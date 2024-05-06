@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using GXPEngine.Core;
 
 namespace GXPEngine
@@ -10,6 +11,7 @@ namespace GXPEngine
 	public abstract class GameObject : Transformable
 	{
 		public string name;
+		private int ID;
 		private Collider _collider;
 		
 		private List<GameObject> _children = new List<GameObject>();
@@ -18,23 +20,79 @@ namespace GXPEngine
 		public bool visible = true;
 		private bool destroyed = false;
 
-		//------------------------------------------------------------------------------------------------------------------------
-		//														GameObject()
-		//------------------------------------------------------------------------------------------------------------------------
 		/// <summary>
-		/// Initializes a new instance of the <see cref="GXPEngine.GameObject"/> class.
-		/// Since GameObjects contain a display hierarchy, a GameObject can be used as a container for other objects.
-		/// Other objects can be added using child commands as AddChild.
+		/// The local position of the object.
 		/// </summary>
-		/// <param name="addCollider">
-		/// If <c>true</c>, then the virtual function createCollider will be called, which can be overridden to create a collider that 
-		/// will be added to the collision manager. 
-		/// </param> 
-		public GameObject(bool addCollider=false)
+        public Vec2 Position
+        {
+            get
+            {
+                return new Vec2(x, y);
+            }
+            set
+            {
+                SetXY(value.x, value.y);
+            }
+        }
+		/// <summary>
+		/// the global position of the object, which is also relative to the screen
+		/// </summary>
+        public Vec2 GlobalPosition
+        {
+            get
+            {
+                return TransformPoint(x, y);
+            }
+            set
+            {
+				Vec2 vec = InverseTransformPoint(value.x, value.y);
+                SetXY(vec.x, vec.y);
+            }
+        }
+
+        public static bool operator ==(GameObject A, GameObject B)
+        {
+            if (A is null || A.destroyed)
+                A = null;
+            if (B is null || B.destroyed)
+                B = null;
+
+            return RuntimeHelpers.Equals(A, B);
+        }
+
+        public static bool operator !=(GameObject A, GameObject B)
+        {
+            if (A is null || A.destroyed)
+                A = null;
+            if (B is null || B.destroyed)
+                B = null;
+
+            return !RuntimeHelpers.Equals(A, B);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return RuntimeHelpers.Equals(this, obj);
+        }
+
+        //------------------------------------------------------------------------------------------------------------------------
+        //														GameObject()
+        //------------------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GXPEngine.GameObject"/> class.
+        /// Since GameObjects contain a display hierarchy, a GameObject can be used as a container for other objects.
+        /// Other objects can be added using child commands as AddChild.
+        /// </summary>
+        /// <param name="addCollider">
+        /// If <c>true</c>, then the virtual function createCollider will be called, which can be overridden to create a collider that 
+        /// will be added to the collision manager. 
+        /// </param> 
+        public GameObject(bool addCollider=false)
 		{
 			if (addCollider) {
 				_collider = createCollider ();
 			}
+			ID = Utils.Random(int.MinValue, int.MaxValue);
 		}
 
 		/// <summary>
@@ -435,14 +493,14 @@ namespace GXPEngine
 		/// If a time of impact below 1 is returned, the normal will be the collision normal 
 		///   (otherwise it is undefined).
 		/// </summary>
-		virtual public float TimeOfImpact (GameObject other, float vx, float vy, out Vector2 normal) {
-			normal = new Vector2 ();
+		virtual public float TimeOfImpact (GameObject other, float vx, float vy, out Vec2 normal) {
+			normal = new Vec2 ();
 			if (_collider == null || other._collider == null || parent==null)
 				return float.MaxValue;
 			// Compute world space velocity:
-			//Vector2 p1 = parent.TransformPoint (vx, vy);
-			//Vector2 p0 = parent.TransformPoint (0, 0);
-			Vector2 worldVelocity=parent.TransformDirection(vx,vy);
+			//Vec2 p1 = parent.TransformPoint (vx, vy);
+			//Vec2 p0 = parent.TransformPoint (0, 0);
+			Vec2 worldVelocity=parent.TransformDirection(vx,vy);
 			float TOI=_collider.TimeOfImpact (other._collider, 
 				//p1.x-p0.x, p1.y-p0.y, 
 				worldVelocity.x,worldVelocity.y,
@@ -466,7 +524,7 @@ namespace GXPEngine
 			float minTOI = 1;
 			foreach (GameObject other in objectsToCheck) {
 				if (other.collider != null && other.collider.isTrigger) continue;
-				Vector2 newNormal;
+				Vec2 newNormal;
 				float newTOI = TimeOfImpact (other, vx, vy, out newNormal);
 				if (newTOI < minTOI) {
 					col = new Collision (this, other, newNormal, newTOI);
@@ -527,8 +585,8 @@ namespace GXPEngine
 		/// <param name='y'>
 		/// The y coordinate to transform.
 		/// </param>
-		public override Vector2 TransformPoint(float x, float y) {
-			Vector2 ret = base.TransformPoint (x, y);
+		public override Vec2 TransformPoint(float x, float y) {
+			Vec2 ret = base.TransformPoint (x, y);
 			if (parent == null) {
 				return ret;
 			} else {
@@ -554,10 +612,10 @@ namespace GXPEngine
 		/// If the given game object is not an ancestor of [this] game object, then 
 		/// this argument is ignored, and the returned point will be in screen space.
 		/// </param>
-		public Vector2 TransformPoint(float x, float y, GameObject targetParentSpace) {
+		public Vec2 TransformPoint(float x, float y, GameObject targetParentSpace) {
 			// Implementation note: since the original TransformPoint is a core engine method,
 			// efficiency (avoiding an extra method call) is preferred here at the cost of some code duplication.
-			Vector2 ret = base.TransformPoint(x, y);
+			Vec2 ret = base.TransformPoint(x, y);
 			if (parent == null || parent == targetParentSpace) {
 				return ret;
 			} else {
@@ -576,8 +634,8 @@ namespace GXPEngine
 		/// <param name='y'>
 		/// The y coordinate to transform.
 		/// </param>
-		public override Vector2 TransformDirection(float x, float y) {
-			Vector2 ret = base.TransformDirection (x, y);
+		public override Vec2 TransformDirection(float x, float y) {
+			Vec2 ret = base.TransformDirection (x, y);
 			if (parent == null) {
 				return ret;
 			} else {
@@ -598,7 +656,7 @@ namespace GXPEngine
 		/// <param name='y'>
 		/// The y coordinate to transform.
 		/// </param>
-		public override Vector2 InverseTransformPoint(float x, float y) {
+		public override Vec2 InverseTransformPoint(float x, float y) {
 			return InverseTransformPoint(x, y, null);
 		}
 
@@ -619,11 +677,11 @@ namespace GXPEngine
 		/// The coordinates x and y should be given relative to this game object. If the given game object is not an ancestor of 
 		/// [this] game object, then this argument is ignored and x and y are assumed to be in screen space.
 		/// </param>
-		public Vector2 InverseTransformPoint(float x, float y, GameObject fromParentSpace) {
+		public Vec2 InverseTransformPoint(float x, float y, GameObject fromParentSpace) {
 			if (parent == null || parent==fromParentSpace) {
 				return base.InverseTransformPoint(x, y);
 			} else {
-				Vector2 ret = parent.InverseTransformPoint(x, y, fromParentSpace);
+				Vec2 ret = parent.InverseTransformPoint(x, y, fromParentSpace);
 				return base.InverseTransformPoint(ret.x, ret.y);
 			}
 		}
@@ -639,11 +697,11 @@ namespace GXPEngine
 		/// <param name='y'>
 		/// The y coordinate to transform.
 		/// </param>
-		public override Vector2 InverseTransformDirection(float x, float y) {
+		public override Vec2 InverseTransformDirection(float x, float y) {
 			if (parent == null) {
 				return base.InverseTransformDirection(x, y);
 			} else {
-				Vector2 ret = parent.InverseTransformDirection(x, y);
+				Vec2 ret = parent.InverseTransformDirection(x, y);
 				return base.InverseTransformDirection (ret.x, ret.y);
 			}
 		}
