@@ -198,14 +198,50 @@ namespace GXPEngine
 			return (float)Math.Truncate (f);
 		}
 
-		/// <summary>
-		/// Clamps f in the range [min,max]:
-		/// Returns min if f<min, max if f>max, and f otherwise.
-		/// </summary>
-		public static float Clamp(float f, float min, float max) {
-			return f < min ? min : (f > max ? max : f);
-		}
+        /// <summary>
+        /// Clamps f in the range [min,max]:
+        /// Returns min if f<min, max if f>max, and f otherwise.
+        /// </summary>
+        public static float Clamp(float f, float min, float max)
+        {
+            return f < min ? min : (f > max ? max : f);
+        }
+        /// <summary>
+        /// Clamps f in the range [0,1]:
+        /// Returns min if f<0, max if f>1, and f otherwise.
+        /// </summary>
+        public static float Clamp01(float f)
+        {
+            return f < 0 ? 0 : (f > 1 ? 1 : f);
+        }
 
-	}
+        public static float Lerp(float start, float end, float time)
+        {
+            return (start + (end - start) * Clamp01(time));
+        }
+        public static float LerpUnclamped(float start, float end, float time)
+        {
+            return (start + (end - start) * time);
+        }
+        /// <summary>
+        /// convert from degrees to radians
+        /// </summary>
+        /// <param name="degrees"></param>
+        /// <returns></returns>
+        public static float Deg2Rad(float degrees)
+        {
+            return degrees * Mathf.PI / 180f;
+        }
+
+        /// <summary>
+        /// convert from radians to degrees
+        /// </summary>
+        /// <param name="radians"></param>
+        /// <returns></returns>
+        public static float Rad2Deg(float radians)
+        {
+            return radians * 180f / Mathf.PI;
+        }
+    }
 }
 
