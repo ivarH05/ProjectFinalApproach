@@ -2,12 +2,12 @@ using System;
 
 namespace GXPEngine.Core
 {
-    public struct Vector2
+    public struct Vec2
     {
         public float x;
         public float y;
 
-        public Vector2(float x, float y)
+        public Vec2(float x, float y)
         {
             this.x = x;
             this.y = y;
@@ -18,82 +18,82 @@ namespace GXPEngine.Core
             return "(" + x + ", " + y + ")";
         }
 
-        public static Vector2 zero
+        public static Vec2 zero
         {
-            get { return new Vector2(0, 0); }
+            get { return new Vec2(0, 0); }
         }
 
-        public static Vector2 up
+        public static Vec2 up
         {
-            get { return new Vector2(0, -1); }
+            get { return new Vec2(0, -1); }
         }
 
-        public static Vector2 down
+        public static Vec2 down
         {
-            get { return new Vector2(0, 1); }
+            get { return new Vec2(0, 1); }
         }
-        public static Vector2 left
+        public static Vec2 left
         {
-            get { return new Vector2(-1, 0); }
+            get { return new Vec2(-1, 0); }
         }
-        public static Vector2 right
+        public static Vec2 right
         {
-            get { return new Vector2(1, 0); }
-        }
-
-        public static Vector2 operator +(Vector2 a, Vector2 b)
-        {
-            return new Vector2(a.x + b.x, a.y + b.y);
+            get { return new Vec2(1, 0); }
         }
 
-        public static Vector2 operator -(Vector2 a, Vector2 b)
+        public static Vec2 operator +(Vec2 a, Vec2 b)
         {
-            return new Vector2(a.x - b.x, a.y - b.y);
+            return new Vec2(a.x + b.x, a.y + b.y);
         }
 
-        public static Vector2 operator -(Vector2 a)
+        public static Vec2 operator -(Vec2 a, Vec2 b)
         {
-            return new Vector2(-a.x, -a.y);
+            return new Vec2(a.x - b.x, a.y - b.y);
         }
 
-        public static Vector2 operator *(Vector2 a, float scalar)
+        public static Vec2 operator -(Vec2 a)
         {
-            return new Vector2(a.x * scalar, a.y * scalar);
-        }
-        public static Vector2 operator *(Vector2 a, Vector2 b)
-        {
-            return new Vector2(a.x * b.x, a.y * b.y);
+            return new Vec2(-a.x, -a.y);
         }
 
-        public static Vector2 operator *(float scalar, Vector2 a)
+        public static Vec2 operator *(Vec2 a, float scalar)
         {
-            return new Vector2(a.x * scalar, a.y * scalar);
+            return new Vec2(a.x * scalar, a.y * scalar);
+        }
+        public static Vec2 operator *(Vec2 a, Vec2 b)
+        {
+            return new Vec2(a.x * b.x, a.y * b.y);
         }
 
-        public static Vector2 operator /(Vector2 a, float scalar)
+        public static Vec2 operator *(float scalar, Vec2 a)
+        {
+            return new Vec2(a.x * scalar, a.y * scalar);
+        }
+
+        public static Vec2 operator /(Vec2 a, float scalar)
         {
             if (scalar == 0)
             {
                 throw new ArgumentException("Cant divide by zero!");
             }
-            return new Vector2(a.x / scalar, a.y / scalar);
+            return new Vec2(a.x / scalar, a.y / scalar);
         }
 
-        public static bool operator ==(Vector2 left, Vector2 right)
+        public static bool operator ==(Vec2 left, Vec2 right)
         {
             return left.x == right.x && left.y == right.y;
         }
 
-        public static bool operator !=(Vector2 left, Vector2 right)
+        public static bool operator !=(Vec2 left, Vec2 right)
         {
             return !(left == right);
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is Vector2)
+            if (obj is Vec2)
             {
-                Vector2 other = (Vector2)obj;
+                Vec2 other = (Vec2)obj;
                 return this == other;
             }
             return false;
@@ -118,7 +118,7 @@ namespace GXPEngine.Core
         }
 
         /// <summary>
-        /// turn this into a vector2 with magnitude 1
+        /// turn this into a Vec2 with magnitude 1
         /// </summary>
         public void Normalize()
         {
@@ -131,16 +131,16 @@ namespace GXPEngine.Core
         }
 
         /// <summary>
-        /// get this vector2 with magnitude 1
+        /// get this Vec2 with magnitude 1
         /// </summary>
-        public Vector2 normalized
+        public Vec2 normalized
         {
             get
             {
                 float mag = magnitude;
                 if (mag == 0)
-                    return new Vector2(0, 0);
-                return new Vector2(x / mag, y / mag);
+                    return new Vec2(0, 0);
+                return new Vec2(x / mag, y / mag);
             }
         }
 
@@ -156,53 +156,53 @@ namespace GXPEngine.Core
         }
 
         /// <summary>
-        /// get a vector2 with the angle angleDegrees
+        /// get a Vec2 with the angle angleDegrees
         /// </summary>
         /// <param name="angleDegrees">the angle in degrees</param>
         /// <returns></returns>
-        public static Vector2 GetUnitVectorDeg(float angleDegrees)
+        public static Vec2 GetUnitVectorDeg(float angleDegrees)
         {
             float angleRad = Mathf.Deg2Rad(angleDegrees);
-            return new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
+            return new Vec2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
         }
 
         /// <summary>
-        /// get a vector2 with the angle in angleradians
+        /// get a Vec2 with the angle in angleradians
         /// </summary>
         /// <param name="angleRadians">the angle in radians</param>
         /// <returns></returns>
-        public static Vector2 GetUnitVectorRad(float angleRadians)
+        public static Vec2 GetUnitVectorRad(float angleRadians)
         {
-            return new Vector2(Mathf.Cos(angleRadians), Mathf.Sin(angleRadians));
+            return new Vec2(Mathf.Cos(angleRadians), Mathf.Sin(angleRadians));
         }
 
         /// <summary>
         /// get a random vector with magnitude 1
         /// </summary>
         /// <returns></returns>
-        public static Vector2 RandomUnitVector()
+        public static Vec2 RandomUnitVector()
         {
             return GetUnitVectorRad(Utils.Random(-1, 1f) * 2 * Mathf.PI);
         }
 
         /// <summary>
-        /// lerp the vector2 start to vector2 end with factor t
+        /// lerp the Vec2 start to Vec2 end with factor t
         /// </summary>
         /// <param name="start">the start value</param>
         /// <param name="end">the end value</param>
         /// <param name="t">the time [0, 1] between start and end</param>
         /// <returns></returns>
-        public static Vector2 Lerp(Vector2 start, Vector2 end, float t)
+        public static Vec2 Lerp(Vec2 start, Vec2 end, float t)
         {
             return start + (end - start) * Mathf.Clamp01(t);
         }
         /// <summary>
-        /// lerp the vector2 start to vector2 end with factor t, unclamped
+        /// lerp the Vec2 start to Vec2 end with factor t, unclamped
         /// </summary>
         /// <param name="start">the start value</param>
         /// <param name="end">the end value</param>
         /// <param name="t">the time [0, 1] between start and end</param>
-        public static Vector2 LerpUnclamped(Vector2 start, Vector2 end, float t)
+        public static Vec2 LerpUnclamped(Vec2 start, Vec2 end, float t)
         {
             return start + (end - start) * t;
         }
@@ -213,7 +213,7 @@ namespace GXPEngine.Core
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static float Distance(Vector2 a, Vector2 b)
+        public static float Distance(Vec2 a, Vec2 b)
         {
             return (b - a).magnitude;
         }
@@ -268,38 +268,38 @@ namespace GXPEngine.Core
             y = newY;
         }
 
-        public void RotateAroundDegrees(Vector2 point, float angleDegrees)
+        public void RotateAroundDegrees(Vec2 point, float angleDegrees)
         {
             this -= point;
             RotateDegrees(angleDegrees);
             this += point;
         }
 
-        public void RotateAroundRadians(Vector2 point, float angleRadians)
+        public void RotateAroundRadians(Vec2 point, float angleRadians)
         {
             this -= point;
             RotateRadians(angleRadians);
             this += point;
         }
 
-        public static float Dot(Vector2 a, Vector2 b)
+        public static float Dot(Vec2 a, Vec2 b)
         {
             return a.x * b.x + a.y * b.y;
         }
 
-        public static float Cross(Vector2 a, Vector2 b)
+        public static float Cross(Vec2 a, Vec2 b)
         {
             return a.x * b.y - a.y * b.x;
         }
         /// <summary>
-        /// Reflect the vector2 among a certain normal
+        /// Reflect the Vec2 among a certain normal
         /// </summary>
         /// <param name="Normal">the normal of the "mirror"</param>
         /// <returns></returns>
-        public Vector2 Reflect(Vector2 Normal)
+        public Vec2 Reflect(Vec2 Normal)
         {
-            Vector2 In = normalized;
-            Vector2 Out = In - 2 * In * Normal * Normal;
+            Vec2 In = normalized;
+            Vec2 Out = In - 2 * In * Normal * Normal;
             return Out * magnitude;
         }
     }
