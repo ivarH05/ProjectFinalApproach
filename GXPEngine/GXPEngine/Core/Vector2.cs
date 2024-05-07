@@ -1,4 +1,4 @@
-/*using System;
+using System;
 
 namespace GXPEngine.Core
 {
@@ -17,5 +17,5 @@ namespace GXPEngine.Core
 			return "[Vector2 " + x + ", " + y + "]";
 		}
 	}
-}*/
+}
 

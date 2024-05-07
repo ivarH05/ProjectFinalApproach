@@ -46,12 +46,15 @@ namespace GXPEngine
             background = new Background();
             workspace = new Workspace();
             UILayer = new UILayer();
+            AddChild(new Rigidbody());
         }
 
         void Update()
         {
             workspace.Position = -cameraPosition;
             background.Position = -cameraPosition; // (* 0.75 for depth effect)
+
+            PhysicsManager.PhysicsUpdate();
         }
     }
 }

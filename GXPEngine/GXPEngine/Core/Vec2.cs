@@ -89,6 +89,11 @@ namespace GXPEngine.Core
             return !(left == right);
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public override bool Equals(object obj)
         {
             if (obj is Vec2)

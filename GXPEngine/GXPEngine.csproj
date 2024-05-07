@@ -41,16 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
     <Compile Include="GXPEngine\Core\Vec2.cs" />
     <Compile Include="MainGame.cs" />
+    <Compile Include="Utility\Collision\BoxCollider.cs" />
+    <Compile Include="Utility\Collision\CircleCollider.cs" />
+    <Compile Include="Utility\Collision\Collider.cs" />
+    <Compile Include="Utility\Collision\CollisionData.cs" />
     <Compile Include="Utility\Scene.cs" />
     <Compile Include="LevelAssets\Other\Background.cs" />
     <Compile Include="LevelAssets\Other\UILayer.cs" />
     <Compile Include="LevelAssets\Other\Workspace.cs" />
+    <Compile Include="Managers\PhysicsManager.cs" />
+    <Compile Include="Utility\Rigidbody.cs" />
     <Compile Include="GXPEngine\Core\Canvas.cs" />
     <Compile Include="GXPEngine\Game.cs" />
     <Compile Include="GXPEngine\GameObject.cs" />
@@ -58,13 +63,12 @@
     <Compile Include="GXPEngine\SoundChannel.cs" />
     <Compile Include="GXPEngine\Sprite.cs" />
     <Compile Include="GXPEngine\Core\BlendMode.cs" />
-    <Compile Include="GXPEngine\Core\BoxCollider.cs" />
-    <Compile Include="GXPEngine\Core\Collider.cs" />
+    <Compile Include="GXPEngine\Core\OldBoxCollider.cs" />
+    <Compile Include="GXPEngine\Core\OldCollider.cs" />
     <Compile Include="GXPEngine\Core\GLContext.cs" />
     <Compile Include="GXPEngine\Core\Rectangle.cs" />
     <Compile Include="GXPEngine\Core\Texture2D.cs" />
     <Compile Include="GXPEngine\Core\Transformable.cs" />
-    <Compile Include="GXPEngine\Core\Vector2.cs" />
     <Compile Include="GXPEngine\FMOD\FMOD.cs" />
     <Compile Include="GXPEngine\Managers\CollisionManager.cs" />
     <Compile Include="GXPEngine\Managers\UpdateManager.cs" />
@@ -88,7 +92,6 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
-
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
