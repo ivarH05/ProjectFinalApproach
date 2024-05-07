@@ -9,7 +9,17 @@ namespace GXPEngine.Managers
 {
     public class InputManager 
     {
+        int shootKey = Key.SPACE;
+        int leftBumper = Key.LEFT;
+        int rightBumper = Key.RIGHT;
+        bool bothBumpers = false;
+
         public InputManager () 
+        {
+        }
+
+
+        public void Update()
         {
         }
     }
