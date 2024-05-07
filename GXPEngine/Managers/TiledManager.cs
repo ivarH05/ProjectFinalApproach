@@ -6,9 +6,16 @@ namespace GXPEngine.Managers
 {
     class TiledManager
     {
-        public static void LoadTiledMap(string path)
+        string _tiledMapPath;
+        string currentMap;
+
+        public TiledManager()
         {
-            Console.WriteLine("Loading Tiled Map: " + path);
+        }
+
+        public static void LoadTiledMap( string currentMap)
+        {
+            TiledMap tiledMap = new TiledMap(currentMap);
         }
     }
 
