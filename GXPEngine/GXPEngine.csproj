@@ -41,12 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Background.cs" />
+
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
     <Compile Include="GXPEngine\Core\Vec2.cs" />
     <Compile Include="MainGame.cs" />
+    <Compile Include="Utility\Scene.cs" />
+    <Compile Include="LevelAssets\Other\Background.cs" />
+    <Compile Include="LevelAssets\Other\UILayer.cs" />
+    <Compile Include="LevelAssets\Other\UILayer.cs" />
     <Compile Include="GXPEngine\Core\Canvas.cs" />
     <Compile Include="GXPEngine\Game.cs" />
     <Compile Include="GXPEngine\GameObject.cs" />
@@ -84,9 +88,7 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
-    <Compile Include="Scene.cs" />
-    <Compile Include="UILayer.cs" />
-    <Compile Include="Workspace.cs" />
+
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
