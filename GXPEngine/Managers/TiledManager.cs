@@ -4,7 +4,7 @@ using TiledMapParser;
 
 namespace GXPEngine.Managers
 {
-    class TiledManager
+    public class TiledManager
     {
         string _tiledMapPath = "assets/tiledmaps/";
         string currentMap;
@@ -24,6 +24,7 @@ namespace GXPEngine.Managers
             _tiledLoader.rootObject = tiledRootObject;
             _tiledLoader.addColliders = false;
             _tiledLoader.autoInstance = true;
+            _tiledLoader.LoadImageLayers(0);
         }
     }
 }
