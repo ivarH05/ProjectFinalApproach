@@ -61,20 +61,21 @@ namespace GXPEngine
 		/// </param>
 		public static int Random (int min, int max) {
 			return random.Next(min, max);
-		}
-		public static float Random (float min, float max) {
-			return (float)(random.NextDouble() * (max - min) + min);
-		}
+        }
+        public static float Random(float min, float max)
+        {
+            return (float)(random.NextDouble() * (max - min) + min);
+        }
 
 
-		//------------------------------------------------------------------------------------------------------------------------
-		//														print()
-		//------------------------------------------------------------------------------------------------------------------------
-		/// <summary>
-		/// Shows output on the console window.
-		/// Basically, a shortcut for Console.WriteLine() that allows for multiple parameters.
-		/// </summary>
-		public static void print(params object[] list) {
+        //------------------------------------------------------------------------------------------------------------------------
+        //														print()
+        //------------------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Shows output on the console window.
+        /// Basically, a shortcut for Console.WriteLine() that allows for multiple parameters.
+        /// </summary>
+        public static void print(params object[] list) {
 			for (int i = 0; i < list.Length; i++) {
 				if (list[i] != null) Console.Write(list[i].ToString() + " "); else Console.Write("null ");
 			}
