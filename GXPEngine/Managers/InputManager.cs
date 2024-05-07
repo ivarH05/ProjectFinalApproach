@@ -9,10 +9,10 @@ namespace GXPEngine.Managers
 {
     public class InputManager 
     {
-        int shootKey = Key.SPACE;
-        int leftBumper = Key.LEFT;
-        int rightBumper = Key.RIGHT;
-        bool bothBumpers = false;
+        int shootKey = Key.SPACE;           // also UI select
+        int leftBumper = Key.LEFT;          // also UI left
+        int rightBumper = Key.RIGHT;        // also UI right
+        bool bothBumpers = false;           // use when both bumpers are pressed
 
         public InputManager () 
         {
