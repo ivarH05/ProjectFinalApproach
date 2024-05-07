@@ -1,22 +1,29 @@
 using GXPEngine.Utility;
 using System;
-
+using TiledMapParser;
 
 namespace GXPEngine.Managers
 {
     class TiledManager
     {
-        string _tiledMapPath;
+        string _tiledMapPath = "assets/tiledmaps/";
         string currentMap;
+        TiledLoader _tiledLoader;
 
-        public TiledManager()
+        public TiledManager( GameObject TiledRootObject )
         {
+            tiledRootObject = TiledRootObject;
         }
 
-        public static void LoadTiledMap( string currentMap)
+        public GameObject tiledRootObject { get; set; }
+
+        public void LoadTiledMap( string mapToLoad )
         {
-            TiledMap tiledMap = new TiledMap(currentMap);
+            currentMap = mapToLoad;
+            _tiledLoader = new TiledLoader( _tiledMapPath+mapToLoad );
+            _tiledLoader.rootObject = tiledRootObject;
+            _tiledLoader.addColliders = false;
+            _tiledLoader.autoInstance = true;
         }
     }
-
 }
