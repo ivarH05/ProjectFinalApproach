@@ -1,5 +1,10 @@
 GXPEngine/obj
 .vs
+.vscode
 GXPEngine.userprefs
-GXPEngine/bin/Debug
+GXPEngine/bin/Debug/GXPEngine.exe
+GXPEngine/bin/Debug/GXPEngine.pbd
+GXPEngine/bin/Debug/lib
 GXPEngine/bin/Release
+GXPEngine/bin/Debug/GXPEngine.pdb
+GXPEngine/bin/Debug/GXPEngine.exe.config
