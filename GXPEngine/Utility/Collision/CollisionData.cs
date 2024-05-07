@@ -21,11 +21,11 @@ namespace GXPEngine
         /// <summary>
         /// The self object of the collision, object 1. 
         /// </summary>
-        public Rigidbody self;
+        public Collider self;
         /// <summary>
         /// the other object of the collision, object 2
         /// </summary>
-        public Rigidbody other;
+        public Collider other;
 
         /// <summary>
         /// The depth the object was at the time of FINDING the collision, not at the time of impact. 

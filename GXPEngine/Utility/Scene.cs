@@ -34,6 +34,9 @@ namespace GXPEngine
         /// </summary>
         public static UILayer UILayer { get; private set; }
 
+        Rigidbody ball1 = new Rigidbody("Square.png", new BoxCollider(new Vec2(64, 64)));
+        Rigidbody ball2 = new Rigidbody("Square.png", new BoxCollider(new Vec2(64, 64)));
+
         public Scene(bool overrideSingleton = false)
         {
             if (_singleton != null && !overrideSingleton)
@@ -46,7 +49,11 @@ namespace GXPEngine
             background = new Background();
             workspace = new Workspace();
             UILayer = new UILayer();
-            AddChild(new Rigidbody());
+            AddChild(ball1);
+            ball1.Position = new Vec2(800, 450);
+            ball1.isKinematic = true;
+            ball2.useGravity = false;
+            AddChild(ball2);
         }
 
         void Update()
@@ -55,6 +62,14 @@ namespace GXPEngine
             background.Position = -cameraPosition; // (* 0.75 for depth effect)
 
             PhysicsManager.PhysicsUpdate();
+            ball2.Position = Input.getMouseWorldPosition();
+            ball2.velocity = new Vec2(0, 1000);
+
+            CollisionData dat = ball1.collider.GetCollision(ball2.collider);
+            Console.WriteLine(dat);
+
+            if (Input.GetKey(Key.SPACE)) ball2.velocity = new Vec2();
+            ball1.rotation += 1;
         }
     }
 }

@@ -252,25 +252,23 @@ namespace GXPEngine.Core
             return Mathf.Rad2Deg(GetAngleRadians());
         }
 
-        public void RotateDegrees(float angleDegrees)
+        public Vec2 RotateDegrees(float angleDegrees)
         {
             float angleRad = Mathf.Deg2Rad(angleDegrees);
             float cos = Mathf.Cos(angleRad);
             float sin = Mathf.Sin(angleRad);
             float newX = x * cos - y * sin;
             float newY = x * sin + y * cos;
-            x = newX;
-            y = newY;
+            return new Vec2(newX, newY);
         }
 
-        public void RotateRadians(float angleRadians)
+        public Vec2 RotateRadians(float angleRadians)
         {
             float cos = Mathf.Cos(angleRadians);
             float sin = Mathf.Sin(angleRadians);
             float newX = x * cos - y * sin;
             float newY = x * sin + y * cos;
-            x = newX;
-            y = newY;
+            return new Vec2(newX, newY);
         }
 
         public void RotateAroundDegrees(Vec2 point, float angleDegrees)

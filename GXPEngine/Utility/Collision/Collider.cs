@@ -12,7 +12,17 @@ namespace GXPEngine
         /// <summary>
         /// The offset of the collider
         /// </summary>
-        public Vec2 Center;
+        public Vec2 center;
+
+        internal float rotation { get { return rigidbody.rotation; } }
+
+        internal Vec2 Velocity { get { return rigidbody.velocity; } }
+
+        internal Vec2 Position { get { return rigidbody.Position; } }
+
+        public Rigidbody rigidbody;
+
+        ////////// calculating current collisions
 
         /// <summary>
         /// get the collision info if the collider type is unknown. 
@@ -35,5 +45,22 @@ namespace GXPEngine
         public virtual CollisionData GetCollision(CircleCollider other) { return null; }
 
         public virtual CollisionData IsOverlapping(Vec2 point) { return null; }
+
+        ////////// Predicting Collisions
+
+        public CollisionData PredictCollision(Collider other)
+        {
+            if (other is BoxCollider)
+                return PredictCollision((BoxCollider)other);
+            if (other is CircleCollider)
+                return PredictCollision((CircleCollider)other);
+
+            throw new Exception("Collider type not known");
+        }
+
+        public virtual CollisionData PredictCollision(BoxCollider other) { return null; }
+
+        public virtual CollisionData PredictCollision(CircleCollider other) { return null; }
+
     }
 }

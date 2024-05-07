@@ -26,7 +26,7 @@ namespace GXPEngine
         /// <summary>
         /// the collider of the rigidbody, boxcollider by default
         /// </summary>
-        public new Collider collider = new BoxCollider(); //(private?)
+        public new Collider collider = new BoxCollider(new Vec2(64, 64)); //(private?)
 
         /// <summary>
         /// when set to true the object will not move at all, though will collide. 
@@ -53,9 +53,15 @@ namespace GXPEngine
         public Rigidbody(string spritePath = "Square.png", Collider collider = null) : base(spritePath, false, false)
         {
             if (collider != null)
-                this.collider = collider;
-
+                SetCollider(collider);
             PhysicsManager.AddBody(this);
+            centerOrigin();
+        }
+
+        public void SetCollider(Collider collider)
+        {
+            collider.rigidbody = this;
+            this.collider = collider;
         }
 
         /// <summary>
