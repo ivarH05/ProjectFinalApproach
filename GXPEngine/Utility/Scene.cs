@@ -54,7 +54,7 @@ namespace GXPEngine
             workspace = new Workspace();
             UILayer = new UILayer();
 
-            tiledManager.LoadTiledMap("testmap.tmx");
+            // tiledManager.LoadTiledMap("testmap.tmx");       //Uncomment this line to load a tiled map
         }
 
         void Update()
