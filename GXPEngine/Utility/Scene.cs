@@ -35,9 +35,10 @@ namespace GXPEngine
         /// </summary>
         public static UILayer UILayer { get; private set; }
 
+        public static TiledManager tiledManager { get; private set; }
         public static Debugger debugger { get; private set; }
         public static InputManager inputManager { get; private set; }
-     
+        
         public Scene(bool overrideSingleton = false)
         {
             if (_singleton != null && !overrideSingleton)
@@ -46,7 +47,8 @@ namespace GXPEngine
                 return;
             }
             _singleton = this;
-            
+
+            tiledManager = new TiledManager( this );
             inputManager = new InputManager();
             debugger = new Debugger();
             background = new Background();
@@ -56,6 +58,8 @@ namespace GXPEngine
             AddChild(workspace);
             AddChild(UILayer);
             AddChild(debugger);
+            
+            // tiledManager.LoadTiledMap("testmap.tmx");       //Uncomment this line to load a tiled map
         }
 
         void Update()
