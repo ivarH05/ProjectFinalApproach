@@ -65,7 +65,7 @@ namespace GXPEngine
             ball2.Position = Input.getMouseWorldPosition();
             ball2.velocity = new Vec2(0, 1000);
 
-            CollisionData dat = ball1.collider.GetCollision(ball2.collider);
+            CollisionData dat = ball2.collider.GetCollision(ball1.collider);
             Console.WriteLine(dat);
 
             if (Input.GetKey(Key.SPACE)) ball2.velocity = new Vec2();

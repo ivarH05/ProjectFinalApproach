@@ -149,6 +149,14 @@ namespace GXPEngine.Core
             }
         }
 
+        public Vec2 Normal
+        {
+            get
+            {
+                return new Vec2(-y, x).normalized;
+            }
+        }
+
         /// <summary>
         /// set the x and y coordinates
         /// </summary>

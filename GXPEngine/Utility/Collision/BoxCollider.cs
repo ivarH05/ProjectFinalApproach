@@ -1,6 +1,7 @@
 ﻿using GXPEngine.Core;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,24 +30,53 @@ namespace GXPEngine
             this.size = size;
         }
 
-        //future me, you need to calculate the correct top left and bottom right corners. 
         public override CollisionData GetCollision(BoxCollider other)
         {
-            Vec2 offsetPos = _halfSize.RotateDegrees(rotation %45);
-            Vec2 BL1 = Position - offsetPos;
-            Vec2 TR1 = Position + offsetPos;
+            Vec2[] corners1 = GetRotatedCorners(Position, _halfSize, rotation);
+            Vec2[] corners2 = GetRotatedCorners(other.Position, other._halfSize, other.rotation);
+            Vec2[] axes = new Vec2[4];
 
-            Vec2 otherOffsetPos = other._halfSize.RotateDegrees(other.rotation % 45);
-            Vec2 BL2 = other.Position - otherOffsetPos;
-            Vec2 TR2 = other.Position + otherOffsetPos;
+            axes[0] = (corners1[0] - corners1[1]).Normal;
+            axes[1] = (corners1[1] - corners1[2]).Normal;
+            axes[2] = (corners2[0] - corners2[1]).Normal;
+            axes[3] = (corners2[1] - corners2[2]).Normal;
 
-            if (BL1.x <= TR2.x && TR1.x >= BL2.x &&
-                BL1.y <= TR2.y && TR1.y >= BL2.y)
+            Vec2 minAxis;
+            float penetrationDepth = float.MaxValue;
+
+            for (int i = 0; i < axes.Length; i++)
             {
-                return new CollisionData();
+                float overlap = IsOverlapOnAxis(axes[i], corners1, corners2);
+                if (overlap == float.MaxValue)
+                    return null;
+                else if (overlap < penetrationDepth)
+                {
+                    penetrationDepth = overlap;
+                    minAxis = axes[i];
+                }
             }
-            return null;
+
+            Vec2 normal = (other.Position - Position).RotateDegrees(-other.rotation);
+            normal = (Mathf.Abs(normal.x) > Mathf.Abs(normal.y) ? -new Vec2(normal.x, 0) : -new Vec2(0, normal.y)).RotateDegrees(other.rotation).normalized;
+            //float penetrationDepth = ;
+
+            Console.WriteLine(normal);
+            rigidbody.Position += normal * penetrationDepth;
+
+            CollisionData result = new CollisionData
+            {
+                /*point = ,
+                normal = normal,
+                self = this,
+                other = other,
+                penetrationDepth = ,
+                TimeOfImpact = */
+            };
+
+            return result;
         }
+
+
         public override CollisionData GetCollision(CircleCollider other)
         {
             return null;
@@ -54,6 +84,60 @@ namespace GXPEngine
         public override CollisionData IsOverlapping(Vec2 point)
         {
             return null;
+        }
+
+        private Vec2[] GetRotatedCorners(Vec2 position, Vec2 halfSize, float rotation)
+        {
+            Vec2[] corners = new Vec2[4];
+
+            float sinTheta = Mathf.Sin(Mathf.Deg2Rad(rotation));
+            float cosTheta = Mathf.Cos(Mathf.Deg2Rad(rotation));
+
+            Vec2[] localCorners = new Vec2[]
+            {
+            new Vec2(-halfSize.x, -halfSize.y),
+            new Vec2(halfSize.x, -halfSize.y),
+            new Vec2(halfSize.x, halfSize.y),
+            new Vec2(-halfSize.x, halfSize.y)
+            };
+
+            for (int i = 0; i < 4; i++)
+            {
+                corners[i] = new Vec2(
+                    localCorners[i].x * cosTheta - localCorners[i].y * sinTheta + position.x,
+                    localCorners[i].x * sinTheta + localCorners[i].y * cosTheta + position.y
+                );
+            }
+
+            return corners;
+        }
+
+        private float IsOverlapOnAxis(Vec2 axis, Vec2[] corners1, Vec2[] corners2)
+        {
+            float[] projections1 = ProjectOnAxis(axis, corners1);
+            float[] projections2 = ProjectOnAxis(axis, corners2);
+
+            if (projections1[1] >= projections2[0] && projections2[1] >= projections1[0])
+                return Math.Min(projections1[1], projections2[1]) - Math.Max(projections1[0], projections2[0]);
+            else
+                return float.MaxValue;
+        }
+
+        private float[] ProjectOnAxis(Vec2 axis, Vec2[] corners)
+        {
+            float min = Vec2.Dot(corners[0], axis);
+            float max = min;
+
+            for (int i = 1; i < corners.Length; i++)
+            {
+                float projection = Vec2.Dot(corners[i], axis);
+                if (projection < min)
+                    min = projection;
+                else if (projection > max)
+                    max = projection;
+            }
+
+            return new float[] { min, max };
         }
     }
 }
