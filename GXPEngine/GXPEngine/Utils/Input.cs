@@ -105,5 +105,15 @@ namespace GXPEngine
 		public static int mouseY {
 			get { return GLContext.mouseY; }
 		}
-	}
+
+        public static Vec2 getMouseScreenPosition()
+        {
+            return new Vec2(mouseX, mouseY);
+        }
+
+        public static Vec2 getMouseWorldPosition()
+        {
+            return new Vec2(mouseX, mouseY) + Scene.cameraPosition;
+        }
+    }
 }

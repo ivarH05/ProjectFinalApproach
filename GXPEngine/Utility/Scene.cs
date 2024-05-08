@@ -35,11 +35,10 @@ namespace GXPEngine
         /// </summary>
         public static UILayer UILayer { get; private set; }
 
-        /// <summary>
-        /// The UI, here all user interface objects that should not move with the camera can be placed. 
-        /// </summary>
         public static TiledManager tiledManager { get; private set; }
-
+        public static Debugger debugger { get; private set; }
+        public static InputManager inputManager { get; private set; }
+        
         public Scene(bool overrideSingleton = false)
         {
             if (_singleton != null && !overrideSingleton)
@@ -50,15 +49,24 @@ namespace GXPEngine
             _singleton = this;
 
             tiledManager = new TiledManager( this );
+            inputManager = new InputManager();
+            debugger = new Debugger();
             background = new Background();
             workspace = new Workspace();
             UILayer = new UILayer();
-
+            AddChild(background);
+            AddChild(workspace);
+            AddChild(UILayer);
+            AddChild(debugger);
+            
             // tiledManager.LoadTiledMap("testmap.tmx");       //Uncomment this line to load a tiled map
         }
 
         void Update()
         {
+            PhysicsManager.PhysicsUpdate();
+            inputManager.Update();
+            debugger.Update();
             workspace.Position = -cameraPosition;
             background.Position = -cameraPosition; // (* 0.75 for depth effect)
         }

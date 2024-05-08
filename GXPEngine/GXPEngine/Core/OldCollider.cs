@@ -2,7 +2,7 @@ using System;
 
 namespace GXPEngine.Core
 {
-	public class Collider
+	public class OldCollider
 	{
 		public bool isTrigger {
 			get {
@@ -14,7 +14,7 @@ namespace GXPEngine.Core
 		}
 		bool _isTrigger=false;
 
-		public Collider ()
+		public OldCollider ()
 		{
 		}
 		
@@ -24,7 +24,7 @@ namespace GXPEngine.Core
 		/// <summary>
 		/// Returns <c>true</c> if this collider is currently overlapping with the collider other.
 		/// </summary>
-		public virtual bool HitTest (Collider other) {
+		public virtual bool HitTest (OldCollider other) {
 			return false;
 		}
 		
@@ -50,7 +50,7 @@ namespace GXPEngine.Core
 		/// <param name="vx">x velocity or translation amount.</param>
 		/// <param name="vy">y velocity or translation amount.</param>
 		/// <param name="normal">The collision normal.</param>
-		public virtual float TimeOfImpact (Collider other, float vx, float vy, out Vec2 normal) {
+		public virtual float TimeOfImpact (OldCollider other, float vx, float vy, out Vec2 normal) {
 			normal = new Vec2 ();
 			return float.MaxValue;
 		}
@@ -62,7 +62,7 @@ namespace GXPEngine.Core
 		/// 
 		/// If they are not overlapping, this method returns null.
 		/// </summary>
-		public virtual Collision GetCollisionInfo (Collider other)
+		public virtual Collision GetCollisionInfo (OldCollider other)
 		{
 			return null;
 		}			

@@ -12,7 +12,7 @@ namespace GXPEngine
 	{
 		public string name;
 		private int ID;
-		private Collider _collider;
+		private OldCollider _collider;
 		
 		private List<GameObject> _children = new List<GameObject>();
 		private GameObject _parent = null;
@@ -75,6 +75,11 @@ namespace GXPEngine
             return RuntimeHelpers.Equals(this, obj);
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         //------------------------------------------------------------------------------------------------------------------------
         //														GameObject()
         //------------------------------------------------------------------------------------------------------------------------
@@ -98,7 +103,7 @@ namespace GXPEngine
 		/// <summary>
 		/// Create and return a collider to use for this game object. Null is allowed.
 		/// </summary>
-		protected virtual Collider createCollider () {
+		protected virtual OldCollider createCollider () {
 			return null;
 		}
 
@@ -122,7 +127,7 @@ namespace GXPEngine
 		//------------------------------------------------------------------------------------------------------------------------
 		//														collider
 		//------------------------------------------------------------------------------------------------------------------------
-		internal Collider collider {
+		internal OldCollider collider {
 			get { return _collider; }
 		}
 		

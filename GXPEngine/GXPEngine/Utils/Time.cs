@@ -8,6 +8,9 @@ namespace GXPEngine
 	/// </summary>
 	public class Time
 	{
+        /// <summary>
+        /// the time inbetween fixed updates, like the physics updates. 
+        /// </summary>
 		public static float timeStep = 0.02f;
 
         private static int previousTime;
@@ -54,7 +57,9 @@ namespace GXPEngine
             }
         }
 
-
+        /// <summary>
+        /// get the deltatime in seconds rather than milliseconds.
+        /// </summary>
         public static float DeltaSeconds { get; private set; }
 
         internal static void newFrame() {
@@ -62,7 +67,6 @@ namespace GXPEngine
 			previousTime = time;
             DeltaSeconds = timeSeconds - previousTimeSeconds;
             previousTimeSeconds = timeSeconds;
-
         }
 	}
 }
