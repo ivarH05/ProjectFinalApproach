@@ -19,7 +19,11 @@ namespace GXPEngine
 
         public override CollisionData GetCollision(BoxCollider other)
         {
-            return null;
+            CollisionData dat = other.GetCollision(this);
+            if (dat == null)
+                return null;
+            dat.normal *= -1;
+            return dat;
         }
         public override CollisionData GetCollision(CircleCollider other)
         {
@@ -48,7 +52,11 @@ namespace GXPEngine
 
         public override CollisionData PredictCollision(BoxCollider other)
         {
-            return null;
+            CollisionData dat = other.PredictCollision(this);
+            if (dat == null)
+                return null;
+            dat.normal *= -1;
+            return dat;
         }
 
         public override CollisionData PredictCollision(CircleCollider other)

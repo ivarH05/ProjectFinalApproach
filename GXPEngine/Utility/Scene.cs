@@ -22,7 +22,7 @@ namespace GXPEngine
         /// <summary>
         /// The background of the scene, these objects cannot be interacted with
         /// </summary>
-        public static Background background {get; private set;}
+        public static Background background { get; private set; }
 
         /// <summary>
         /// The main hierachy of the scene, these are all objects that can be interacted with / that are on the same layer as the player
@@ -35,7 +35,7 @@ namespace GXPEngine
         public static UILayer UILayer { get; private set; }
 
         Rigidbody ball1 = new Rigidbody("Square.png", new BoxCollider(new Vec2(64, 64)));
-        Rigidbody ball2 = new Rigidbody("Square.png", new BoxCollider(new Vec2(64, 64)));
+        Rigidbody ball2 = new Rigidbody("Circle.png", new CircleCollider(32));
 
         Rigidbody ball3 = new Rigidbody("Circle.png", new CircleCollider(8));
 
@@ -69,10 +69,13 @@ namespace GXPEngine
             background.Position = -cameraPosition; // (* 0.75 for depth effect)
 
             PhysicsManager.PhysicsUpdate();
+
+
+
             ball2.Position = Input.getMouseWorldPosition();
             ball2.velocity = new Vec2(0, 1000);
 
-            CollisionData dat = ball2.collider.PredictCollision(ball1.collider);
+            CollisionData dat = ball1.collider.GetCollision(ball2.collider);
             Console.WriteLine(dat);
 
             if (Input.GetKey(Key.SPACE)) ball2.velocity = new Vec2();

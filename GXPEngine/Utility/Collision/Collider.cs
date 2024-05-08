@@ -32,6 +32,8 @@ namespace GXPEngine
         /// <exception cref="Exception"></exception>
         public CollisionData GetCollision(Collider other)
         {
+            if (other == null)
+                return null;
             if (other is BoxCollider)
                 return GetCollision((BoxCollider)other);
             if (other is CircleCollider)

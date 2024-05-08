@@ -240,10 +240,6 @@ namespace GXPEngine.Core
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="angleDegrees"></param>
         public void SetAngleDegrees(float angleDegrees)
         {
             float angleRad = Mathf.Deg2Rad(angleDegrees);

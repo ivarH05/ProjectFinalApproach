@@ -74,7 +74,26 @@ namespace GXPEngine
 
         public override CollisionData GetCollision(CircleCollider other)
         {
-            return null;
+            Vec2[] corners1 = GetRotatedCorners(Position, _halfSize, rotation);
+            Vec2 PointOfImpact = GetClosestPointOnSquare(corners1, other.Position);
+
+            float dist = Vec2.Distance(PointOfImpact, other.Position);
+
+            if (dist > other.radius)
+                return null;
+
+            Vec2 normal = (other.Position - Position).RotateDegrees(rotation);
+            normal = (Mathf.Abs(normal.x) > Mathf.Abs(normal.y) ? -new Vec2(normal.x, 0) : -new Vec2(0, normal.y)).RotateDegrees(rotation).normalized;
+
+            return new CollisionData
+            {
+                point = PointOfImpact,
+                normal = normal,
+                self = this,
+                other = other,
+                penetrationDepth = other.radius - dist,
+                TimeOfImpact = 0
+            };
         }
 
         public override CollisionData PredictCollision(BoxCollider other)
@@ -83,7 +102,7 @@ namespace GXPEngine
             Vec2 nextOtherPosition = other.Position + other.Velocity * Time.timeStep;
 
             Vec2[] corners1 = GetRotatedCorners(nextPosition, _halfSize, rotation + rigidbody.angularVelocity * Time.timeStep);
-            Vec2[] corners2 = GetRotatedCorners(other.Position, other._halfSize, other.rotation + other.rigidbody.angularVelocity * Time.timeStep);
+            Vec2[] corners2 = GetRotatedCorners(nextOtherPosition, other._halfSize, other.rotation + other.rigidbody.angularVelocity * Time.timeStep);
             Vec2[] axes = new Vec2[4];
 
             axes[0] = (corners1[0] - corners1[1]).Normal;
@@ -104,12 +123,12 @@ namespace GXPEngine
                 }
             }
 
-            float TimeOfImpact = (penetrationDepth / Velocity.magnitude);
 
             Vec2 normal = (other.Position - Position).RotateDegrees(-other.rotation);
             normal = (Mathf.Abs(normal.x) > Mathf.Abs(normal.y) ? -new Vec2(normal.x, 0) : -new Vec2(0, normal.y)).RotateDegrees(other.rotation).normalized;
 
             Vec2 PointOfImpact = (GetClosestPointOnSquare(corners2, Position) + GetClosestPointOnSquare(corners1, other.Position)) / 2;
+            float TimeOfImpact = (Vec2.Distance(PointOfImpact, other.Position) / (other.Velocity - Velocity).magnitude);
 
             CollisionData result = new CollisionData
             {
@@ -121,6 +140,36 @@ namespace GXPEngine
                 TimeOfImpact = TimeOfImpact
             };
             return result;
+        }
+
+        public override CollisionData PredictCollision(CircleCollider other)
+        {
+            Vec2 nextPosition = Position + Velocity * Time.timeStep;
+            Vec2 nextOtherPosition = other.Position + other.Velocity * Time.timeStep;
+
+            Vec2[] corners1 = GetRotatedCorners(nextPosition, _halfSize, rotation);
+            Vec2 PointOfImpact = GetClosestPointOnSquare(corners1, nextOtherPosition);
+
+            float dist = Vec2.Distance(PointOfImpact, nextOtherPosition);
+
+            if (dist > other.radius)
+                return null;
+
+            Vec2 normal = (other.Position - Position).RotateDegrees(rotation);
+            normal = (Mathf.Abs(normal.x) > Mathf.Abs(normal.y) ? -new Vec2(normal.x, 0) : -new Vec2(0, normal.y)).RotateDegrees(rotation).normalized;
+
+            float TimeOfImpact = (Vec2.Distance(PointOfImpact, other.Position) - other.radius) / (Velocity - other.Velocity).magnitude;
+            Console.WriteLine("------------" + TimeOfImpact);
+
+            return new CollisionData
+            {
+                point = PointOfImpact,
+                normal = normal,
+                self = this,
+                other = other,
+                penetrationDepth = other.radius - dist,
+                TimeOfImpact = TimeOfImpact
+            };
         }
 
         public override CollisionData IsOverlapping(Vec2 point)
