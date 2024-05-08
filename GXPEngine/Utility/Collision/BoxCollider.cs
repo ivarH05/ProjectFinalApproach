@@ -41,7 +41,6 @@ namespace GXPEngine
             axes[2] = (corners2[0] - corners2[1]).Normal;
             axes[3] = (corners2[1] - corners2[2]).Normal;
 
-            Vec2 minAxis;
             float penetrationDepth = float.MaxValue;
 
             for (int i = 0; i < axes.Length; i++)
@@ -52,39 +51,110 @@ namespace GXPEngine
                 else if (overlap < penetrationDepth)
                 {
                     penetrationDepth = overlap;
-                    minAxis = axes[i];
                 }
             }
 
             Vec2 normal = (other.Position - Position).RotateDegrees(-other.rotation);
             normal = (Mathf.Abs(normal.x) > Mathf.Abs(normal.y) ? -new Vec2(normal.x, 0) : -new Vec2(0, normal.y)).RotateDegrees(other.rotation).normalized;
-            //float penetrationDepth = ;
 
-            Console.WriteLine(normal);
-            rigidbody.Position += normal * penetrationDepth;
+            Vec2 PointOfImpact = (GetClosestPointOnSquare(corners2, Position) + GetClosestPointOnSquare(corners1, other.Position)) / 2;
 
             CollisionData result = new CollisionData
             {
-                /*point = ,
+                point = PointOfImpact,
                 normal = normal,
                 self = this,
                 other = other,
-                penetrationDepth = ,
-                TimeOfImpact = */
+                penetrationDepth = penetrationDepth,
+                TimeOfImpact = 0
             };
 
             return result;
         }
 
-
         public override CollisionData GetCollision(CircleCollider other)
         {
             return null;
         }
+
+        public override CollisionData PredictCollision(BoxCollider other)
+        {
+            Vec2 nextPosition = Position + Velocity * Time.timeStep;
+            Vec2 nextOtherPosition = other.Position + other.Velocity * Time.timeStep;
+
+            Vec2[] corners1 = GetRotatedCorners(nextPosition, _halfSize, rotation + rigidbody.angularVelocity * Time.timeStep);
+            Vec2[] corners2 = GetRotatedCorners(other.Position, other._halfSize, other.rotation + other.rigidbody.angularVelocity * Time.timeStep);
+            Vec2[] axes = new Vec2[4];
+
+            axes[0] = (corners1[0] - corners1[1]).Normal;
+            axes[1] = (corners1[1] - corners1[2]).Normal;
+            axes[2] = (corners2[0] - corners2[1]).Normal;
+            axes[3] = (corners2[1] - corners2[2]).Normal;
+
+            float penetrationDepth = float.MaxValue;
+
+            for (int i = 0; i < axes.Length; i++)
+            {
+                float overlap = IsOverlapOnAxis(axes[i], corners1, corners2);
+                if (overlap == float.MaxValue)
+                    return null;
+                else if (overlap < penetrationDepth)
+                {
+                    penetrationDepth = overlap;
+                }
+            }
+
+            float TimeOfImpact = (penetrationDepth / Velocity.magnitude);
+
+            Vec2 normal = (other.Position - Position).RotateDegrees(-other.rotation);
+            normal = (Mathf.Abs(normal.x) > Mathf.Abs(normal.y) ? -new Vec2(normal.x, 0) : -new Vec2(0, normal.y)).RotateDegrees(other.rotation).normalized;
+
+            Vec2 PointOfImpact = (GetClosestPointOnSquare(corners2, Position) + GetClosestPointOnSquare(corners1, other.Position)) / 2;
+
+            CollisionData result = new CollisionData
+            {
+                point = PointOfImpact,
+                normal = normal,
+                self = this,
+                other = other,
+                penetrationDepth = penetrationDepth,
+                TimeOfImpact = TimeOfImpact
+            };
+            return result;
+        }
+
         public override CollisionData IsOverlapping(Vec2 point)
         {
             return null;
         }
+        private Vec2 GetClosestPointOnSquare(Vec2[] corners, Vec2 point)
+        {
+            Vec2 closestPoint = Vec2.Zero;
+            float distance = float.MaxValue;
+            for (int i = 0; i < corners.Length; i++)
+            {
+                Vec2 c1 = corners[i];
+                Vec2 c2 = corners[(i + 1) % corners.Length];
+                Vec2 p = GetClosestPointOnLine(c1, c2, point);
+                float dist = Vec2.Distance(p, point);
+                if (dist < distance)
+                {
+                    closestPoint = p;
+                    distance = dist;
+                }
+            }
+            return closestPoint;
+        }
+
+        private Vec2 GetClosestPointOnLine(Vec2 v, Vec2 w, Vec2 p)
+        {
+            float l2 = (v - w).SqrMagnitude;
+            if (l2 == 0.0) return v;
+            float t = Mathf.Max(0, Mathf.Min(1, Vec2.Dot(p - v, w - v) / l2));
+            Vec2 projection = v + t * (w - v);
+            return projection;
+        }
+
 
         private Vec2[] GetRotatedCorners(Vec2 position, Vec2 halfSize, float rotation)
         {

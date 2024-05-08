@@ -13,6 +13,7 @@ namespace GXPEngine
         /// the velocity of the current object in pixels / second. 
         /// </summary>
         public Vec2 velocity;
+        public float angularVelocity;
 
         /// <summary>
         /// the momentumn of the object
@@ -76,6 +77,7 @@ namespace GXPEngine
                 velocity += new Vec2(0, 981f) * Time.timeStep;
 
             Position += velocity * Time.timeStep;
+            rotation += angularVelocity * Time.timeStep;
         }
 
         /// <summary>

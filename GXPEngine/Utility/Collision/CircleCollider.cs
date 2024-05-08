@@ -35,7 +35,7 @@ namespace GXPEngine
 
             CollisionData result = new CollisionData()
             {
-                point = Vec2.Lerp(position, otherPosition, 0.5f),
+                point = position + otherPosition / 2,
                 normal = relPos.normalized,
                 self = this,
                 other = other,

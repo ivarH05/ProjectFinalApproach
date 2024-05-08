@@ -37,6 +37,8 @@ namespace GXPEngine
         Rigidbody ball1 = new Rigidbody("Square.png", new BoxCollider(new Vec2(64, 64)));
         Rigidbody ball2 = new Rigidbody("Square.png", new BoxCollider(new Vec2(64, 64)));
 
+        Rigidbody ball3 = new Rigidbody("Circle.png", new CircleCollider(8));
+
         public Scene(bool overrideSingleton = false)
         {
             if (_singleton != null && !overrideSingleton)
@@ -54,6 +56,11 @@ namespace GXPEngine
             ball1.isKinematic = true;
             ball2.useGravity = false;
             AddChild(ball2);
+
+
+            ball3.isKinematic = true;
+            ball3.width = 8; ball3.height = 8;
+            AddChild(ball3);
         }
 
         void Update()
@@ -65,7 +72,7 @@ namespace GXPEngine
             ball2.Position = Input.getMouseWorldPosition();
             ball2.velocity = new Vec2(0, 1000);
 
-            CollisionData dat = ball2.collider.GetCollision(ball1.collider);
+            CollisionData dat = ball2.collider.PredictCollision(ball1.collider);
             Console.WriteLine(dat);
 
             if (Input.GetKey(Key.SPACE)) ball2.velocity = new Vec2();

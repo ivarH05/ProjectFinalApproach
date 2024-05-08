@@ -18,12 +18,12 @@ namespace GXPEngine.Core
             return "(" + x + ", " + y + ")";
         }
 
-        public static Vec2 zero
+        public static Vec2 Zero
         {
             get { return new Vec2(0, 0); }
         }
 
-        public static Vec2 up
+        public static Vec2 Up
         {
             get { return new Vec2(0, -1); }
         }
@@ -32,11 +32,11 @@ namespace GXPEngine.Core
         {
             get { return new Vec2(0, 1); }
         }
-        public static Vec2 left
+        public static Vec2 Lleft
         {
             get { return new Vec2(-1, 0); }
         }
-        public static Vec2 right
+        public static Vec2 Right
         {
             get { return new Vec2(1, 0); }
         }
@@ -119,6 +119,14 @@ namespace GXPEngine.Core
                 if (mag == 0)
                     return;
                 this = this / magnitude * value;
+            }
+        }
+
+        public float SqrMagnitude
+        {
+            get
+            {
+                return x * x + y * y;
             }
         }
 
@@ -230,6 +238,7 @@ namespace GXPEngine.Core
         {
             return (b - a).magnitude;
         }
+
 
         /// <summary>
         /// 

@@ -35,5 +35,13 @@ namespace GXPEngine
         /// the time of the impact between colliders
         /// </summary>
         public float TimeOfImpact;
+
+        public override string ToString()
+        {
+            return "Point of impact:   " + point +
+                "\nNormal:            " + normal +
+                "\nPenetration depth: " + penetrationDepth +
+                "\nTime of impact:    " + TimeOfImpact;
+        }
     }
 }
