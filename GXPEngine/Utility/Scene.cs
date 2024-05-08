@@ -35,12 +35,9 @@ namespace GXPEngine
         /// </summary>
         public static UILayer UILayer { get; private set; }
 
-
         public static Debugger debugger { get; private set; }
-
-
         public static InputManager inputManager { get; private set; }
-
+     
         public Scene(bool overrideSingleton = false)
         {
             if (_singleton != null && !overrideSingleton)
@@ -55,7 +52,6 @@ namespace GXPEngine
             background = new Background();
             workspace = new Workspace();
             UILayer = new UILayer();
-
             AddChild(background);
             AddChild(workspace);
             AddChild(UILayer);
@@ -64,6 +60,7 @@ namespace GXPEngine
 
         void Update()
         {
+            PhysicsManager.PhysicsUpdate();
             inputManager.Update();
             debugger.Update();
             workspace.Position = -cameraPosition;

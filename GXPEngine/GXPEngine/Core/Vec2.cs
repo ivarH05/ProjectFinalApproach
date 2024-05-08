@@ -18,12 +18,12 @@ namespace GXPEngine.Core
             return "(" + x + ", " + y + ")";
         }
 
-        public static Vec2 zero
+        public static Vec2 Zero
         {
             get { return new Vec2(0, 0); }
         }
 
-        public static Vec2 up
+        public static Vec2 Up
         {
             get { return new Vec2(0, -1); }
         }
@@ -32,11 +32,11 @@ namespace GXPEngine.Core
         {
             get { return new Vec2(0, 1); }
         }
-        public static Vec2 left
+        public static Vec2 Lleft
         {
             get { return new Vec2(-1, 0); }
         }
-        public static Vec2 right
+        public static Vec2 Right
         {
             get { return new Vec2(1, 0); }
         }
@@ -89,6 +89,11 @@ namespace GXPEngine.Core
             return !(left == right);
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public override bool Equals(object obj)
         {
             if (obj is Vec2)
@@ -117,6 +122,14 @@ namespace GXPEngine.Core
             }
         }
 
+        public float SqrMagnitude
+        {
+            get
+            {
+                return x * x + y * y;
+            }
+        }
+
         /// <summary>
         /// turn this into a Vec2 with magnitude 1
         /// </summary>
@@ -141,6 +154,14 @@ namespace GXPEngine.Core
                 if (mag == 0)
                     return new Vec2(0, 0);
                 return new Vec2(x / mag, y / mag);
+            }
+        }
+
+        public Vec2 Normal
+        {
+            get
+            {
+                return new Vec2(-y, x).normalized;
             }
         }
 
@@ -218,6 +239,7 @@ namespace GXPEngine.Core
             return (b - a).magnitude;
         }
 
+
         /// <summary>
         /// 
         /// </summary>
@@ -247,25 +269,23 @@ namespace GXPEngine.Core
             return Mathf.Rad2Deg(GetAngleRadians());
         }
 
-        public void RotateDegrees(float angleDegrees)
+        public Vec2 RotateDegrees(float angleDegrees)
         {
             float angleRad = Mathf.Deg2Rad(angleDegrees);
             float cos = Mathf.Cos(angleRad);
             float sin = Mathf.Sin(angleRad);
             float newX = x * cos - y * sin;
             float newY = x * sin + y * cos;
-            x = newX;
-            y = newY;
+            return new Vec2(newX, newY);
         }
 
-        public void RotateRadians(float angleRadians)
+        public Vec2 RotateRadians(float angleRadians)
         {
             float cos = Mathf.Cos(angleRadians);
             float sin = Mathf.Sin(angleRadians);
             float newX = x * cos - y * sin;
             float newY = x * sin + y * cos;
-            x = newX;
-            y = newY;
+            return new Vec2(newX, newY);
         }
 
         public void RotateAroundDegrees(Vec2 point, float angleDegrees)
