@@ -22,6 +22,9 @@ namespace GXPEngine
             CollisionData dat = other.GetCollision(this);
             if (dat == null)
                 return null;
+            Collider c = dat.self;
+            dat.self = dat.other;
+            dat.other = c;
             dat.normal *= -1;
             return dat;
         }
