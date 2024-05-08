@@ -2,7 +2,7 @@ using System;
 using GXPEngine;
 
 public class MainGame : Game {
-	public MainGame() : base(1920, 1080, false, true, 1600, 900)
+	public MainGame() : base(1920, 1080, false, true, 1600, 900) //set to 800x450 for testing
 	{
 		AddChild(new Scene());
     }

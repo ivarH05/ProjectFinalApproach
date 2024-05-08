@@ -48,6 +48,7 @@
     <Compile Include="GXPEngine\Core\Vec2.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="Utility\Scene.cs" />
+    <Compile Include="Utility\Debugger.cs" />
     <Compile Include="LevelAssets\Other\Background.cs" />
     <Compile Include="LevelAssets\Other\UILayer.cs" />
     <Compile Include="LevelAssets\Other\Workspace.cs" />    

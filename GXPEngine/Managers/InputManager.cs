@@ -12,7 +12,8 @@ namespace GXPEngine.Managers
         public const int shootKey = Key.SPACE;           // also UI select
         public const int leftBumper = Key.LEFT;          // also UI left
         public const int rightBumper = Key.RIGHT;        // also UI right
-        const int debugToggle = Key.F1;
+        const int debugToggleKey = Key.F1;
+        bool debugModeToggle = false;
         Dictionary<int, bool> isHeld;
 
         public InputManager () 
@@ -35,7 +36,11 @@ namespace GXPEngine.Managers
 
         public bool ToggleDebugMode()
         {
-            return Input.GetKeyDown(debugToggle);
+            if (Input.GetKeyDown(debugToggleKey)) {
+                debugModeToggle = !debugModeToggle;
+                return debugModeToggle;
+            }
+            return debugModeToggle;
         }
 
         public bool IsHeld(int key)
