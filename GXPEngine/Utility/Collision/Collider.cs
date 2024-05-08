@@ -46,6 +46,8 @@ namespace GXPEngine
 
         public virtual CollisionData GetCollision(CircleCollider other) { return null; }
 
+        public virtual CollisionData GetCollision(LineCollider other) { return null; }
+
         public virtual CollisionData IsOverlapping(Vec2 point) { return null; }
 
         ////////// Predicting Collisions
