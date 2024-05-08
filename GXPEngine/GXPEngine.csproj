@@ -50,6 +50,7 @@
     <Compile Include="Utility\Collision\CircleCollider.cs" />
     <Compile Include="Utility\Collision\Collider.cs" />
     <Compile Include="Utility\Collision\CollisionData.cs" />
+    <Compile Include="Utility\Collision\LineCollider.cs" />
     <Compile Include="Utility\Scene.cs" />
     <Compile Include="LevelAssets\Other\Background.cs" />
     <Compile Include="LevelAssets\Other\UILayer.cs" />
