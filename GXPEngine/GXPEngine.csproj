@@ -51,10 +51,12 @@
     <Compile Include="Utility\Collision\Collider.cs" />
     <Compile Include="Utility\Collision\CollisionData.cs" />
     <Compile Include="Utility\Scene.cs" />
+    <Compile Include="Utility\Debugger.cs" />
     <Compile Include="LevelAssets\Other\Background.cs" />
     <Compile Include="LevelAssets\Other\UILayer.cs" />
-    <Compile Include="LevelAssets\Other\Workspace.cs" />
-    <Compile Include="Managers\PhysicsManager.cs" />
+    <Compile Include="LevelAssets\Other\Workspace.cs" />    
+    <Compile Include="Managers\PhysicsManager.cs" />    
+    <Compile Include="Managers\InputManager.cs" />    
     <Compile Include="Utility\Rigidbody.cs" />
     <Compile Include="GXPEngine\Core\Canvas.cs" />
     <Compile Include="GXPEngine\Game.cs" />

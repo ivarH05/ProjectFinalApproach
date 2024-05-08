@@ -1,4 +1,5 @@
 ﻿using GXPEngine.Core;
+using GXPEngine.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,11 +35,9 @@ namespace GXPEngine
         /// </summary>
         public static UILayer UILayer { get; private set; }
 
-        Rigidbody ball1 = new Rigidbody("Square.png", new BoxCollider(new Vec2(64, 64)));
-        Rigidbody ball2 = new Rigidbody("Square.png", new BoxCollider(new Vec2(64, 64)));
-
-        Rigidbody ball3 = new Rigidbody("Circle.png", new CircleCollider(8));
-
+        public static Debugger debugger { get; private set; }
+        public static InputManager inputManager { get; private set; }
+     
         public Scene(bool overrideSingleton = false)
         {
             if (_singleton != null && !overrideSingleton)
@@ -47,36 +46,25 @@ namespace GXPEngine
                 return;
             }
             _singleton = this;
-
+            
+            inputManager = new InputManager();
+            debugger = new Debugger();
             background = new Background();
             workspace = new Workspace();
             UILayer = new UILayer();
-            AddChild(ball1);
-            ball1.Position = new Vec2(800, 450);
-            ball1.isKinematic = true;
-            ball2.useGravity = false;
-            AddChild(ball2);
-
-
-            ball3.isKinematic = true;
-            ball3.width = 8; ball3.height = 8;
-            AddChild(ball3);
+            AddChild(background);
+            AddChild(workspace);
+            AddChild(UILayer);
+            AddChild(debugger);
         }
 
         void Update()
         {
+            PhysicsManager.PhysicsUpdate();
+            inputManager.Update();
+            debugger.Update();
             workspace.Position = -cameraPosition;
             background.Position = -cameraPosition; // (* 0.75 for depth effect)
-
-            PhysicsManager.PhysicsUpdate();
-            ball2.Position = Input.getMouseWorldPosition();
-            ball2.velocity = new Vec2(0, 1000);
-
-            CollisionData dat = ball2.collider.PredictCollision(ball1.collider);
-            Console.WriteLine(dat);
-
-            if (Input.GetKey(Key.SPACE)) ball2.velocity = new Vec2();
-            ball1.rotation += 1;
         }
     }
 }
