@@ -13,14 +13,15 @@ namespace GXPEngine
 
         BoxCollider collider;
         string spriteLocation;
-        int gridIndex;
-        bool isStatic = false;
+        bool isStatic = true;
 
         public PhysicsObject(string spriteLocation = "square.png") : base(spriteLocation, false)
         {
             this.spriteLocation = spriteLocation;
             // Empty
         }
+
+        public int gridIndex{get; set;}
 
         // make the object draggable 
         void DragObject()
