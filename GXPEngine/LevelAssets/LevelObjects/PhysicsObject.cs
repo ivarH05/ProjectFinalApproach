@@ -10,12 +10,19 @@ namespace GXPEngine
 {
     public class PhysicsObject : Sprite
     {
-        public PhysicsObject() : base("square.png", false)
+
+        BoxCollider collider;
+        string spriteLocation;
+        int gridIndex;
+        bool isStatic = false;
+
+        public PhysicsObject(string spriteLocation = "square.png") : base(spriteLocation, false)
         {
+            this.spriteLocation = spriteLocation;
             // Empty
         }
 
-        // a drag and drop function 
+        // make the object draggable 
         void DragObject()
         {
             if (Input.GetMouseButton(0))
@@ -25,9 +32,14 @@ namespace GXPEngine
             }
         }
 
+        public void SetStatic(bool isStatic)
+        {
+            this.isStatic = isStatic;
+        }
+
         void Update()
         {
-            DragObject();
+            if (!isStatic) DragObject();
             // Empty
         }
     }
