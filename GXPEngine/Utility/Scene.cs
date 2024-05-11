@@ -38,7 +38,6 @@ namespace GXPEngine
         public static TiledManager tiledManager { get; private set; }
         public static Debugger debugger { get; private set; }
         public static InputManager inputManager { get; private set; }
-        public static PhysicsObject  physicsObject { get; private set; }
         
         public Scene(bool overrideSingleton = false)
         {
@@ -55,14 +54,12 @@ namespace GXPEngine
             background = new Background();
             workspace = new Workspace();
             UILayer = new UILayer();
-            physicsObject = new PhysicsObject();
-            AddChild(physicsObject);
             AddChild(background);
             AddChild(workspace);
             AddChild(UILayer);
             AddChild(debugger);
             
-            // tiledManager.LoadTiledMap("testmap.tmx");       //Uncomment this line to load a tiled map
+            tiledManager.LoadTiledMap("testmap.tmx");       //Uncomment this line to load a tiled map
         }
 
         void Update()
