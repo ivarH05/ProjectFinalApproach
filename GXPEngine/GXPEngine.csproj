@@ -93,6 +93,10 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
+    <Compile Include="Utility\Debugger.cs" />
+    <Compile Include="Managers\InputManager.cs" />    
+    <Compile Include="Managers\TiledManager.cs" />    
+    <Compile Include="Utility\Rigidbody.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
