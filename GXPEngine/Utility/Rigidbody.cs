@@ -51,10 +51,14 @@ namespace GXPEngine
         /// </summary>
         public float bounciness = 0.5f;
 
-        public Rigidbody(string spritePath = "Square.png", Collider collider = null) : base(spritePath, false, false)
+        public Rigidbody(string spritePath = "Square.png", Collider collider = null) : base(spritePath == "" ? "Square.png" : spritePath, false, false)
         {
+            if (spritePath == "")
+                visible = false;
             if (collider != null)
                 SetCollider(collider);
+            if (collider is LineCollider)
+                isKinematic = true;
             PhysicsManager.AddBody(this);
             centerOrigin();
         }
