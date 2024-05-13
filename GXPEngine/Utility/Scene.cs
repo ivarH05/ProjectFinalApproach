@@ -60,30 +60,8 @@ namespace GXPEngine
             AddChild(UILayer);
             AddChild(debugger);
             PhysicsManager.setup();
-
             // tiledManager.LoadTiledMap("testmap.tmx");       //Uncomment this line to load a tiled map
-
-
-            Vec2[] verts = new Vec2[] { new Vec2(400, 1200), new Vec2(0, 800), new Vec2(700, 600), new Vec2(400, 0),
-            new Vec2(000, 200)};
-
-            for (int i = 0; i < verts.Length; i++)
-            {
-                Vec2 start = verts[i];
-                Vec2 end = verts[(i + 1) % verts.Length];
-
-                workspace.AddChild(new Rigidbody("", new LineCollider(start, end)));
-            }
-            Rigidbody c = new Rigidbody("Circle.png", new CircleCollider(32));
-            workspace.AddChild(c);
-            c.Position = new Vec2(500, 500);
-
-            ball = new Rigidbody("Circle.png", new CircleCollider(32));
-            workspace.AddChild(ball);
-            ball.isKinematic = true;
         }
-
-        public Rigidbody ball;
 
         void Update()
         {
@@ -92,10 +70,6 @@ namespace GXPEngine
             debugger.Update();
             workspace.Position = -cameraPosition;
             background.Position = -cameraPosition; // (* 0.75 for depth effect)
-
-
-            ball.velocity = (Input.getMouseWorldPosition() - ball.Position) / Time.timeStep;
-            ball.Position = Input.getMouseWorldPosition();
         }
     }
 }
