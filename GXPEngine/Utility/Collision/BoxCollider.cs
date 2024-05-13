@@ -96,6 +96,45 @@ namespace GXPEngine
             };
         }
 
+        public override CollisionData GetCollision(LineCollider other)
+        {
+            Vec2[] corners1 = GetRotatedCorners(Position, _halfSize, rotation);
+            Vec2[] corners2 = new Vec2[] {other._start, other._end };
+            Vec2[] axes = new Vec2[3];
+
+            axes[0] = (corners1[1] - corners1[0]).Normal;
+            axes[1] = (corners1[2] - corners1[1]).Normal;
+            axes[2] = (corners2[1] - corners2[0]).Normal;
+
+            for (int i = 0; i < axes.Length; i++)
+            {
+                float overlap = IsOverlapOnAxis(axes[i], corners1, corners2);
+                if (overlap == float.MaxValue)
+                    return null;
+            }
+            Vec2 linePoint = other.GetClosestPointOnLine(Position);
+            Vec2 rectPoint = GetClosestPointOnSquare(corners1, linePoint);
+            float penetrationDepth = (rectPoint - linePoint).magnitude;
+
+
+            Vec2 PointOfImpact = linePoint + rectPoint / 2;
+
+            Vec2 normal = (other._start - other._end).Normal;
+            if (Vec2.Dot(normal, Position - other.Position) < 0)
+                normal *= -1;
+
+            CollisionData result = new CollisionData
+            {
+                point = PointOfImpact,
+                normal = normal,
+                self = this,
+                other = other,
+                penetrationDepth = penetrationDepth,
+                TimeOfImpact = 0
+            };
+            return result;
+        }
+
         public override CollisionData PredictCollision(BoxCollider other)
         {
             Vec2 nextPosition = Position + Velocity * Time.timeStep;
@@ -147,7 +186,7 @@ namespace GXPEngine
             Vec2 nextPosition = Position + Velocity * Time.timeStep;
             Vec2 nextOtherPosition = other.Position + other.Velocity * Time.timeStep;
 
-            Vec2[] corners1 = GetRotatedCorners(nextPosition, _halfSize, rotation);
+            Vec2[] corners1 = GetRotatedCorners(nextPosition, _halfSize, rotation + rigidbody.angularVelocity * Time.timeStep);
             Vec2 PointOfImpact = GetClosestPointOnSquare(corners1, nextOtherPosition);
 
             float dist = Vec2.Distance(PointOfImpact, nextOtherPosition);
@@ -170,6 +209,47 @@ namespace GXPEngine
                 penetrationDepth = other.radius - dist,
                 TimeOfImpact = TimeOfImpact
             };
+        }
+
+        public override CollisionData PredictCollision(LineCollider other)
+        {
+            Vec2 nextPosition = Position + Velocity * Time.timeStep;
+            Vec2 nextOtherPosition = other.Position + other.Velocity * Time.timeStep;
+            Vec2[] corners1 = GetRotatedCorners(nextPosition, _halfSize, rotation + rigidbody.angularVelocity * Time.timeStep);
+            Vec2[] corners2 = new Vec2[] { other.start + nextOtherPosition, other.end + nextOtherPosition };
+            Vec2[] axes = new Vec2[3];
+
+            axes[0] = (corners1[1] - corners1[0]).Normal;
+            axes[1] = (corners1[2] - corners1[1]).Normal;
+            axes[2] = (corners2[1] - corners2[0]).Normal;
+
+            for (int i = 0; i < axes.Length; i++) //FYI tomorrow ivar, you dont calculate the penetration depth because the line has a depth of 0. 
+            {
+                float overlap = IsOverlapOnAxis(axes[i], corners1, corners2);
+                if (overlap == float.MaxValue)
+                    return null;
+            }
+            Vec2 linePoint = other.GetClosestPointOnLine(Position);
+            Vec2 rectPoint = GetClosestPointOnSquare(corners1, linePoint);
+            float penetrationDepth = (rectPoint - linePoint).magnitude;
+
+
+            Vec2 PointOfImpact = linePoint + rectPoint / 2;
+
+            Vec2 normal = (other._start - other._end).Normal;
+            if (Vec2.Dot(normal, Position - other.Position) < 0)
+                normal *= -1;
+
+            CollisionData result = new CollisionData
+            {
+                point = PointOfImpact,
+                normal = normal,
+                self = this,
+                other = other,
+                penetrationDepth = penetrationDepth,
+                TimeOfImpact = 0
+            };
+            return result;
         }
 
         public override CollisionData IsOverlapping(Vec2 point)
@@ -257,6 +337,12 @@ namespace GXPEngine
             }
 
             return new float[] { min, max };
+        }
+
+        public override void Draw()
+        {
+            PhysicsManager.debugCanvas.Rect(Position.x, Position.y, size.x, size.y);
+            base.Draw();
         }
     }
 }
