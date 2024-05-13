@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="39" height="26" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="4">
+ <imagelayer id="2" name="background">
+  <image source="template_bg.png" width="1920" height="1080"/>
+ </imagelayer>
+ <objectgroup id="3" name="physics objects">
+  <object id="1" name="test" type="GXPEngine.PhysicsObject" x="224" y="113.333" width="160" height="133.333">
+   <properties>
+    <property name="Sprite" value="colors.png"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
