@@ -63,7 +63,7 @@ namespace GXPEngine
             AddChild(debugger);
             PhysicsManager.setup();
             
-            // tiledManager.LoadTiledMap("testmap.tmx");       //Uncomment this line to load a tiled map
+            tiledManager.LoadTiledMap("map1/map1.tmx");       //Uncomment this line to load a tiled map
         }
 
         void Update()
