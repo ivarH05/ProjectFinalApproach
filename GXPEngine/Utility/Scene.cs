@@ -48,8 +48,7 @@ namespace GXPEngine
         {
             if (_singleton != null && !overrideSingleton)
             {
-                LateDestroy();
-                return;
+                _singleton.LateDestroy();
             }
             _singleton = this;
             this.levelIndex = levelIndex;
