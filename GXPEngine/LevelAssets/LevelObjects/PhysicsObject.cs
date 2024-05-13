@@ -44,7 +44,7 @@ namespace GXPEngine
         {
             if (!isUIBox) return;
             if (!Scene.debugMode) this.alpha = 0f;
-            else this.alpha = 1f;
+            else this.alpha = 0.5f;
         }
 
         void DragObject()
