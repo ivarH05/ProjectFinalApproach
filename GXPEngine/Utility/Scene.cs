@@ -1,4 +1,5 @@
 ﻿using GXPEngine.Core;
+using GXPEngine.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,10 @@ namespace GXPEngine
         /// The UI, here all user interface objects that should not move with the camera can be placed. 
         /// </summary>
         public static UILayer UILayer { get; private set; }
+
+        public static TiledManager tiledManager { get; private set; }
+        public static Debugger debugger { get; private set; }
+        public static InputManager inputManager { get; private set; }
 
         public Scene(bool overrideSingleton = false)
         {

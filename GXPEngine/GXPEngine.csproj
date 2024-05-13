@@ -95,8 +95,7 @@
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="Utility\Debugger.cs" />
     <Compile Include="Managers\InputManager.cs" />    
-    <Compile Include="Managers\TiledManager.cs" />    
-    <Compile Include="Utility\Rigidbody.cs" />
+    <Compile Include="Managers\TiledManager.cs" />  
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
