@@ -74,7 +74,6 @@ namespace GXPEngine
             return false;
         }
 
-
         void Update()
         {
             PhysicsManager.PhysicsUpdate();
