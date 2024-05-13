@@ -11,6 +11,9 @@ namespace GXPEngine
 {
     public class Scene : GameObject
     {
+
+        public static bool debugMode;
+
         /// <summary>
         /// Singleton will make sure there is only one scene at a time. 
         /// </summary>
@@ -59,8 +62,8 @@ namespace GXPEngine
             AddChild(workspace);
             AddChild(UILayer);
             AddChild(debugger);
-            PhysicsManager.setup();
-            // tiledManager.LoadTiledMap("testmap.tmx");       //Uncomment this line to load a tiled map
+            PhysicsManager.setup(); 
+            tiledManager.LoadTiledMap("map1/map1.tmx");       //Uncomment this line to load a tiled map
         }
 
         void Update()
