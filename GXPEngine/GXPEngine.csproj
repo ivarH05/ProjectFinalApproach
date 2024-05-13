@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
@@ -51,14 +50,12 @@
     <Compile Include="Utility\Collision\CircleCollider.cs" />
     <Compile Include="Utility\Collision\Collider.cs" />
     <Compile Include="Utility\Collision\CollisionData.cs" />
+    <Compile Include="Utility\Collision\LineCollider.cs" />
     <Compile Include="Utility\Scene.cs" />
-    <Compile Include="Utility\Debugger.cs" />
     <Compile Include="LevelAssets\Other\Background.cs" />
     <Compile Include="LevelAssets\Other\UILayer.cs" />
-    <Compile Include="LevelAssets\Other\Workspace.cs" />    
-    <Compile Include="Managers\PhysicsManager.cs" />    
-    <Compile Include="Managers\InputManager.cs" />    
-    <Compile Include="Managers\TiledManager.cs" />    
+    <Compile Include="LevelAssets\Other\Workspace.cs" />
+    <Compile Include="Managers\PhysicsManager.cs" />
     <Compile Include="Utility\Rigidbody.cs" />
     <Compile Include="GXPEngine\Core\Canvas.cs" />
     <Compile Include="GXPEngine\Game.cs" />
@@ -96,7 +93,9 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
-
+    <Compile Include="Utility\Debugger.cs" />
+    <Compile Include="Managers\InputManager.cs" />    
+    <Compile Include="Managers\TiledManager.cs" />  
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

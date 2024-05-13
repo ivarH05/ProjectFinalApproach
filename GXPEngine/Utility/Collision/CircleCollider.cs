@@ -19,8 +19,10 @@ namespace GXPEngine
 
         public override CollisionData GetCollision(BoxCollider other)
         {
-            return null;
+            CollisionData dat = other.GetCollision(this);
+            return CollisionData.flip(dat);
         }
+
         public override CollisionData GetCollision(CircleCollider other)
         {
             Vec2 position = (rigidbody.Position + center);
@@ -46,9 +48,16 @@ namespace GXPEngine
             return result;
         }
 
+        public override CollisionData GetCollision(LineCollider other)
+        {
+            CollisionData dat = other.GetCollision(this);
+            return CollisionData.flip(dat);
+        }
+
         public override CollisionData PredictCollision(BoxCollider other)
         {
-            return null;
+            CollisionData dat = other.PredictCollision(this);
+            return CollisionData.flip(dat);
         }
 
         public override CollisionData PredictCollision(CircleCollider other)
@@ -88,9 +97,22 @@ namespace GXPEngine
 
             return result;
         }
+
+        public override CollisionData PredictCollision(LineCollider other)
+        {
+            CollisionData dat = other.PredictCollision(this);
+            return CollisionData.flip(dat);
+        }
+
         public override CollisionData IsOverlapping(Vec2 point)
         {
             return null;
+        }
+
+        public override void Draw()
+        {
+            PhysicsManager.debugCanvas.Ellipse(Position.x, Position.y, radius * 2, radius  * 2);
+            base.Draw();
         }
     }
 }

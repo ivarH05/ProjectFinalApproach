@@ -58,6 +58,7 @@ namespace GXPEngine
             AddChild(workspace);
             AddChild(UILayer);
             AddChild(debugger);
+            PhysicsManager.setup();
             
             // tiledManager.LoadTiledMap("testmap.tmx");       //Uncomment this line to load a tiled map
         }

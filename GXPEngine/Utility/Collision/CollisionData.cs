@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TiledMapParser;
 
 namespace GXPEngine
 {
@@ -42,6 +43,17 @@ namespace GXPEngine
                 "\nNormal:            " + normal +
                 "\nPenetration depth: " + penetrationDepth +
                 "\nTime of impact:    " + TimeOfImpact;
+        }
+
+        public static CollisionData flip(CollisionData dat)
+        {
+            if (dat == null)
+                return null;
+            Collider c = dat.self;
+            dat.self = dat.other;
+            dat.other = c;
+            dat.normal *= -1;
+            return dat;
         }
     }
 }
