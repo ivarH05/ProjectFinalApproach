@@ -13,12 +13,10 @@ namespace GXPEngine
     public class PhysicsObject : Sprite
     {
 
-    /* make constructor with following arguments
-        newSprite = (Sprite)_callingAssembly.CreateInstance(obj.Type,false,BindingFlags.Default,null, new object[] { obj }, null, null);
-    */
         BoxCollider collider;
         string spriteLocation;
         bool isStatic = true;
+        bool isUIBox;
 
         public PhysicsObject(string spriteLocation = "square.png") : base(spriteLocation, false)
         {
@@ -32,14 +30,22 @@ namespace GXPEngine
             // Empty
         }
 
-        public PhysicsObject(TiledObject obj=null) : base( obj.GetStringProperty("Sprite") != null ? obj.GetStringProperty("Sprite") : "square.png" , false)
+        public PhysicsObject(TiledObject obj=null) : base( obj.GetStringProperty("Sprite") != "" ? obj.GetStringProperty("Sprite") : "square.png" , false)
         {
-            spriteLocation = "square.png";
-            if ( obj.GetStringProperty("Sprite") != null ) this.spriteLocation = obj.GetStringProperty("Sprite");
+            spriteLocation = obj.GetStringProperty("Sprite") != "" ? obj.GetStringProperty("Sprite") : "square.png";
+            isUIBox = obj.GetStringProperty("UI") == "true";
+            if (isUIBox) this.alpha = 0f;
         }
 
 
         public int gridIndex{get; set;}
+
+        public void DebugToggle() 
+        {
+            if (!isUIBox) return;
+            if (!Scene.debugMode) this.alpha = 0f;
+            else this.alpha = 1f;
+        }
 
         void DragObject()
         {
@@ -58,7 +64,7 @@ namespace GXPEngine
         void Update()
         {
             if (!isStatic) DragObject();
-            // Empty
+            DebugToggle();
         }
     }
 
