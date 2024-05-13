@@ -36,6 +36,7 @@ namespace GXPEngine
             if (Scene.inputManager.ToggleDebugMode())
             {
                 _enabled = !_enabled;
+                Scene.debugMode = _enabled;
                 string debugMode = _enabled ? "enabled" : "disabled";
                 Console.WriteLine("Debug mode: " + debugMode);
             }
