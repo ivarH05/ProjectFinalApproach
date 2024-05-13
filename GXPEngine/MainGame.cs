@@ -8,9 +8,23 @@ public class MainGame : Game {
 		AddChild(new Scene());
     }
 
+        int levelIndex = 1;
+        int lastLevel = 3;
+
+		void ChangeLevel()
+        {
+            if ( levelIndex != lastLevel)
+            {
+                levelIndex++;
+				AddChild(new Scene(true, levelIndex));
+            } else {
+                Console.WriteLine("idk"); // Wait on team to know what end screen should be
+            }
+        }
+
 	// For every game object, Update is called every frame, by the engine:
 	void Update() {
-		// Empty
+        if ( Input.GetKeyDown(Key.ENTER) ) ChangeLevel();  // replace with other functionality later
 	}
 
 	static void Main()

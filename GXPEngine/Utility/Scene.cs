@@ -11,10 +11,9 @@ namespace GXPEngine
 {
     public class Scene : GameObject
     {
+        int levelIndex;
 
         public static bool debugMode;
-        int levelIndex = 1;
-        int lastLevel = 3;
 
         /// <summary>
         /// Singleton will make sure there is only one scene at a time. 
@@ -45,7 +44,7 @@ namespace GXPEngine
         public static Debugger debugger { get; private set; }
         public static InputManager inputManager { get; private set; }
         
-        public Scene(bool overrideSingleton = false)
+        public Scene(bool overrideSingleton = false, int levelIndex = 1)
         {
             if (_singleton != null && !overrideSingleton)
             {
@@ -53,6 +52,7 @@ namespace GXPEngine
                 return;
             }
             _singleton = this;
+            this.levelIndex = levelIndex;
 
             tiledManager = new TiledManager( this );
             inputManager = new InputManager();
