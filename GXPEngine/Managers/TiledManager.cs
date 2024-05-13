@@ -23,9 +23,9 @@ namespace GXPEngine.Managers
             _tiledLoader.rootObject = tiledRootObject;
             _tiledLoader.addColliders = false;
             _tiledLoader.autoInstance = true;
-            _tiledLoader.LoadImageLayers(0);
-            _tiledLoader.LoadObjectGroups(0);
-            _tiledLoader.LoadTileLayers(0);
+            _tiledLoader.LoadImageLayers();
+            _tiledLoader.LoadObjectGroups();
+            _tiledLoader.LoadTileLayers();
         }
     }
 }

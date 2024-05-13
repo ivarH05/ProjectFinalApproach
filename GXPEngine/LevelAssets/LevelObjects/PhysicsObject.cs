@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 using TiledMapParser;
 
 namespace GXPEngine
@@ -12,6 +13,9 @@ namespace GXPEngine
     public class PhysicsObject : Sprite
     {
 
+    /* make constructor with following arguments
+        newSprite = (Sprite)_callingAssembly.CreateInstance(obj.Type,false,BindingFlags.Default,null, new object[] { obj }, null, null);
+    */
         BoxCollider collider;
         string spriteLocation;
         bool isStatic = true;
@@ -27,6 +31,12 @@ namespace GXPEngine
             this.spriteLocation = spriteLocation;
             // Empty
         }
+
+        public PhysicsObject(string type, bool b, BindingFlags flags, object dummy, object[] parameters, object dummy2, object dummy3) : base("square.png", false)
+        {
+            // Constructor body
+        }
+
 
         public int gridIndex{get; set;}
 
