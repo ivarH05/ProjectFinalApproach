@@ -23,7 +23,7 @@ namespace GXPEngine
         /// <summary>
         /// The background of the scene, these objects cannot be interacted with
         /// </summary>
-        public static Background background { get; private set; }
+        public static Background background {get; private set;}
 
         /// <summary>
         /// The main hierachy of the scene, these are all objects that can be interacted with / that are on the same layer as the player
@@ -38,7 +38,7 @@ namespace GXPEngine
         public static TiledManager tiledManager { get; private set; }
         public static Debugger debugger { get; private set; }
         public static InputManager inputManager { get; private set; }
-
+        
         public Scene(bool overrideSingleton = false)
         {
             if (_singleton != null && !overrideSingleton)
@@ -48,17 +48,28 @@ namespace GXPEngine
             }
             _singleton = this;
 
+            tiledManager = new TiledManager( this );
+            inputManager = new InputManager();
+            debugger = new Debugger();
             background = new Background();
             workspace = new Workspace();
             UILayer = new UILayer();
+            AddChild(background);
+            AddChild(workspace);
+            AddChild(UILayer);
+            AddChild(debugger);
             PhysicsManager.setup();
+            
+            // tiledManager.LoadTiledMap("testmap.tmx");       //Uncomment this line to load a tiled map
         }
 
         void Update()
         {
+            PhysicsManager.PhysicsUpdate();
+            inputManager.Update();
+            debugger.Update();
             workspace.Position = -cameraPosition;
             background.Position = -cameraPosition; // (* 0.75 for depth effect)
-            PhysicsManager.PhysicsUpdate();
         }
     }
 }
