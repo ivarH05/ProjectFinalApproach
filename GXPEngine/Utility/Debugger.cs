@@ -47,7 +47,10 @@ namespace GXPEngine
             CheckForDebugToggle();
             if (_enabled) {
                 DrawMouseCoords();
+            } else {
+                _debuggerCanvas.Clear(Color.Transparent);
             }
+
         }
     }
 }
