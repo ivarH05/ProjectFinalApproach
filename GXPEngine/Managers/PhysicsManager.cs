@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +10,9 @@ namespace GXPEngine
 {
     public static class PhysicsManager
     {
+        public static float GravityMultiplier = 2;
+        public static float AirFriction = 0.1f;
+
         private static bool debug = true;
         public static EasyDraw debugCanvas = new EasyDraw(1920, 1080, false);
 
@@ -41,9 +45,44 @@ namespace GXPEngine
             while (updateTimer > Time.timeStep)
             {
                 updateTimer -= Time.timeStep;
-                foreach(Rigidbody b in _bodies)
+                foreach (Rigidbody b in _bodies)
                     b.PhysicsUpdate();
+                foreach (Rigidbody b in _bodies)
+                    b.LatePhysicsUpdate();
             }
+        }
+
+        public static List<CollisionData> PredictCollisions(Rigidbody b)
+        {
+            List<CollisionData> collisions = new List<CollisionData>();
+            foreach (Rigidbody other in _bodies)
+            {
+                if (other == b)
+                    continue;
+
+                CollisionData c = b.collider.PredictCollision(other.collider);
+                if (c == null)
+                    continue;
+
+                collisions.Add(c);
+            }
+            return collisions;
+        }
+        public static List<CollisionData> GetCollisions(Rigidbody b)
+        {
+            List<CollisionData> collisions = new List<CollisionData>();
+            foreach (Rigidbody other in _bodies)
+            {
+                if (other == b)
+                    continue;
+
+                CollisionData c = b.collider.GetCollision(other.collider);
+                if (c == null)
+                    continue;
+
+                collisions.Add(c);
+            }
+            return collisions;
         }
 
         /// <summary>

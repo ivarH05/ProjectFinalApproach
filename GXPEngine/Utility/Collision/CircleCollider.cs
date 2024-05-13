@@ -88,7 +88,7 @@ namespace GXPEngine
             CollisionData result = new CollisionData()
             {
                 point = point,
-                normal = (other.Position - other.Velocity * TimeOfImpact - point).normalized,
+                normal = (Position - other.Position).normalized,
                 self = this,
                 other = other,
                 penetrationDepth = minDistance - distance,

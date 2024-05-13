@@ -1,6 +1,7 @@
 ﻿using GXPEngine.Core;
 using GXPEngine.Managers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -61,8 +62,7 @@ namespace GXPEngine
             AddChild(workspace);
             AddChild(UILayer);
             AddChild(debugger);
-            PhysicsManager.setup();
-            
+            PhysicsManager.setup(); 
             tiledManager.LoadTiledMap("map1/map1.tmx");       //Uncomment this line to load a tiled map
         }
 
