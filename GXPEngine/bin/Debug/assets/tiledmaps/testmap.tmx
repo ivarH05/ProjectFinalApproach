@@ -4,6 +4,10 @@
   <image source="template_bg.png" width="1920" height="1080"/>
  </imagelayer>
  <objectgroup id="3" name="physics objects">
-  <object id="1" name="test" type="GXPEngine.PhysicsObject" x="224" y="113.333" width="160" height="133.333"/>
+  <object id="1" name="test" type="GXPEngine.PhysicsObject" x="224" y="113.333" width="160" height="133.333">
+   <properties>
+    <property name="Sprite" value="colors.png"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

@@ -59,7 +59,7 @@ namespace GXPEngine
             AddChild(UILayer);
             AddChild(debugger);
             
-            tiledManager.LoadTiledMap("testmap.tmx");       //Uncomment this line to load a tiled map
+            // tiledManager.LoadTiledMap("testmap.tmx");       //Uncomment this line to load a tiled map
         }
 
         void Update()

@@ -23,7 +23,7 @@ namespace GXPEngine
         public PhysicsObject(string spriteLocation = "square.png") : base(spriteLocation, false)
         {
             this.spriteLocation = spriteLocation;
-            // Empty
+            // empty
         }
 
         public PhysicsObject(TiledObject obj=null, string spriteLocation = "square.png") : base(spriteLocation, false)
@@ -32,15 +32,15 @@ namespace GXPEngine
             // Empty
         }
 
-        public PhysicsObject(string type, bool b, BindingFlags flags, object dummy, object[] parameters, object dummy2, object dummy3) : base("square.png", false)
+        public PhysicsObject(TiledObject obj=null) : base( obj.GetStringProperty("Sprite") != null ? obj.GetStringProperty("Sprite") : "square.png" , false)
         {
-            // Constructor body
+            spriteLocation = "square.png";
+            if ( obj.GetStringProperty("Sprite") != null ) this.spriteLocation = obj.GetStringProperty("Sprite");
         }
 
 
         public int gridIndex{get; set;}
 
-        // make the object draggable 
         void DragObject()
         {
             if (Input.GetMouseButton(0))
