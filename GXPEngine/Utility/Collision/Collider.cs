@@ -38,33 +38,45 @@ namespace GXPEngine
                 return GetCollision((BoxCollider)other);
             if (other is CircleCollider)
                 return GetCollision((CircleCollider)other);
+            if (other is LineCollider)
+                return GetCollision((LineCollider)other);
 
             throw new Exception("Collider type not known");
         }
 
-        public virtual CollisionData GetCollision(BoxCollider other) { return null; }
+        public virtual CollisionData GetCollision(BoxCollider other) { throw new Exception("This collision detection has not been implemented"); }
 
-        public virtual CollisionData GetCollision(CircleCollider other) { return null; }
+        public virtual CollisionData GetCollision(CircleCollider other) { throw new Exception("This collision detection has not been implemented"); }
 
-        public virtual CollisionData GetCollision(LineCollider other) { return null; }
+        public virtual CollisionData GetCollision(LineCollider other) { throw new Exception("This collision detection has not been implemented"); }
 
-        public virtual CollisionData IsOverlapping(Vec2 point) { return null; }
+        public virtual CollisionData IsOverlapping(Vec2 point) { throw new Exception("This collision detection has not been implemented"); }
 
         ////////// Predicting Collisions
 
         public CollisionData PredictCollision(Collider other)
         {
+            if (other == null)
+                return null;
             if (other is BoxCollider)
                 return PredictCollision((BoxCollider)other);
             if (other is CircleCollider)
                 return PredictCollision((CircleCollider)other);
+            if (other is LineCollider)
+                return PredictCollision((LineCollider)other);
 
             throw new Exception("Collider type not known");
         }
 
-        public virtual CollisionData PredictCollision(BoxCollider other) { return null; }
+        public virtual CollisionData PredictCollision(BoxCollider other) { throw new Exception("This collision detection has not been implemented"); }
 
-        public virtual CollisionData PredictCollision(CircleCollider other) { return null; }
+        public virtual CollisionData PredictCollision(CircleCollider other) { throw new Exception("This collision detection has not been implemented"); }
 
+        public virtual CollisionData PredictCollision(LineCollider other) { throw new Exception("This collision detection has not been implemented"); }
+
+        public virtual void Draw()
+        {
+            PhysicsManager.debugCanvas.Line(Position.x, Position.y, Position.x + Velocity.x * Time.timeStep, Position.y + Velocity.y * Time.timeStep);
+        }
     }
 }

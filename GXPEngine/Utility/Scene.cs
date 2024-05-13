@@ -34,8 +34,8 @@ namespace GXPEngine
         /// </summary>
         public static UILayer UILayer { get; private set; }
 
-        Rigidbody ball1 = new Rigidbody("Square.png", new BoxCollider(new Vec2(64, 64)));
-        Rigidbody ball2 = new Rigidbody("Circle.png", new CircleCollider(32));
+        Rigidbody ball1 = new Rigidbody("Square.png", new LineCollider(new Vec2(64, 64), new Vec2(500, 500)));
+        Rigidbody ball2 = new Rigidbody("Square.png", new BoxCollider(new Vec2(64, 64)));
 
         Rigidbody ball3 = new Rigidbody("Circle.png", new CircleCollider(8));
 
@@ -51,6 +51,8 @@ namespace GXPEngine
             background = new Background();
             workspace = new Workspace();
             UILayer = new UILayer();
+
+
             AddChild(ball1);
             ball1.Position = new Vec2(800, 450);
             ball1.isKinematic = true;
@@ -61,6 +63,9 @@ namespace GXPEngine
             ball3.isKinematic = true;
             ball3.width = 8; ball3.height = 8;
             AddChild(ball3);
+
+            AddChild(UILayer);
+            PhysicsManager.setup();
         }
 
         void Update()
@@ -75,11 +80,11 @@ namespace GXPEngine
             ball2.Position = Input.getMouseWorldPosition();
             ball2.velocity = new Vec2(0, 1000);
 
-            CollisionData dat = ball1.collider.GetCollision(ball2.collider);
+            CollisionData dat = ball2.collider.PredictCollision(ball1.collider);
             Console.WriteLine(dat);
 
             if (Input.GetKey(Key.SPACE)) ball2.velocity = new Vec2();
-            ball1.rotation += 1;
+            //ball1.rotation += 1;
         }
     }
 }
