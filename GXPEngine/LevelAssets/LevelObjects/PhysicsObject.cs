@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TiledMapParser;
 
 namespace GXPEngine
 {
@@ -16,6 +17,12 @@ namespace GXPEngine
         bool isStatic = true;
 
         public PhysicsObject(string spriteLocation = "square.png") : base(spriteLocation, false)
+        {
+            this.spriteLocation = spriteLocation;
+            // Empty
+        }
+
+        public PhysicsObject(TiledObject obj=null, string spriteLocation = "square.png") : base(spriteLocation, false)
         {
             this.spriteLocation = spriteLocation;
             // Empty
