@@ -82,7 +82,7 @@ namespace GXPEngine
             if (dist > other.radius)
                 return null;
 
-            Vec2 normal = (other.Position - Position).RotateDegrees(rotation);
+            Vec2 normal = (Position - other.Position);
             normal = (Mathf.Abs(normal.x) > Mathf.Abs(normal.y) ? -new Vec2(normal.x, 0) : -new Vec2(0, normal.y)).RotateDegrees(rotation).normalized;
 
             return new CollisionData

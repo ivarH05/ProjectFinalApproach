@@ -314,9 +314,9 @@ namespace GXPEngine.Core
         /// <returns></returns>
         public Vec2 Reflect(Vec2 Normal)
         {
-            Vec2 In = normalized;
-            Vec2 Out = In - 2 * In * Normal * Normal;
-            return Out * magnitude;
+            Vec2 In = this.normalized;
+            Vec2 Out = In - 2 * Vec2.Dot(In, Normal) * Normal;
+            return Out.normalized * this.magnitude;
         }
     }
 }
