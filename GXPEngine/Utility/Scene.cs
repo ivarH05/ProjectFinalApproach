@@ -14,6 +14,7 @@ namespace GXPEngine
 
         public static bool debugMode;
         int levelIndex = 1;
+        int lastLevel = 3;
 
         /// <summary>
         /// Singleton will make sure there is only one scene at a time. 
