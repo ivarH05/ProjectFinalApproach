@@ -68,6 +68,13 @@ namespace GXPEngine
             tiledManager.LoadTiledMap("map"+levelIndex+"/map"+levelIndex+".tmx");       //Uncomment this line to load a tiled map
         }
 
+        public bool SceneIsOver()
+        {
+            // transition to next scene and destroy this one        
+            return false;
+        }
+
+
         void Update()
         {
             PhysicsManager.PhysicsUpdate();
