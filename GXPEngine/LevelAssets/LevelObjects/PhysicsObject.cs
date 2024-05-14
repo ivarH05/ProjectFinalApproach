@@ -52,6 +52,7 @@ namespace GXPEngine
             x = x + (originalPosition.x - x) * 0.1f;
             y = y + (originalPosition.y - y) * 0.1f;
             if (x == originalPosition.x && y == originalPosition.y) isOriginalPosition = true;
+            // if (isOriginalPosition) this.Destroy();    //NOTE uncomment this line to destroy object when it is back to original position
         }
 
 
