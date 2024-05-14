@@ -11,6 +11,7 @@ namespace GXPEngine
 {
     public class Scene : GameObject
     {
+        int levelIndex;
 
         public static bool debugMode;
 
@@ -43,14 +44,14 @@ namespace GXPEngine
         public static Debugger debugger { get; private set; }
         public static InputManager inputManager { get; private set; }
         
-        public Scene(bool overrideSingleton = false)
+        public Scene(bool overrideSingleton = false, int levelIndex = 1)
         {
             if (_singleton != null && !overrideSingleton)
             {
-                LateDestroy();
-                return;
+                _singleton.LateDestroy();
             }
             _singleton = this;
+            this.levelIndex = levelIndex;
 
             tiledManager = new TiledManager( this );
             inputManager = new InputManager();
@@ -63,7 +64,13 @@ namespace GXPEngine
             AddChild(UILayer);
             AddChild(debugger);
             PhysicsManager.setup(); 
-            tiledManager.LoadTiledMap("map1/map1.tmx");       //Uncomment this line to load a tiled map
+            tiledManager.LoadTiledMap("map"+levelIndex+"/map"+levelIndex+".tmx");       //Uncomment this line to load a tiled map
+        }
+
+        public bool SceneIsOver()
+        {
+            // transition to next scene and destroy this one        
+            return false;
         }
 
         void Update()
