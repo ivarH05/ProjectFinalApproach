@@ -102,12 +102,7 @@
     <Compile Include="Utility\Debugger.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\TiledManager.cs" />
-    <Compile Include="LevelAssets\LevelObjects\PhysicsObject.cs" />
     <Compile Include="LevelAssets\LevelObjects\Booster.cs" />
-    <Compile Include="LevelAssets\LevelObjects\Bumper.cs" />
-    <Compile Include="LevelAssets\LevelObjects\Brake.cs" />
-    <Compile Include="LevelAssets\LevelObjects\Wall.cs" />
-    <Compile Include="LevelAssets\LevelObjects\Triangle.cs" />
     <Compile Include="Managers\InputManager.cs" />    
     <Compile Include="Managers\TiledManager.cs" />  
     <Compile Include="LevelAssets\LevelObjects\PhysicsObject.cs" />    
