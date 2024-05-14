@@ -15,8 +15,12 @@ namespace GXPEngine
 
         BoxCollider collider;
         string spriteLocation;
-        bool isStatic = true;
-        bool isUIBox;
+        bool isStatic = false;
+        bool isDragging = false;
+        string objectName;
+        Vec2 originalPosition;
+        bool isOriginalPosition;
+        bool isValidPlacement = false;
 
         public PhysicsObject(string spriteLocation = "square.png") : base(spriteLocation, false)
         {
@@ -33,8 +37,8 @@ namespace GXPEngine
         public PhysicsObject(TiledObject obj=null) : base( obj.GetStringProperty("Sprite") != "" ? obj.GetStringProperty("Sprite") : "square.png" , false)
         {
             spriteLocation = obj.GetStringProperty("Sprite") != "" ? obj.GetStringProperty("Sprite") : "square.png";
-            isUIBox = obj.GetStringProperty("UI") == "true";
-            if (isUIBox) this.alpha = 0f;
+            objectName = obj.Name;
+            originalPosition = new Vec2( obj.X+obj.Width/2, obj.Y+obj.Height/2);
         }
 
 
@@ -42,19 +46,51 @@ namespace GXPEngine
 
         public void DebugToggle() 
         {
-            if (!isUIBox) return;
-            if (!Scene.debugMode) this.alpha = 0f;
-            else this.alpha = 0.5f;
+            // place debug methods here
         }
+
+
+        void MoveBackToOriginalPosition()
+        {
+            x = x + (originalPosition.x - x) * 0.1f;
+            y = y + (originalPosition.y - y) * 0.1f;
+            if (x == originalPosition.x && y == originalPosition.y) isOriginalPosition = true;
+        }
+
 
         void DragObject()
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0)
+                && Input.mouseX > x - width / 2
+                && Input.mouseX < x + width / 2
+                && Input.mouseY > y - height / 2
+                && Input.mouseY < y + height / 2
+                )
             {
-                x = Input.mouseX;
-                y = Input.mouseY;
+                isDragging = true;
+                x = x + (Input.mouseX - x) * 0.1f;
+                y = y + (Input.mouseY - y) * 0.1f; 
+            } else if (isDragging && !Input.GetMouseButton(0))
+            {
+                isDragging = false;
+                if ( x > 1000 ) {               //NOTE make a method to check is it's a valid placement
+                    isValidPlacement = true;
+                    isOriginalPosition = false;
+                } else {
+                    isValidPlacement = false;
+                    MoveBackToOriginalPosition();
+                }
+
+            }   else if (isDragging)
+            {
+                x = x + (Input.mouseX - x) * 0.1f;
+                y = y + (Input.mouseY - y) * 0.1f;
+            } else if (!isValidPlacement)
+            {
+                MoveBackToOriginalPosition();
             }
         }
+
 
         public void SetStatic(bool isStatic)
         {

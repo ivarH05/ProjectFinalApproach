@@ -98,6 +98,9 @@
     <Compile Include="Managers\InputManager.cs" />    
     <Compile Include="Managers\TiledManager.cs" />  
     <Compile Include="LevelAssets\LevelObjects\PhysicsObject.cs" />    
+    <Compile Include="LevelAssets\LevelObjects\PinBallMachine.cs" />    
+    <Compile Include="LevelAssets\LevelObjects\ScoreBoard.cs" />    
+    <Compile Include="LevelAssets\LevelObjects\SidePanel.cs" />    
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

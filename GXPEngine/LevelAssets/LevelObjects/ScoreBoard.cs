@@ -10,20 +10,16 @@ using TiledMapParser;
 
 namespace GXPEngine
 {
-    public class LevelProperties : Sprite
+    public class ScoreBoard : Sprite
     {
-
-        public LevelProperties() :base("square.png", false)
+        public ScoreBoard() : base("square.png", false)
         {
             alpha = 0f;
-            Scene.levelProperties = this;
         }
 
-
-        public LevelProperties(TiledObject obj=null) : base("square.png", false)
+        public ScoreBoard(TiledObject obj = null) : base("square.png", false)
         {
             alpha = 0f;
-            Scene.levelProperties = this;
         }
-    }    
+    }
 }
