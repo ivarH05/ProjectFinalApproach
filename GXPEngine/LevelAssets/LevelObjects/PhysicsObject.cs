@@ -73,7 +73,11 @@ namespace GXPEngine
             } else if (isDragging && !Input.GetMouseButton(0))
             {
                 isDragging = false;
-                if ( x > 1000 ) {               //NOTE make a method to check is it's a valid placement
+                if ( x > PinBallMachine.coords[0].x && 
+                        x < PinBallMachine.coords[1].x &&
+                        y > PinBallMachine.coords[0].y &&
+                        y < PinBallMachine.coords[1].y
+                    ) {
                     isValidPlacement = true;
                     isOriginalPosition = false;
                 } else {
