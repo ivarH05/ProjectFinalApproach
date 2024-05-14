@@ -17,12 +17,10 @@ namespace GXPEngine
         string spriteLocation;
         bool isStatic = false;
         bool isDragging = false;
-        bool isUIBox;
         string objectName;
         Vec2 originalPosition;
         bool isOriginalPosition;
         bool isValidPlacement = false;
-        bool isTransparent = false;
 
         public PhysicsObject(string spriteLocation = "square.png") : base(spriteLocation, false)
         {
@@ -40,9 +38,7 @@ namespace GXPEngine
         {
             spriteLocation = obj.GetStringProperty("Sprite") != "" ? obj.GetStringProperty("Sprite") : "square.png";
             objectName = obj.Name;
-            isStatic = isUIBox = obj.GetStringProperty("UI") == "true";
             originalPosition = new Vec2( obj.X+obj.Width/2, obj.Y+obj.Height/2);
-            this.alpha = isUIBox ? 0f : 1f;
         }
 
 
@@ -50,10 +46,7 @@ namespace GXPEngine
 
         public void DebugToggle() 
         {
-            if (isUIBox && !Scene.debugMode) 
-                this.alpha = 0f;
-            else if (this.alpha == 0f)
-                this.alpha = 0.5f;
+            // place debug methods here
         }
 
 

@@ -11,17 +11,17 @@
   </object>
  </objectgroup>
  <objectgroup id="4" name="UI">
-  <object id="4" name="Pinball Box" type="GXPEngine.PhysicsObject" x="72.0869" y="62.9853" width="658.594" height="985.015">
+  <object id="4" name="Pinball Box" type="GXPEngine.PinBallMachine" x="72.0869" y="62.9853" width="658.594" height="985.015">
    <properties>
     <property name="UI" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="6" name="Side Box" type="GXPEngine.PhysicsObject" x="1073.78" y="43.4848" width="737.273" height="483.727">
+  <object id="6" name="Side Box" type="GXPEngine.SidePanel" x="1073.78" y="43.4848" width="737.273" height="483.727">
    <properties>
     <property name="UI" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="7" name="Score Box" type="GXPEngine.PhysicsObject" x="1063.99" y="798" width="747" height="240">
+  <object id="7" name="Score Box" type="GXPEngine.ScoreBoard" x="1063.99" y="798" width="747" height="240">
    <properties>
     <property name="UI" type="bool" value="true"/>
    </properties>
