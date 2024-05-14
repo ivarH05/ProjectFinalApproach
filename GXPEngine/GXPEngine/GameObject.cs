@@ -277,8 +277,9 @@ namespace GXPEngine
 		/// <param name='child'>
 		/// Child object to add.
 		/// </param>
-		public void AddChild(GameObject child) {
-			child.parent = this;	
+		public GameObject AddChild(GameObject child) {
+			child.parent = this;
+			return child;
 		}
 
 		//------------------------------------------------------------------------------------------------------------------------
