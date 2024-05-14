@@ -12,6 +12,8 @@ namespace GXPEngine
 {
     public class SidePanel : Sprite
     {
+        public static Vec2[] coords;
+
         public SidePanel() : base("square.png", false)
         {
             alpha = 0f;
@@ -21,6 +23,7 @@ namespace GXPEngine
         public SidePanel(TiledObject obj = null) : base("square.png", false)
         {
             alpha = 0f;
+            coords = new Vec2[]{ new Vec2(obj.X, obj.Y), new Vec2(obj.Width, obj.Height)  };
         }
     }
 }
