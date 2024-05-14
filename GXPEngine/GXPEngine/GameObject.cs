@@ -34,19 +34,42 @@ namespace GXPEngine
                 SetXY(value.x, value.y);
             }
         }
-		/// <summary>
-		/// the global position of the object, which is also relative to the screen
-		/// </summary>
+        /// <summary>
+        /// the global position of the object, which is also relative to the screen
+        /// </summary>
         public Vec2 GlobalPosition
         {
             get
             {
-                return TransformPoint(x, y);
+                return TransformPoint(0, 0);
             }
             set
             {
-				Vec2 vec = InverseTransformPoint(value.x, value.y);
+                Vec2 vec = InverseTransformPoint(value.x, value.y);
                 SetXY(vec.x, vec.y);
+            }
+        }
+
+		public float TransformRotation(float ret)
+        {
+            if (parent == null)
+            {
+                return ret + rotation;
+            }
+            else
+            {
+                return parent.TransformRotation(ret + rotation);
+            }
+        }
+        public float GlobalRotation
+        {
+            get
+            {
+				return TransformRotation(0);
+            }
+            set
+            {
+				rotation = parent.TransformRotation(0) + value;
             }
         }
 

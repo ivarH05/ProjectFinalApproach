@@ -284,18 +284,22 @@ namespace GXPEngine.Core
             return new Vec2(newX, newY);
         }
 
-        public void RotateAroundDegrees(Vec2 point, float angleDegrees)
+        public Vec2 RotateAroundDegrees(Vec2 point, float angleDegrees)
         {
-            this -= point;
-            RotateDegrees(angleDegrees);
-            this += point;
+            Vec2 a = this;
+            a -= point;
+            a.RotateDegrees(angleDegrees);
+            a += point;
+            return a;
         }
 
-        public void RotateAroundRadians(Vec2 point, float angleRadians)
+        public Vec2 RotateAroundRadians(Vec2 point, float angleRadians)
         {
-            this -= point;
-            RotateRadians(angleRadians);
-            this += point;
+            Vec2 a = this;
+            a -= point;
+            a.RotateRadians(angleRadians);
+            a += point;
+            return a;
         }
 
         public static float Dot(Vec2 a, Vec2 b)

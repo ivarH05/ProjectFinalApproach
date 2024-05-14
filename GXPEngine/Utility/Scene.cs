@@ -1,4 +1,5 @@
 ﻿using GXPEngine.Core;
+using GXPEngine.LevelAssets.LevelObjects;
 using GXPEngine.Managers;
 using System;
 using System.Collections;
@@ -26,7 +27,7 @@ namespace GXPEngine
         /// <summary>
         /// The position of the camera based on the corner of the screen.
         /// </summary>
-        public static Vec2 cameraPosition;
+        public static Vec2 cameraPosition = new Vec2(960, 540);
 
         /// <summary>
         /// The background of the scene, these objects cannot be interacted with
@@ -47,7 +48,7 @@ namespace GXPEngine
         public static Debugger debugger { get; private set; }
         public static InputManager inputManager { get; private set; }
 
-        private Rigidbody Ball;
+        private static Rigidbody Ball;
 
         public Vec2[] verticies = new Vec2[] { new Vec2(289, 1048), new Vec2(300, 1018), new Vec2(115, 892), new Vec2(104, 871), 
             new Vec2(102, 374), new Vec2(111, 309), new Vec2(124, 273), new Vec2(141, 240), new Vec2(168, 206), new Vec2(204, 171), 
@@ -62,19 +63,23 @@ namespace GXPEngine
         
         public Scene(bool overrideSingleton = false, int levelIndex = 1)
         {
-            if (_singleton != null && !overrideSingleton)
+            if (_singleton != null && overrideSingleton)
             {
-                _singleton.LateDestroy();
+                Console.WriteLine("aaaa");
+                UILayer.LateDestroy();
+                debugger.LateDestroy();
+                background.LateDestroy();
+                //_singleton.LateDestroy();
             }
             _singleton = this;
             this.levelIndex = levelIndex;
 
-            tiledManager = new TiledManager( this );
             inputManager = new InputManager();
             debugger = new Debugger();
             background = new Background();
             workspace = new Workspace();
             UILayer = new UILayer();
+            tiledManager = new TiledManager(workspace);
 
             tiledManager.LoadTiledMap("map"+levelIndex+"/map"+levelIndex+".tmx");       //Uncomment this line to load a tiled map
 
@@ -94,6 +99,17 @@ namespace GXPEngine
                 Vec2 end = verticies[i + 1];
                 workspace.AddChild(new Rigidbody("", new LineCollider(start, end)));
             }
+
+            GameObject b = workspace.AddChild(new Booster());
+            b.Position = new Vec2(380, 990);
+            GameObject p = workspace.AddChild(new Bumper());
+            p.Position = new Vec2(380, 500);
+            GameObject t = workspace.AddChild(new Triangle());
+            t.Position = new Vec2(250, 700);
+            GameObject w = workspace.AddChild(new Wall());
+            w.Position = new Vec2(400, 200);
+            GameObject B = workspace.AddChild(new Brake());
+            B.Position = new Vec2(500, 600);
         }
 
         public bool SceneIsOver()
@@ -104,11 +120,15 @@ namespace GXPEngine
 
         void Update()
         {
+            if (_singleton != this)
+                return;
             PhysicsManager.PhysicsUpdate();
             inputManager.Update();
             debugger.Update();
-            workspace.Position = -cameraPosition;
-            background.Position = -cameraPosition; // (* 0.75 for depth effect)
+            workspace.Position = -cameraPosition + new Vec2(960, 540);
+            background.Position = -cameraPosition + new Vec2(960, 540); // (* 0.75 for depth effect)
+
+            //cameraPosition = Ball.Position;
 
             if (Input.GetKey(Key.NUMPAD_1))
             {
