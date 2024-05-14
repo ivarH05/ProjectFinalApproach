@@ -25,13 +25,11 @@ namespace GXPEngine
         public PhysicsObject(string spriteLocation = "square.png") : base(spriteLocation, false)
         {
             this.spriteLocation = spriteLocation;
-            // empty
         }
 
         public PhysicsObject(TiledObject obj=null, string spriteLocation = "square.png") : base(spriteLocation, false)
         {
             this.spriteLocation = spriteLocation;
-            // Empty
         }
 
         public PhysicsObject(TiledObject obj=null) : base( obj.GetStringProperty("Sprite") != "" ? obj.GetStringProperty("Sprite") : "square.png" , false)
@@ -94,7 +92,6 @@ namespace GXPEngine
                 MoveBackToOriginalPosition();
             }
         }
-
 
         public void SetStatic(bool isStatic)
         {
