@@ -75,15 +75,16 @@ namespace GXPEngine
             Vec2 p = GetClosestPointOnLine(nextOtherPosition);
             float dist = Vec2.Distance(p, other.Position);
 
-            Vec2 line = (_end - _start);
-
-
-            if (dist > other.radius)
+            float timeOfImpact = (dist - other.radius) / (other.Velocity).magnitude;
+            if (timeOfImpact > Time.timeStep)
                 return null;
+
+            Vec2 line = (_end - _start);
 
             Vec2 normal = line.Normal;
             if (Vec2.Dot(normal, other.Position - p) > 0)
                 normal *= -1;
+
 
             CollisionData result = new CollisionData
             {
@@ -92,7 +93,7 @@ namespace GXPEngine
                 self = this,
                 other = other,
                 penetrationDepth = dist - other.radius,
-                TimeOfImpact = 0
+                TimeOfImpact = timeOfImpact
             };
 
             return result;

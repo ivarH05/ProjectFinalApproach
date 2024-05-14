@@ -1,6 +1,7 @@
 ﻿using GXPEngine.Core;
 using GXPEngine.Managers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Printing;
 using System.Linq;
@@ -82,6 +83,8 @@ namespace GXPEngine
                 Vec2 end = verticies[i + 1];
                 workspace.AddChild(new Rigidbody("", new LineCollider(start, end)));
             }
+            PhysicsManager.setup(); 
+            tiledManager.LoadTiledMap("map1/map1.tmx");       //Uncomment this line to load a tiled map
         }
 
         void Update()

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TiledMapParser;
 
 namespace GXPEngine
 {
@@ -51,6 +52,13 @@ namespace GXPEngine
         /// </summary>
         public float bounciness = 0.5f;
 
+        Vec2 nextPosition = new Vec2();
+        float nextRotation = 0;
+
+        public bool isTrigger = false;
+
+        private CollisionData[] Collisions;
+
         public Rigidbody(string spritePath = "Square.png", Collider collider = null) : base(spritePath == "" ? "Square.png" : spritePath, false, false)
         {
             if (spritePath == "")
@@ -74,14 +82,64 @@ namespace GXPEngine
         /// </summary>
         public void PhysicsUpdate()
         {
+            Vec2 oldPosition = Position;
+            float oldRotation = rotation;
+            nextPosition = Position;
+            nextRotation = rotation;
             if (isKinematic)
                 return;
 
             if (useGravity)
-                velocity += new Vec2(0, 981f) * Time.timeStep;
+                velocity += new Vec2(0, 981f) * Time.timeStep * PhysicsManager.GravityMultiplier;
 
-            Position += velocity * Time.timeStep;
-            rotation += angularVelocity * Time.timeStep;
+            float time = Time.timeStep;
+            int count = 0;
+
+            rotation += angularVelocity * time;
+            Position += velocity * time;
+
+            Move:
+            List<CollisionData> data = PhysicsManager.GetCollisions(this);
+            Collisions = data.ToArray();
+            if (data.Count == 0)
+                goto End;
+
+            foreach (CollisionData dat in data)
+            {
+                Position -= dat.normal * (dat.penetrationDepth + 0.001f);
+                time -= dat.penetrationDepth / velocity.magnitude;
+                velocity = velocity.Reflect(dat.normal);
+                Vec2 relativeVelocity = dat.other.Velocity - velocity;
+
+                if (Vec2.Dot(velocity.normalized, relativeVelocity.normalized) >= 0)
+                {
+                    velocity += relativeVelocity;
+                }
+            }
+
+            count++;
+            if (count < 5)
+                goto Move;
+
+            End:
+            velocity = Vec2.Lerp(velocity, Vec2.Zero, Time.timeStep * PhysicsManager.AirFriction);
+            velocity.magnitude = Mathf.Clamp(velocity.magnitude, 0, 2500);
+            nextPosition = Position;
+            nextRotation = rotation;
+            Position = oldPosition;
+            rotation = oldRotation;
+        }
+
+        public void LatePhysicsUpdate()
+        {
+            Position = nextPosition;
+            rotation = nextRotation;
+
+            foreach (CollisionData dat in Collisions)
+                if (isTrigger)
+                    OnTrigger(dat);
+                else
+                    OnCollision(dat);
         }
 
         /// <summary>
@@ -96,6 +154,16 @@ namespace GXPEngine
         protected override void OnDestroy()
         {
             PhysicsManager.RemoveBody(this);
+        }
+
+        public virtual void OnCollision(CollisionData collision)
+        {
+
+        }
+
+        public virtual void OnTrigger(CollisionData collision)
+        {
+
         }
     }
 }
