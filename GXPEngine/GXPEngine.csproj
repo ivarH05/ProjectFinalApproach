@@ -52,6 +52,7 @@
     <Compile Include="Utility\Collision\CollisionData.cs" />
     <Compile Include="Utility\Collision\LineCollider.cs" />
     <Compile Include="Utility\Scene.cs" />
+    <Compile Include="Utility\LevelProperties.cs" />
     <Compile Include="LevelAssets\Other\Background.cs" />
     <Compile Include="LevelAssets\Other\UILayer.cs" />
     <Compile Include="LevelAssets\Other\Workspace.cs" />
