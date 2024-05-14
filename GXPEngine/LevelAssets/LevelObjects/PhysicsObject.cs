@@ -17,7 +17,6 @@ namespace GXPEngine
         string spriteLocation;
         bool isStatic = false;
         bool isDragging = false;
-        string objectName;
         Vec2 originalPosition;
         bool isOriginalPosition;
         bool isValidPlacement = false;
@@ -35,7 +34,6 @@ namespace GXPEngine
         public PhysicsObject(TiledObject obj=null) : base( obj.GetStringProperty("Sprite") != "" ? obj.GetStringProperty("Sprite") : "square.png" , false)
         {
             spriteLocation = obj.GetStringProperty("Sprite") != "" ? obj.GetStringProperty("Sprite") : "square.png";
-            objectName = obj.Name;
             originalPosition = new Vec2( obj.X+obj.Width/2, obj.Y+obj.Height/2);
         }
 

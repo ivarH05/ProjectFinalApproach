@@ -3,13 +3,7 @@
  <imagelayer id="2" name="background">
   <image source="../BGGAMEfinal.jpg" width="1920" height="1080"/>
  </imagelayer>
- <objectgroup id="3" name="physics objects">
-  <object id="1" name="test" type="GXPEngine.PhysicsObject" x="1118" y="79.333" width="160" height="133.333">
-   <properties>
-    <property name="Sprite" value="colors.png"/>
-   </properties>
-  </object>
- </objectgroup>
+ <objectgroup id="3" name="physics objects"/>
  <objectgroup id="4" name="UI">
   <object id="4" name="Pinball Box" type="GXPEngine.PinBallMachine" x="72.0869" y="62.9853" width="658.594" height="985.015"/>
   <object id="6" name="Side Box" type="GXPEngine.SidePanel" x="1073.78" y="43.4848" width="737.273" height="483.727"/>

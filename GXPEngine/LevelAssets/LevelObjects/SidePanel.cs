@@ -14,12 +14,10 @@ namespace GXPEngine
     public class SidePanel : Sprite
     {
         public static Vec2[] coords;
-        static PhysicsObject[] panelChildren;
 
         public SidePanel() : base("square.png", false)
         {
             alpha = 0f;
-            panelChildren = new PhysicsObject[0];
         }
 
 
@@ -28,16 +26,5 @@ namespace GXPEngine
             alpha = 0f;
             coords = new Vec2[]{ new Vec2(obj.X, obj.Y), new Vec2(obj.Width, obj.Height)  };
         }
-
-        PhysicsObject[] GetPanelChildren()
-        {
-            return panelChildren;
-        }
-
-        public static void AppendPanelChild( PhysicsObject newChild )
-        {
-
-        }
-
     }
 }
