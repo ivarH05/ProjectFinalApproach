@@ -57,18 +57,23 @@ namespace GXPEngine
 
         public bool isTrigger = false;
 
-        private CollisionData[] Collisions;
+        private CollisionData[] Collisions = new CollisionData[0];
 
         public Rigidbody(string spritePath = "Square.png", Collider collider = null) : base(spritePath == "" ? "Square.png" : spritePath, false, false)
         {
+            centerOrigin();
             if (spritePath == "")
                 visible = false;
             if (collider != null)
                 SetCollider(collider);
             if (collider is LineCollider)
                 isKinematic = true;
+            if (collider is CircleCollider cc)
+            {
+                width = (int)cc.radius * 2; 
+                height = (int)cc.radius * 2;
+            }
             PhysicsManager.AddBody(this);
-            centerOrigin();
         }
 
         public void SetCollider(Collider collider)
@@ -110,6 +115,7 @@ namespace GXPEngine
                 time -= dat.penetrationDepth / velocity.magnitude;
                 velocity = velocity.Reflect(dat.normal);
                 Vec2 relativeVelocity = dat.other.Velocity - velocity;
+                velocity *= 0.96f;
 
                 if (Vec2.Dot(velocity.normalized, relativeVelocity.normalized) >= 0)
                 {
