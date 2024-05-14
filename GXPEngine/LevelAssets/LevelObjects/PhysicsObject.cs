@@ -56,10 +56,6 @@ namespace GXPEngine
                 this.alpha = 0.5f;
         }
 
-        void ClickedOn()
-        {
-            Console.WriteLine("Clicked on " + objectName);
-        }
 
         void MoveBackToOriginalPosition()
         {
@@ -67,6 +63,7 @@ namespace GXPEngine
             y = y + (originalPosition.y - y) * 0.1f;
             if (x == originalPosition.x && y == originalPosition.y) isOriginalPosition = true;
         }
+
 
         void DragObject()
         {
@@ -100,6 +97,7 @@ namespace GXPEngine
                 MoveBackToOriginalPosition();
             }
         }
+
 
         public void SetStatic(bool isStatic)
         {
