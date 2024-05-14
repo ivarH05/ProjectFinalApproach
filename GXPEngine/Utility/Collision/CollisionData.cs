@@ -45,14 +45,19 @@ namespace GXPEngine
                 "\nTime of impact:    " + TimeOfImpact;
         }
 
-        public static CollisionData flip(CollisionData dat)
+        public static CollisionData flip(CollisionData data)
         {
-            if (dat == null)
+            if (data == null)
                 return null;
-            Collider c = dat.self;
-            dat.self = dat.other;
-            dat.other = c;
-            dat.normal *= -1;
+            CollisionData dat = new CollisionData()
+            {
+                point = data.point,
+                normal = data.normal * -1,
+                self = data.other,
+                other = data.self,
+                penetrationDepth = data.penetrationDepth,
+                TimeOfImpact = data.TimeOfImpact
+            };
             return dat;
         }
     }

@@ -14,11 +14,11 @@ namespace GXPEngine
         /// </summary>
         public Vec2 center;
 
-        internal float rotation { get { return rigidbody.rotation; } }
+        internal float rotation { get { return rigidbody.GlobalRotation; } }
 
         internal Vec2 Velocity { get { return rigidbody.velocity; } }
 
-        internal Vec2 Position { get { return rigidbody.Position; } }
+        internal Vec2 Position { get { return rigidbody.GlobalPosition; } }
 
         public Rigidbody rigidbody;
 
@@ -76,7 +76,7 @@ namespace GXPEngine
 
         public virtual void Draw()
         {
-            PhysicsManager.debugCanvas.Line(Position.x, Position.y, Position.x + Velocity.x * Time.timeStep, Position.y + Velocity.y * Time.timeStep);
+            PhysicsManager.debugCanvas.Line(Position.x, Position.y, Position.x + Velocity.x * 0.1f, Position.y + Velocity.y * 0.1f);
         }
     }
 }

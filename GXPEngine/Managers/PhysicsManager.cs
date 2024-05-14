@@ -27,6 +27,7 @@ namespace GXPEngine
         public static void setup()
         {
             Scene.UILayer.AddChild(debugCanvas);
+            _bodies.Clear();
         }
 
         /// <summary>
@@ -41,6 +42,14 @@ namespace GXPEngine
                 updateTimer += Time.DeltaSeconds;
                 //Time.timeStep = Mathf.Clamp(Time.DeltaSeconds / 2, 0, 0.1f);
             }
+            while (updateTimer > Time.timeStep)
+            {
+                updateTimer -= Time.timeStep;
+                foreach (Rigidbody b in _bodies)
+                    b.PhysicsUpdate();
+                foreach (Rigidbody b in _bodies)
+                    b.LatePhysicsUpdate();
+            }
             if (debug)
             {
                 debugCanvas.ClearTransparent();
@@ -49,14 +58,6 @@ namespace GXPEngine
                 debugCanvas.StrokeWeight(3);
                 foreach (Rigidbody b in _bodies)
                     b.collider.Draw();
-            }
-            while (updateTimer > Time.timeStep)
-            {
-                updateTimer -= Time.timeStep;
-                foreach (Rigidbody b in _bodies)
-                    b.PhysicsUpdate();
-                foreach (Rigidbody b in _bodies)
-                    b.LatePhysicsUpdate();
             }
         }
 

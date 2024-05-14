@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -45,6 +45,11 @@
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
     <Compile Include="GXPEngine\Core\Vec2.cs" />
+    <Compile Include="LevelAssets\LevelObjects\Brake.cs" />
+    <Compile Include="LevelAssets\LevelObjects\Bumper.cs" />
+    <Compile Include="LevelAssets\LevelObjects\LineBumper.cs" />
+    <Compile Include="LevelAssets\LevelObjects\Triangle.cs" />
+    <Compile Include="LevelAssets\LevelObjects\Wall.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="Utility\Collision\BoxCollider.cs" />
     <Compile Include="Utility\Collision\CircleCollider.cs" />
@@ -94,9 +99,10 @@
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="Utility\Debugger.cs" />
-    <Compile Include="Managers\InputManager.cs" />    
-    <Compile Include="Managers\TiledManager.cs" />  
-    <Compile Include="LevelAssets\LevelObjects\PhysicsObject.cs" />    
+    <Compile Include="Managers\InputManager.cs" />
+    <Compile Include="Managers\TiledManager.cs" />
+    <Compile Include="LevelAssets\LevelObjects\PhysicsObject.cs" />
+    <Compile Include="LevelAssets\LevelObjects\Booster.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

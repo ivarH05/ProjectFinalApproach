@@ -7,20 +7,20 @@ public class MainGame : Game {
 		targetFps = 50;
 		AddChild(scene = new Scene());
     }
-		Scene scene;
-        int levelIndex = 1;
-        int lastLevel = 3;
+	Scene scene;
+    int levelIndex = 1;
+    int lastLevel = 3;
 
-		void ChangeLevel()
+	void ChangeLevel()
+    {
+        if ( levelIndex != lastLevel)
         {
-            if ( levelIndex != lastLevel)
-            {
-                levelIndex++;
-				AddChild(scene = new Scene(true, levelIndex));
-            } else {
-                Console.WriteLine("idk"); // Wait on team to know what end screen should be
-            }
+            levelIndex++;
+			AddChild(scene = new Scene(true, levelIndex));
+        } else {
+            Console.WriteLine("idk"); // Wait on team to know what end screen should be
         }
+    }
 
 	// For every game object, Update is called every frame, by the engine:
 	void Update() {
