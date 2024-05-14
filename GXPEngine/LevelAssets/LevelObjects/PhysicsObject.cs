@@ -80,7 +80,7 @@ namespace GXPEngine
             } else if (isDragging && !Input.GetMouseButton(0))
             {
                 isDragging = false;
-                if ( x > 1000 ) {
+                if ( x > 1000 ) {               //NOTE make a method to check is it's a valid placement
                     isValidPlacement = true;
                     isOriginalPosition = false;
                 } else {
