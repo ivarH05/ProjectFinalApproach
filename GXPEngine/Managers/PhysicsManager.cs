@@ -10,8 +10,8 @@ namespace GXPEngine
 {
     public static class PhysicsManager
     {
-        public static float GravityMultiplier = 2;
-        public static float AirFriction = 0.1f;
+        public static float GravityMultiplier = 1;
+        public static float AirFriction = 0.2f;
 
         private static bool debug = true;
         public static EasyDraw debugCanvas = new EasyDraw(1920, 1080, false);
@@ -21,6 +21,8 @@ namespace GXPEngine
         /// </summary>
         private static List<Rigidbody> _bodies = new List<Rigidbody>();
         private static float updateTimer = 0;
+
+        private static bool firstFrame = false;
 
         public static void setup()
         {
@@ -32,7 +34,13 @@ namespace GXPEngine
         /// </summary>
         public static void PhysicsUpdate()
         {
-            updateTimer += Time.DeltaSeconds;
+            if (firstFrame)
+                firstFrame = false;
+            else
+            {
+                updateTimer += Time.DeltaSeconds;
+                //Time.timeStep = Mathf.Clamp(Time.DeltaSeconds / 2, 0, 0.1f);
+            }
             if (debug)
             {
                 debugCanvas.ClearTransparent();

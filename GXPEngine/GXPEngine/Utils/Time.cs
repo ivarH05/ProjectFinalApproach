@@ -11,7 +11,7 @@ namespace GXPEngine
         /// <summary>
         /// the time inbetween fixed updates, like the physics updates. 
         /// </summary>
-		public static float timeStep = 0.01f;
+		public static float timeStep = 0.001f;
 
         private static int previousTime;
 
