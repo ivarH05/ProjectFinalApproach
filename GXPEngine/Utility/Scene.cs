@@ -45,6 +45,8 @@ namespace GXPEngine
         public static Debugger debugger { get; private set; }
         public static InputManager inputManager { get; private set; }
 
+        private Rigidbody Ball;
+
         public Vec2[] verticies = new Vec2[] { new Vec2(289, 1048), new Vec2(300, 1018), new Vec2(115, 892), new Vec2(104, 871), 
             new Vec2(102, 374), new Vec2(111, 309), new Vec2(124, 273), new Vec2(141, 240), new Vec2(168, 206), new Vec2(204, 171), 
             new Vec2(246, 145), new Vec2(294, 128), new Vec2(346, 117), new Vec2(433, 116), new Vec2(505, 121), new Vec2(567, 133),
@@ -71,13 +73,18 @@ namespace GXPEngine
             background = new Background();
             workspace = new Workspace();
             UILayer = new UILayer();
+
             tiledManager.LoadTiledMap("map1/map1.tmx");       //Uncomment this line to load a tiled map
+
             AddChild(background);
             AddChild(workspace);
             AddChild(UILayer);
             AddChild(debugger);
             PhysicsManager.setup();
-            
+
+            Ball = new Rigidbody("Circle.png", new CircleCollider(16));
+            workspace.AddChild(Ball);
+            Ball.Position = new Vec2(686, 948);
 
             for (int i = 0; i < verticies.Length - 1; i++)
             {
@@ -85,12 +92,7 @@ namespace GXPEngine
                 Vec2 end = verticies[i + 1];
                 workspace.AddChild(new Rigidbody("", new LineCollider(start, end)));
             }
-
-            x = new Rigidbody("Circle.png", new CircleCollider(16));
-            workspace.AddChild(x);
-            x.Position = new Vec2(686, 948);
         }
-        Rigidbody x;
 
         void Update()
         {
@@ -102,18 +104,18 @@ namespace GXPEngine
 
             if (Input.GetKey(Key.NUMPAD_1))
             {
-                x.Position = new Vec2(686, 948);
-                x.velocity = new Vec2(0, -1500);
+                Ball.Position = new Vec2(686, 948);
+                Ball.velocity = new Vec2(0, -1500);
             }
             if (Input.GetKey(Key.NUMPAD_2))
             {
-                x.Position = new Vec2(686, 948);
-                x.velocity = new Vec2(0, -1825);
+                Ball.Position = new Vec2(686, 948);
+                Ball.velocity = new Vec2(0, -1825);
             }
             if (Input.GetKey(Key.NUMPAD_3))
             {
-                x.Position = new Vec2(686, 948);
-                x.velocity = new Vec2(0, -2250);
+                Ball.Position = new Vec2(686, 948);
+                Ball.velocity = new Vec2(0, -2250);
             }
         }
     }
