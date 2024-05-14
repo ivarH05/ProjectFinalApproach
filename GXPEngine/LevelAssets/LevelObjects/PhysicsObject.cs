@@ -26,9 +26,10 @@ namespace GXPEngine
             this.spriteLocation = spriteLocation;
         }
 
-        public PhysicsObject(TiledObject obj=null, string spriteLocation = "square.png") : base(spriteLocation, false)
+        public PhysicsObject(string spriteLocation, Vec2 originalPosition) : base(spriteLocation, false)
         {
             this.spriteLocation = spriteLocation;
+            this.originalPosition = originalPosition;
         }
 
         public PhysicsObject(TiledObject obj=null) : base( obj.GetStringProperty("Sprite") != "" ? obj.GetStringProperty("Sprite") : "square.png" , false)
