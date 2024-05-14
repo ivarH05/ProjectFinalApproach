@@ -13,6 +13,7 @@ namespace GXPEngine
 {
     public class Scene : GameObject
     {
+        int levelIndex;
 
         public static bool debugMode;
 
@@ -58,14 +59,14 @@ namespace GXPEngine
             new Vec2(644, 624), new Vec2(642, 633), new Vec2(651, 646), new Vec2(650, 658), new Vec2(633, 673), new Vec2(650, 693), 
             new Vec2(652, 854), new Vec2(648, 878), new Vec2(631, 898), new Vec2(457, 1020), new Vec2(475, 1054) };
         
-        public Scene(bool overrideSingleton = false)
+        public Scene(bool overrideSingleton = false, int levelIndex = 1)
         {
             if (_singleton != null && !overrideSingleton)
             {
-                LateDestroy();
-                return;
+                _singleton.LateDestroy();
             }
             _singleton = this;
+            this.levelIndex = levelIndex;
 
             tiledManager = new TiledManager( this );
             inputManager = new InputManager();
@@ -74,7 +75,7 @@ namespace GXPEngine
             workspace = new Workspace();
             UILayer = new UILayer();
 
-            tiledManager.LoadTiledMap("map1/map1.tmx");       //Uncomment this line to load a tiled map
+            tiledManager.LoadTiledMap("map"+levelIndex+"/map"+levelIndex+".tmx");       //Uncomment this line to load a tiled map
 
             AddChild(background);
             AddChild(workspace);
@@ -92,6 +93,12 @@ namespace GXPEngine
                 Vec2 end = verticies[i + 1];
                 workspace.AddChild(new Rigidbody("", new LineCollider(start, end)));
             }
+        }
+
+        public bool SceneIsOver()
+        {
+            // transition to next scene and destroy this one        
+            return false;
         }
 
         void Update()
