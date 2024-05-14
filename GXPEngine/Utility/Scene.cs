@@ -15,6 +15,7 @@ namespace GXPEngine
     public class Scene : GameObject
     {
         int levelIndex;
+        public static LevelProperties levelProperties;
 
         public static bool debugMode;
 
