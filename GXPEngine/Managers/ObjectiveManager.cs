@@ -100,30 +100,61 @@ namespace GXPEngine
             switch (objectiveType)
             {
                 case ObjectiveType.ScoreBelow:
-                    return $"Keep your score below {(int)parameter}, score: {(int)score} / {(int)parameter}";
+                    return $"Keep your score below {(int)parameter}";
                 case ObjectiveType.ScoreEqual:
-                    return $"Exit with a score of {(int)parameter}, score: {(int)score} / {(int)parameter}";
+                    return $"Exit with a score of {(int)parameter}";
                 case ObjectiveType.ScoreAbove:
-                    return $"Reach a score above {(int)parameter}, score: {(int)score} / {(int)parameter}";
+                    return $"Reach a score above {(int)parameter}";
 
                 case ObjectiveType.CollectTreats:
-                    return $"Collect {(int)parameter} treats, {(int)score} / {(int)parameter}";
+                    return $"Collect {(int)parameter} treats";
                 case ObjectiveType.DoNotColelctTreats:
                     return $"Exit without colleting any treats";
 
 
                 case ObjectiveType.DoNotExit:
-                    return $"Survive {(int)parameter} seconds without exiting, {(int)(parameter - timer)}";
+                    return $"Survive {(int)parameter} seconds without exiting";
                 case ObjectiveType.ExitInTime:
-                    return $"Exit the level within {(int)parameter} seconds, {(int)(parameter - timer)}";
+                    return $"Exit the level within {(int)parameter} seconds";
 
                 case ObjectiveType.DoNotStop:
-                    return $"Survive {(int)parameter} without stopping, {(int)(parameter - timer)}";
+                    return $"Survive {(int)parameter} seconds without stopping";
                 case ObjectiveType.StopInTime:
-                    return $"Stop the ball from moving within {(int)parameter} seconds, {(int)(parameter - timer)}";
+                    return $"Stop the ball from moving within {(int)parameter} seconds";
 
                 case ObjectiveType.TouchBumpers:
-                    return $"Bounce off of {(int)parameter} bumpers, {(int)score} / {(int)parameter}";
+                    return $"Bounce off of {(int)parameter} bumpers";
+
+                default:
+                    return "";
+            }
+        }
+        public static string GetProgress()
+        {
+            switch (objectiveType)
+            {
+                case ObjectiveType.ScoreBelow:
+                    return $"Score: {(int)score} / {(int)parameter}";
+                case ObjectiveType.ScoreEqual:
+                    return $"Score: {(int)score} / {(int)parameter}";
+                case ObjectiveType.ScoreAbove:
+                    return $"Score: {(int)score} / {(int)parameter}";
+
+                case ObjectiveType.CollectTreats:
+                    return $"Treats: {(int)score} / {(int)parameter}";
+
+                case ObjectiveType.DoNotExit:
+                    return $"Time left: {(int)(parameter - timer)}";
+                case ObjectiveType.ExitInTime:
+                    return $"Time left: {(int)(parameter - timer)}";
+
+                case ObjectiveType.DoNotStop:
+                    return $"Time left: {(int)(parameter - timer)}";
+                case ObjectiveType.StopInTime:
+                    return $"Time left: {(int)(parameter - timer)}";
+
+                case ObjectiveType.TouchBumpers:
+                    return $"Bumpers: {(int)score} / {(int)parameter}";
 
                 default:
                     return "";
