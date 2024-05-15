@@ -129,10 +129,6 @@ namespace GXPEngine
             ObjectiveManager.Update();
             inputManager.Update();
             debugger.Update();
-            workspace.Position = -cameraPosition + new Vec2(960, 540);
-            background.Position = -cameraPosition + new Vec2(960, 540); // (* 0.75 for depth effect)
-
-            //cameraPosition = Ball.Position;
 
             if (Input.GetKey(Key.NUMPAD_1))
             {
