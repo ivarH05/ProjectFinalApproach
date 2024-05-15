@@ -58,14 +58,6 @@ namespace GXPEngine
             SetGridPositions();
         }
 
-        void IsClickedOn()
-        {
-            if (Input.GetMouseButton(0) && Input.mouseX > coords[0].x && Input.mouseX < coords[0].x + coords[1].x && Input.mouseY > coords[0].y && Input.mouseY < coords[0].y + coords[1].y)
-            {
-                Console.WriteLine("Clicked on SidePanel");
-            }
-        }
-
         void SetGridPositions()
         {
             Vec2 currentGridPosition = new Vec2(0, 0);
@@ -91,28 +83,13 @@ namespace GXPEngine
             }
         }
 
-
         PhysicsObject GeneratePhysicsObject()
         {
             return new PhysicsObject("square.png", new Vec2(x, y));
         }
 
-        void CheckIfClicked()
-        {
-            if (Input.GetMouseButton(0) && Input.mouseX > x - width / 2 && Input.mouseX < x + width / 2 && Input.mouseY > y - height / 2 && Input.mouseY < y + height / 2)
-            {
-                PhysicsObject newObject = GeneratePhysicsObject();
-                newObject.SetXY(Input.mouseX, Input.mouseY);
-                newObject.gridIndex = 1;
-                newObject.DebugToggle();
-            }
-        }
-
-
         void Update()
         {
-            IsClickedOn();
-            // CheckIfClicked();
         }
     }
 }

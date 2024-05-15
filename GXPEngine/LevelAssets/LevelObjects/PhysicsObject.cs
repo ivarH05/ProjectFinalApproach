@@ -21,11 +21,14 @@ namespace GXPEngine
         Vec2 originalPosition;
         bool isOriginalPosition;
         bool isValidPlacement = false;
+        bool isUIObject = false;
+        bool isSpawned = false;
 
         public PhysicsObject(string spriteLocation, bool isStatic) : base(spriteLocation, false)
         {
             this.spriteLocation = spriteLocation;
             this.isStatic = isStatic;
+            this.isUIObject = true;
         }
 
         public PhysicsObject(string spriteLocation, Vec2 originalPosition) : base(spriteLocation, false)
@@ -56,7 +59,7 @@ namespace GXPEngine
         public void SetClickCollider( Vec2 pos)
         {
             originalPosition = pos;
-            Console.WriteLine(originalPosition.x + " " + originalPosition.y);
+            isOriginalPosition = false;
         }
 
         void MoveBackToOriginalPosition()
@@ -124,8 +127,9 @@ namespace GXPEngine
 
         void Update()
         {
-            IsClickedOn();
             if (!isStatic) DragObject();
+            else if (isStatic && isUIObject) IsClickedOn();
+            if (isUIObject && !isSpawned && !isOriginalPosition) MoveBackToOriginalPosition();
             DebugToggle();
         }
     }
