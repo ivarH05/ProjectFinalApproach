@@ -110,6 +110,8 @@ namespace GXPEngine
             w.Position = new Vec2(400, 200);
             GameObject B = workspace.AddChild(new Brake());
             B.Position = new Vec2(500, 600);
+            GameObject I = workspace.AddChild(new Ice());
+            I.Position = new Vec2(400, 400);
         }
 
         public bool SceneIsOver()

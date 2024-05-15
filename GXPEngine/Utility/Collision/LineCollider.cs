@@ -44,9 +44,9 @@ namespace GXPEngine
             if (dist > other.radius)
                 return null;
 
-            Vec2 normal = line.Normal * -1;
-            if (Vec2.Dot(normal, other.Position - p) < 0)
-                return null;
+            Vec2 normal = line.Normal;
+            if (Vec2.Dot(normal, other.Position - p) > 0)
+                normal = line.Normal * -1;
 
             CollisionData result = new CollisionData
             {

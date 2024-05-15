@@ -47,6 +47,7 @@
     <Compile Include="GXPEngine\Core\Vec2.cs" />
     <Compile Include="LevelAssets\LevelObjects\Brake.cs" />
     <Compile Include="LevelAssets\LevelObjects\Bumper.cs" />
+    <Compile Include="LevelAssets\LevelObjects\Ice.cs" />
     <Compile Include="LevelAssets\LevelObjects\LineBumper.cs" />
     <Compile Include="LevelAssets\LevelObjects\Triangle.cs" />
     <Compile Include="LevelAssets\LevelObjects\Wall.cs" />
@@ -103,12 +104,12 @@
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\TiledManager.cs" />
     <Compile Include="LevelAssets\LevelObjects\Booster.cs" />
-    <Compile Include="Managers\InputManager.cs" />    
-    <Compile Include="Managers\TiledManager.cs" />  
-    <Compile Include="LevelAssets\LevelObjects\PhysicsObject.cs" />    
-    <Compile Include="LevelAssets\LevelObjects\PinBallMachine.cs" />    
-    <Compile Include="LevelAssets\LevelObjects\ScoreBoard.cs" />    
-    <Compile Include="LevelAssets\LevelObjects\SidePanel.cs" />    
+    <Compile Include="Managers\InputManager.cs" />
+    <Compile Include="Managers\TiledManager.cs" />
+    <Compile Include="LevelAssets\LevelObjects\PhysicsObject.cs" />
+    <Compile Include="LevelAssets\LevelObjects\PinBallMachine.cs" />
+    <Compile Include="LevelAssets\LevelObjects\ScoreBoard.cs" />
+    <Compile Include="LevelAssets\LevelObjects\SidePanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
