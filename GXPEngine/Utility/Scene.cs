@@ -97,7 +97,7 @@ namespace GXPEngine
                 Vec2 end = verticies[i + 1];
                 workspace.AddChild(new Rigidbody("", new LineCollider(start, end)));
             }
-            ObjectiveManager.setObjective(ObjectiveType.CollectTreats, 50);
+            ObjectiveManager.setObjective(ObjectiveType.DoNotExit, 50);
 
             GameObject b = workspace.AddChild(new Booster());
             b.Position = new Vec2(380, 990);
@@ -150,7 +150,6 @@ namespace GXPEngine
                 Ball.velocity = new Vec2(0, -2250);
             }
             ObjectiveManager.UpdateScore(ScoreType.PlayerSpeed, Ball.velocity.magnitude);
-            Console.WriteLine(ObjectiveManager.GetObjectiveText());
         }
     }
 }
