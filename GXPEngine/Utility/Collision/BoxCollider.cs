@@ -77,12 +77,12 @@ namespace GXPEngine
             Vec2[] corners1 = GetRotatedCorners(Position, _halfSize, rotation);
             Vec2 PointOfImpact = GetClosestPointOnSquare(corners1, other.Position);
 
-            float dist = Vec2.Distance(PointOfImpact, other.Position);
+            Vec2 normal = (other.Position - PointOfImpact);
+            float dist = normal.magnitude;
 
             if (dist > other.radius)
                 return null;
 
-            Vec2 normal = (Position - other.Position);
             normal = (Mathf.Abs(normal.x) > Mathf.Abs(normal.y) ? -new Vec2(normal.x, 0) : -new Vec2(0, normal.y)).RotateDegrees(rotation).normalized;
 
             return new CollisionData
@@ -91,7 +91,7 @@ namespace GXPEngine
                 normal = normal,
                 self = this,
                 other = other,
-                penetrationDepth = other.radius - dist,
+                penetrationDepth = dist - other.radius,
                 TimeOfImpact = 0
             };
         }
@@ -259,17 +259,17 @@ namespace GXPEngine
         private Vec2 GetClosestPointOnSquare(Vec2[] corners, Vec2 point)
         {
             Vec2 closestPoint = Vec2.Zero;
-            float distance = float.MaxValue;
+            float minDistance = float.MaxValue;
             for (int i = 0; i < corners.Length; i++)
             {
                 Vec2 c1 = corners[i];
                 Vec2 c2 = corners[(i + 1) % corners.Length];
                 Vec2 p = GetClosestPointOnLine(c1, c2, point);
                 float dist = Vec2.Distance(p, point);
-                if (dist < distance)
+                if (dist < minDistance)
                 {
                     closestPoint = p;
-                    distance = dist;
+                    minDistance = dist;
                 }
             }
             return closestPoint;

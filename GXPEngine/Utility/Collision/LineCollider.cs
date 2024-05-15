@@ -46,7 +46,7 @@ namespace GXPEngine
 
             Vec2 normal = line.Normal;
             if (Vec2.Dot(normal, other.Position - p) > 0)
-                normal *= -1;
+                normal = line.Normal * -1;
 
             CollisionData result = new CollisionData
             {

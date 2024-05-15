@@ -57,22 +57,29 @@ namespace GXPEngine
 
         public bool isTrigger = false;
 
-        private CollisionData[] Collisions = new CollisionData[0];
+        public List<CollisionData> Collisions = new List<CollisionData>();
 
         public Rigidbody(string spritePath = "Square.png", Collider collider = null) : base(spritePath == "" ? "Square.png" : spritePath, false, false)
         {
             centerOrigin();
             if (spritePath == "")
                 visible = false;
+
             if (collider != null)
                 SetCollider(collider);
             if (collider is LineCollider)
                 isKinematic = true;
             if (collider is CircleCollider cc)
             {
-                width = (int)cc.radius * 2; 
+                width = (int)cc.radius * 2;
                 height = (int)cc.radius * 2;
             }
+            if (collider is BoxCollider bc)
+            {
+                width = (int)bc.size.x;
+                height = (int)bc.size.y;
+            }
+
             PhysicsManager.AddBody(this);
         }
 
@@ -91,7 +98,7 @@ namespace GXPEngine
             float oldRotation = rotation;
             nextPosition = Position;
             nextRotation = rotation;
-            if (isKinematic)
+            if (isKinematic || isTrigger)
                 return;
 
             if (useGravity)
@@ -105,17 +112,31 @@ namespace GXPEngine
 
             Move:
             List<CollisionData> data = PhysicsManager.GetCollisions(this);
-            Collisions = data.ToArray();
+            int c = data.Count;
+            foreach (CollisionData dat in data)
+            {
+                CollisionData flipped = CollisionData.flip(dat);
+                if (dat.other.rigidbody.isTrigger)
+                    c--;
+                if (dat.other.rigidbody.Collisions.Contains(flipped))
+                    continue;
+                dat.other.rigidbody.Collisions.Add(flipped);
+            }
+
             if (data.Count == 0)
                 goto End;
 
             foreach (CollisionData dat in data)
             {
+                if (dat.other.rigidbody.isTrigger)
+                    continue;
                 Position -= dat.normal * (dat.penetrationDepth + 0.001f);
                 time -= dat.penetrationDepth / velocity.magnitude;
                 velocity = velocity.Reflect(dat.normal);
                 Vec2 relativeVelocity = dat.other.Velocity - velocity;
-                velocity *= 0.96f;
+                velocity *= 0.95f;
+                if (velocity.magnitude < 10)
+                    velocity += dat.normal * 10;
 
                 if (Vec2.Dot(velocity.normalized, relativeVelocity.normalized) >= 0)
                 {
@@ -146,6 +167,7 @@ namespace GXPEngine
                     OnTrigger(dat);
                 else
                     OnCollision(dat);
+            Collisions.Clear();
         }
 
         /// <summary>
@@ -160,6 +182,7 @@ namespace GXPEngine
         protected override void OnDestroy()
         {
             PhysicsManager.RemoveBody(this);
+            base.OnDestroy();
         }
 
         public virtual void OnCollision(CollisionData collision)
