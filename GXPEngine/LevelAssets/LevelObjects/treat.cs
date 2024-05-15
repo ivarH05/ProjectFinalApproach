@@ -8,10 +8,10 @@ using TiledMapParser;
 
 namespace GXPEngine
 {
-    public class Ice : Rigidbody
+    public class Treat : Rigidbody
     {
         float triggerTimer = -100;
-        public Ice(TiledObject obj = null) : base("Circle.png", new CircleCollider(32))
+        public Treat(TiledObject obj = null) : base("Circle.png", new CircleCollider(32))
         {
             isTrigger = true;
         }
@@ -21,7 +21,7 @@ namespace GXPEngine
             color = (uint)(color + (0xffffff - color) * Time.DeltaSeconds * 10);
             triggerTimer -= Time.DeltaSeconds;
             scale = Mathf.Lerp(scale, 1, Time.DeltaSeconds * 35);
-            if(triggerTimer > -100 && triggerTimer < -0.35)
+            if (triggerTimer > -100 && triggerTimer < -0.35)
             {
                 LateDestroy();
             }
@@ -35,11 +35,9 @@ namespace GXPEngine
                 return;
 
             scale = 2f;
-            color = 0x00FF00;
-            other.velocity = collision.normal * 1000;
+            color = 0x0000ff;
             triggerTimer = 0.25f;
-            ObjectiveManager.UpdateScore(ScoreType.BumperCount, 1);
-            ObjectiveManager.UpdateScore(ScoreType.Score, 500);
+            ObjectiveManager.UpdateScore(ScoreType.TreatsCount, 1);
         }
     }
 }

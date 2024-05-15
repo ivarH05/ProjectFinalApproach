@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GXPEngine.LevelAssets.LevelObjects
+namespace GXPEngine
 {
     public class Wall : Rigidbody
     {

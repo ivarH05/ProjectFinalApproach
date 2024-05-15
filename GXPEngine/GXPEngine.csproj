@@ -49,9 +49,11 @@
     <Compile Include="LevelAssets\LevelObjects\Bumper.cs" />
     <Compile Include="LevelAssets\LevelObjects\Ice.cs" />
     <Compile Include="LevelAssets\LevelObjects\LineBumper.cs" />
+    <Compile Include="LevelAssets\LevelObjects\treat.cs" />
     <Compile Include="LevelAssets\LevelObjects\Triangle.cs" />
     <Compile Include="LevelAssets\LevelObjects\Wall.cs" />
     <Compile Include="MainGame.cs" />
+    <Compile Include="Managers\ObjectiveManager.cs" />
     <Compile Include="Utility\Collision\BoxCollider.cs" />
     <Compile Include="Utility\Collision\CircleCollider.cs" />
     <Compile Include="Utility\Collision\Collider.cs" />

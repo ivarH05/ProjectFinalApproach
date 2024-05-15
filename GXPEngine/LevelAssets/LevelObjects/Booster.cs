@@ -5,12 +5,13 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TiledMapParser;
 
 namespace GXPEngine
 {
     public class Booster : Rigidbody
     {
-        public Booster() : base("Square.png", new BoxCollider(new Vec2(64, 150)))
+        public Booster(TiledObject obj = null) : base("Square.png", new BoxCollider(new Vec2(64, 150)))
         {
             isTrigger = true;
         }
@@ -22,7 +23,7 @@ namespace GXPEngine
             if (other.isKinematic)
                 return;
 
-            other.velocity += new Vec2(0, -2000 * Time.timeStep);
+            other.velocity += new Vec2(0, -10000 * Time.timeStep);
         }
     }
 }

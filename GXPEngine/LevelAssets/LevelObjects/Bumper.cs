@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TiledMapParser;
 
-namespace GXPEngine.LevelAssets.LevelObjects
+namespace GXPEngine
 {
     public class Bumper : Rigidbody
     {
         float triggerTimer = 0;
-        public Bumper() : base("Circle.png", new CircleCollider(32))
+        public Bumper(TiledObject obj = null) : base("Circle.png", new CircleCollider(32))
         {
             isTrigger = true;
         }
@@ -33,6 +34,8 @@ namespace GXPEngine.LevelAssets.LevelObjects
             color = 0xFF0000;
             other.velocity = collision.normal * 1000;
             triggerTimer = 0.25f;
+            ObjectiveManager.UpdateScore(ScoreType.BumperCount, 1);
+            ObjectiveManager.UpdateScore(ScoreType.Score, 500);
         }
     }
 }

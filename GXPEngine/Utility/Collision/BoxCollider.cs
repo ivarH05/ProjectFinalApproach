@@ -198,7 +198,6 @@ namespace GXPEngine
             normal = (Mathf.Abs(normal.x) > Mathf.Abs(normal.y) ? -new Vec2(normal.x, 0) : -new Vec2(0, normal.y)).RotateDegrees(rotation).normalized;
 
             float TimeOfImpact = (Vec2.Distance(PointOfImpact, other.Position) - other.radius) / (Velocity - other.Velocity).magnitude;
-            Console.WriteLine("------------" + TimeOfImpact);
 
             return new CollisionData
             {
