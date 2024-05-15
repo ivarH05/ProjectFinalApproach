@@ -69,7 +69,7 @@ namespace GXPEngine
         void SetGridPositions()
         {
             Vec2 currentGridPosition = new Vec2(0, 0);
-            int offset = 0;
+            int offset = 5;
             bool runOnce = true;
 
             for ( int i = 0; i < gridIndex.Count; i++ )
@@ -77,10 +77,10 @@ namespace GXPEngine
                 PhysicsObject spriteToAdd = new PhysicsObject(spriteLocations[i], true);
                 spriteToAdd.SetOrigin(spriteToAdd.width/2, spriteToAdd.height/2);
 
-                if ( currentGridPosition.y == 0 && runOnce ) currentGridPosition = new Vec2( coords[0].x+spriteToAdd.width/2, coords[0].y+spriteToAdd.height/2 );
+                if ( currentGridPosition.y == 0 && runOnce ) currentGridPosition = new Vec2( coords[0].x+spriteToAdd.width/2+offset, coords[0].y+spriteToAdd.height/2+offset );
                 else currentGridPosition = new Vec2(currentGridPosition.x + spriteToAdd.width, currentGridPosition.y);
 
-                // if ( currentGridPosition.x + spriteToAdd.width >= width ) currentGridPosition = new Vec2( coords[0].x , currentGridPosition.y + spriteToAdd.height);
+                if ( currentGridPosition.x + spriteToAdd.width >= width ) currentGridPosition = new Vec2( currentGridPosition.x+spriteToAdd.height , currentGridPosition.y + spriteToAdd.height);
 
                 spriteToAdd.SetClickCollider( new Vec2( currentGridPosition.x, currentGridPosition.y ));
                 gridPositions[i] = currentGridPosition;
