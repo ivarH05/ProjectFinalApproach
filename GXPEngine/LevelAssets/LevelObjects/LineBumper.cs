@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GXPEngine.LevelAssets.LevelObjects
+namespace GXPEngine
 {
     internal class LineBumper : Rigidbody
     {
@@ -25,6 +25,7 @@ namespace GXPEngine.LevelAssets.LevelObjects
 
             other.velocity = collision.normal * 1000;
             triggerTimer = 0.25f;
+            ObjectiveManager.UpdateScore(ScoreType.Score, 500);
         }
     }
 }

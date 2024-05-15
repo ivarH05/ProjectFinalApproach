@@ -56,10 +56,12 @@ namespace GXPEngine
         float nextRotation = 0;
 
         public bool isTrigger = false;
+        public bool storeCollisions = false;
 
         public List<CollisionData> Collisions = new List<CollisionData>();
+        public List<CollisionData> lastCollisions = new List<CollisionData>();
 
-        public Rigidbody(string spritePath = "Square.png", Collider collider = null) : base(spritePath == "" ? "Square.png" : spritePath, false, false)
+        public Rigidbody(string spritePath = "Square.png", Collider collider = null, bool storeCollisions = false) : base(spritePath == "" ? "Square.png" : spritePath, false, false)
         {
             centerOrigin();
             if (spritePath == "")
@@ -81,6 +83,7 @@ namespace GXPEngine
             }
 
             PhysicsManager.AddBody(this);
+            this.storeCollisions = storeCollisions;
         }
 
         public void SetCollider(Collider collider)
@@ -123,7 +126,7 @@ namespace GXPEngine
                 dat.other.rigidbody.Collisions.Add(flipped);
             }
 
-            if (data.Count == 0)
+            if (c == 0)
                 goto End;
 
             foreach (CollisionData dat in data)
@@ -135,8 +138,10 @@ namespace GXPEngine
                 velocity = velocity.Reflect(dat.normal);
                 Vec2 relativeVelocity = dat.other.Velocity - velocity;
                 velocity *= 0.95f;
-                if (velocity.magnitude < 10)
-                    velocity += dat.normal * 10;
+
+                if(Vec2.Dot(velocity.normalized, dat.normal) < 30)
+                    if (velocity.magnitude < 100)
+                        velocity += dat.normal * 20;
 
                 if (Vec2.Dot(velocity.normalized, relativeVelocity.normalized) >= 0)
                 {
@@ -167,8 +172,11 @@ namespace GXPEngine
                     OnTrigger(dat);
                 else
                     OnCollision(dat);
-            Collisions.Clear();
+            if(storeCollisions)
+                lastCollisions.AddRange(Collisions);
+            Collisions = new List<CollisionData>();
         }
+
 
         /// <summary>
         /// add a certain amount of force to the object, the effectiveness will depend on the mass of this object.
@@ -193,6 +201,16 @@ namespace GXPEngine
         public virtual void OnTrigger(CollisionData collision)
         {
 
+        }
+
+        public List<CollisionData> GetCollisions()
+        {
+            return lastCollisions;
+        }
+        public void ClearCollisions()
+        {
+            Collisions.Clear();
+            lastCollisions = new List<CollisionData>();
         }
     }
 }

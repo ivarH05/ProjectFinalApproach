@@ -5,12 +5,13 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TiledMapParser;
 
 namespace GXPEngine
 {
     public class Brake : Rigidbody
     {
-        public Brake() : base("Square.png", new BoxCollider(new Vec2(96, 96)))
+        public Brake(TiledObject obj = null) : base("Square.png", new BoxCollider(new Vec2(64, 64)))
         {
             isTrigger = true;
         }
@@ -22,7 +23,7 @@ namespace GXPEngine
             if (other.isKinematic)
                 return;
 
-            other.velocity = Vec2.Lerp(other.velocity, Vec2.Zero, Time.timeStep);
+            other.velocity = Vec2.Lerp(other.velocity, new Vec2(0, -164), Time.timeStep * 6);
         }
     }
 }

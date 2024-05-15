@@ -1,5 +1,4 @@
 ﻿using GXPEngine.Core;
-using GXPEngine.LevelAssets.LevelObjects;
 using GXPEngine.Managers;
 using System;
 using System.Collections;
@@ -65,7 +64,6 @@ namespace GXPEngine
         {
             if (_singleton != null && overrideSingleton)
             {
-                Console.WriteLine("aaaa");
                 UILayer.LateDestroy();
                 debugger.LateDestroy();
                 background.LateDestroy();
@@ -99,6 +97,7 @@ namespace GXPEngine
                 Vec2 end = verticies[i + 1];
                 workspace.AddChild(new Rigidbody("", new LineCollider(start, end)));
             }
+            ObjectiveManager.setObjective(ObjectiveType.CollectTreats, 50);
 
             GameObject b = workspace.AddChild(new Booster());
             b.Position = new Vec2(380, 990);
@@ -124,7 +123,10 @@ namespace GXPEngine
         {
             if (_singleton != this)
                 return;
+            if (Ball.Position.y > 1080)
+                ObjectiveManager.Complete();
             PhysicsManager.PhysicsUpdate();
+            ObjectiveManager.Update();
             inputManager.Update();
             debugger.Update();
 
@@ -143,6 +145,8 @@ namespace GXPEngine
                 Ball.Position = new Vec2(686, 948);
                 Ball.velocity = new Vec2(0, -2250);
             }
+            ObjectiveManager.UpdateScore(ScoreType.PlayerSpeed, Ball.velocity.magnitude);
+            Console.WriteLine(ObjectiveManager.GetObjectiveText());
         }
     }
 }
