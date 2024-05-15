@@ -40,7 +40,7 @@ namespace GXPEngine
             else
             {
                 updateTimer += Time.DeltaSeconds;
-                //Time.timeStep = Mathf.Clamp(Time.DeltaSeconds / 2, 0, 0.1f);
+                Time.timeStep = Mathf.Clamp(Time.DeltaSeconds / 2, 0, 0.1f);
             }
             while (updateTimer > Time.timeStep)
             {

@@ -9,7 +9,8 @@ namespace GXPEngine.LevelAssets.LevelObjects
 {
     public class Triangle : Sprite
     {
-        public Vec2[] verticies = new Vec2[] { new Vec2(-70, 65), new Vec2(10, -80), new Vec2(10, 20) };
+        public Vec2[] verticies = new Vec2[] { new Vec2(10, 20), new Vec2(10, -80), new Vec2(-70, 65) };
+        //public Vec2[] verticies = new Vec2[] { new Vec2(-70, 65), new Vec2(10, -80), new Vec2(10, 20) };
         public Triangle() : base("Assets/Triangle.png", false, false)
         {
             centerOrigin();
