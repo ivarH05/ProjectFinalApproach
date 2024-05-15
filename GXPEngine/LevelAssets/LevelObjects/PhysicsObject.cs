@@ -12,33 +12,35 @@ namespace GXPEngine
 {
     public class PhysicsObject : Sprite
     {
-
+        string colliderType;
+        string[] colliderTypes = new string[] { "Box", "Circle", "Line" };
         BoxCollider collider;
         string spriteLocation;
         bool isStatic = false;
         bool isDragging = false;
-        string objectName;
         Vec2 originalPosition;
         bool isOriginalPosition;
         bool isValidPlacement = false;
+        bool isUIObject = false;
 
-        public PhysicsObject(string spriteLocation = "square.png") : base(spriteLocation, false)
+        public PhysicsObject(string spriteLocation, bool isStatic) : base(spriteLocation, false)
         {
             this.spriteLocation = spriteLocation;
-            // empty
+            this.isStatic = isStatic;
+            this.isUIObject = true;
         }
 
-        public PhysicsObject(TiledObject obj=null, string spriteLocation = "square.png") : base(spriteLocation, false)
+        public PhysicsObject(string spriteLocation, Vec2 originalPosition) : base(spriteLocation, false)
         {
             this.spriteLocation = spriteLocation;
-            // Empty
+            this.originalPosition = originalPosition;
         }
 
         public PhysicsObject(TiledObject obj=null) : base( obj.GetStringProperty("Sprite") != "" ? obj.GetStringProperty("Sprite") : "square.png" , false)
         {
             spriteLocation = obj.GetStringProperty("Sprite") != "" ? obj.GetStringProperty("Sprite") : "square.png";
-            objectName = obj.Name;
             originalPosition = new Vec2( obj.X+obj.Width/2, obj.Y+obj.Height/2);
+            isStatic = true;
         }
 
 
@@ -47,22 +49,45 @@ namespace GXPEngine
         public void DebugToggle() 
         {
             // place debug methods here
+            if ( Scene.debugMode )
+            {
+                isStatic = false;
+            }
         }
 
+        public void SetClickCollider( Vec2 pos)
+        {
+            originalPosition = pos;
+            isOriginalPosition = false;
+        }
 
         void MoveBackToOriginalPosition()
         {
             x = x + (originalPosition.x - x) * 0.1f;
             y = y + (originalPosition.y - y) * 0.1f;
             if (x == originalPosition.x && y == originalPosition.y) isOriginalPosition = true;
+            // if (isOriginalPosition) this.Destroy();    //NOTE uncomment this line to destroy object when it is back to original position
         }
 
+        bool CanBeClickedOn()
+        {
+            if (Input.GetMouseButton(0)
+                && Input.mouseX > x - width / 2 
+                && Input.mouseX < x + width / 2
+                && Input.mouseY > y - height / 2
+                && Input.mouseY < y + height / 2
+                )
+            {
+                return true;
+            }
+            return false;
+        }
 
         void DragObject()
         {
             if (Input.GetMouseButton(0)
-                && Input.mouseX > x - width / 2
-                && Input.mouseX < x + width / 2
+                && Input.mouseX  > x - width / 2 
+                && Input.mouseX  < x + width / 2
                 && Input.mouseY > y - height / 2
                 && Input.mouseY < y + height / 2
                 )
@@ -95,8 +120,12 @@ namespace GXPEngine
             }
         }
 
+        void SpawnPhysicsObject()
+        {
+            Console.WriteLine("Spawning object");
+        }
 
-        public void SetStatic(bool isStatic)
+        void SetStatic(bool isStatic)
         {
             this.isStatic = isStatic;
         }
@@ -104,6 +133,8 @@ namespace GXPEngine
         void Update()
         {
             if (!isStatic) DragObject();
+            if (isUIObject && !isOriginalPosition) MoveBackToOriginalPosition();
+            if (isUIObject && CanBeClickedOn()) SpawnPhysicsObject();
             DebugToggle();
         }
     }
