@@ -12,18 +12,21 @@ namespace GXPEngine
 {
     public class PhysicsObject : Sprite
     {
-
+        string colliderType;
+        string[] colliderTypes = new string[] { "Box", "Circle", "Line" };
         BoxCollider collider;
         string spriteLocation;
         bool isStatic = false;
         bool isDragging = false;
         Vec2 originalPosition;
         bool isOriginalPosition;
+        Vec2 realPosition;
         bool isValidPlacement = false;
 
-        public PhysicsObject(string spriteLocation = "square.png") : base(spriteLocation, false)
+        public PhysicsObject(string spriteLocation, bool isStatic) : base(spriteLocation, false)
         {
             this.spriteLocation = spriteLocation;
+            this.isStatic = isStatic;
         }
 
         public PhysicsObject(string spriteLocation, Vec2 originalPosition) : base(spriteLocation, false)
@@ -36,6 +39,7 @@ namespace GXPEngine
         {
             spriteLocation = obj.GetStringProperty("Sprite") != "" ? obj.GetStringProperty("Sprite") : "square.png";
             originalPosition = new Vec2( obj.X+obj.Width/2, obj.Y+obj.Height/2);
+            isStatic = true;
         }
 
 
@@ -44,8 +48,20 @@ namespace GXPEngine
         public void DebugToggle() 
         {
             // place debug methods here
+            if ( Scene.debugMode )
+            {
+                isStatic = false;
+                // Console.WriteLine("x: " + x + " y: " + y);
+            }
         }
 
+        public void SetClickCollider( Vec2 pos, Vec2 size )
+        {
+            originalPosition = pos;
+            width = (int)size.x;
+            height = (int)size.y;
+            Console.WriteLine(originalPosition.x + " " + originalPosition.y);
+        }
 
         void MoveBackToOriginalPosition()
         {
@@ -55,19 +71,36 @@ namespace GXPEngine
             // if (isOriginalPosition) this.Destroy();    //NOTE uncomment this line to destroy object when it is back to original position
         }
 
+        void IsClickedOn()
+        {
+            Vec2 mousePos = InverseTransformPoint(Input.mouseX, Input.mouseY);
+            // Console.WriteLine(mousePos);
+            if (Input.GetMouseButton(0)
+                && mousePos.x > x - width / 2 
+                && mousePos.x < x + width / 2
+                && mousePos.y > y - height / 2
+                && mousePos.y < y + height / 2
+                )
+            {
+                Console.WriteLine("Clicked on object");
+            }
+        }
 
         void DragObject()
         {
+            Vec2 mousePos = InverseTransformPoint(Input.mouseX, Input.mouseY);
+            // Console.WriteLine(mousePos);
             if (Input.GetMouseButton(0)
-                && Input.mouseX > x - width / 2
-                && Input.mouseX < x + width / 2
-                && Input.mouseY > y - height / 2
-                && Input.mouseY < y + height / 2
+                && mousePos.x > x - width / 2 
+                && mousePos.x < x + width / 2
+                && mousePos.y > y - height / 2
+                && mousePos.y < y + height / 2
                 )
             {
                 isDragging = true;
-                x = x + (Input.mouseX - x) * 0.1f;
-                y = y + (Input.mouseY - y) * 0.1f; 
+                mousePos *= 2;
+                x = x + (mousePos.x - x) * 0.1f;
+                y = y + (mousePos.y - y) * 0.1f; 
             } else if (isDragging && !Input.GetMouseButton(0))
             {
                 isDragging = false;
@@ -85,21 +118,22 @@ namespace GXPEngine
 
             }   else if (isDragging)
             {
-                x = x + (Input.mouseX - x) * 0.1f;
-                y = y + (Input.mouseY - y) * 0.1f;
+                x = x + (mousePos.x  - x) * 0.1f;
+                y = y + (mousePos.y - y) * 0.1f;
             } else if (!isValidPlacement)
             {
                 MoveBackToOriginalPosition();
             }
         }
 
-        public void SetStatic(bool isStatic)
+        void SetStatic(bool isStatic)
         {
             this.isStatic = isStatic;
         }
 
         void Update()
         {
+            IsClickedOn();
             if (!isStatic) DragObject();
             DebugToggle();
         }

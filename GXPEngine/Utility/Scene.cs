@@ -107,8 +107,6 @@ namespace GXPEngine
             PhysicsManager.PhysicsUpdate();
             inputManager.Update();
             debugger.Update();
-            workspace.Position = -cameraPosition;
-            background.Position = -cameraPosition; // (* 0.75 for depth effect)
 
             if (Input.GetKey(Key.NUMPAD_1))
             {

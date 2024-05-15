@@ -14,6 +14,17 @@ namespace GXPEngine
     public class SidePanel : Sprite
     {
         public static Vec2[] coords;
+        Vec2[] gridPositions;
+        PhysicsObject[] gridObjects;
+
+        string[] spriteLocations = new string[] 
+        {    
+            "square.png", 
+            "square.png", 
+            "square.png", 
+            "square.png", 
+            "square.png" 
+        };
 
         //<GridIndex, ObjectCount>
         Dictionary<int, int> gridIndex = new Dictionary<int, int>()
@@ -23,7 +34,6 @@ namespace GXPEngine
             { 3, 0 },
             { 4, 0 },
             { 5, 0 },
-            { 6, 0 },
         };
 
         public SidePanel() : base("square.png", false)
@@ -38,14 +48,62 @@ namespace GXPEngine
             
             for ( int i = 0; i < obj.GetIntProperty("GridSize"); i++ )
             {
-                Console.WriteLine("GridProp "+(i+1)+": "+obj.GetIntProperty("Object_"+i) );
+                // Console.WriteLine("GridProp "+(i+1)+": "+obj.GetIntProperty("Object_"+i) );
                 gridIndex[i+1] = obj.GetIntProperty("Object_"+i);
             }
+
+            gridPositions = new Vec2[gridIndex.Count];
+            gridObjects = new PhysicsObject[gridIndex.Count];
+            SetGridPositions();
         }
+
+        void SetGridPositions()
+        {
+            Vec2 tempOriginPoint = new Vec2( width/-2, height/-2 );
+            Vec2 currentGridPosition = new Vec2(0, 0);
+            bool runOnce = true;
+
+            for ( int i = 0; i < gridIndex.Count; i++ )
+            {
+                PhysicsObject spriteToAdd = new PhysicsObject(spriteLocations[i], true);
+                // spriteToAdd.SetScaleXY(0.5f, 0.5f); //NOTE: remove when real assets added
+                spriteToAdd.SetClickCollider( new Vec2( coords[0].x+currentGridPosition.x, coords[0].y+currentGridPosition.y ), new Vec2( spriteToAdd.width, spriteToAdd.height ) );
+
+                if ( currentGridPosition.y == 0 && runOnce ) currentGridPosition = new Vec2( tempOriginPoint.x , tempOriginPoint.y );
+                else currentGridPosition = new Vec2(currentGridPosition.x + spriteToAdd.width, currentGridPosition.y);
+
+                if ( currentGridPosition.x + spriteToAdd.width >= width ) currentGridPosition = new Vec2( tempOriginPoint.x , currentGridPosition.y + spriteToAdd.height);
+
+                // spriteToAdd.SetXY( currentGridPosition.x, currentGridPosition.y );
+                gridPositions[i] = currentGridPosition;
+                gridObjects[i] = spriteToAdd;
+                Scene.workspace.AddChild(spriteToAdd);
+
+                if ( runOnce ) runOnce = false;             
+            }
+        }
+
 
         PhysicsObject GeneratePhysicsObject()
         {
             return new PhysicsObject("square.png", new Vec2(x, y));
+        }
+
+        void CheckIfClicked()
+        {
+            if (Input.GetMouseButton(0) && Input.mouseX > x - width / 2 && Input.mouseX < x + width / 2 && Input.mouseY > y - height / 2 && Input.mouseY < y + height / 2)
+            {
+                PhysicsObject newObject = GeneratePhysicsObject();
+                newObject.SetXY(Input.mouseX, Input.mouseY);
+                newObject.gridIndex = 1;
+                newObject.DebugToggle();
+            }
+        }
+
+
+        void Update()
+        {
+
         }
     }
 }
