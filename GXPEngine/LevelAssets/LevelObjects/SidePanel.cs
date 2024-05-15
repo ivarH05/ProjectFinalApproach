@@ -83,11 +83,6 @@ namespace GXPEngine
             }
         }
 
-        PhysicsObject GeneratePhysicsObject()
-        {
-            return new PhysicsObject("square.png", new Vec2(x, y));
-        }
-
         void Update()
         {
         }

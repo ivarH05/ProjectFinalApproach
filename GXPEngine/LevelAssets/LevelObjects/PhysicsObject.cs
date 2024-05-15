@@ -22,7 +22,6 @@ namespace GXPEngine
         bool isOriginalPosition;
         bool isValidPlacement = false;
         bool isUIObject = false;
-        bool isSpawned = false;
 
         public PhysicsObject(string spriteLocation, bool isStatic) : base(spriteLocation, false)
         {
@@ -70,7 +69,7 @@ namespace GXPEngine
             // if (isOriginalPosition) this.Destroy();    //NOTE uncomment this line to destroy object when it is back to original position
         }
 
-        void IsClickedOn()
+        bool CanBeClickedOn()
         {
             if (Input.GetMouseButton(0)
                 && Input.mouseX > x - width / 2 
@@ -79,8 +78,9 @@ namespace GXPEngine
                 && Input.mouseY < y + height / 2
                 )
             {
-                Console.WriteLine("Object x: " + x + " y: " + y);
+                return true;
             }
+            return false;
         }
 
         void DragObject()
@@ -120,6 +120,11 @@ namespace GXPEngine
             }
         }
 
+        void SpawnPhysicsObject()
+        {
+            Console.WriteLine("Spawning object");
+        }
+
         void SetStatic(bool isStatic)
         {
             this.isStatic = isStatic;
@@ -128,8 +133,8 @@ namespace GXPEngine
         void Update()
         {
             if (!isStatic) DragObject();
-            else if (isStatic && isUIObject) IsClickedOn();
-            if (isUIObject && !isSpawned && !isOriginalPosition) MoveBackToOriginalPosition();
+            if (isUIObject && !isOriginalPosition) MoveBackToOriginalPosition();
+            if (isUIObject && CanBeClickedOn()) SpawnPhysicsObject();
             DebugToggle();
         }
     }
