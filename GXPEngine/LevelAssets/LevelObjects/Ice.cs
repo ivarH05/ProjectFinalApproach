@@ -11,7 +11,7 @@ namespace GXPEngine
     public class Ice : Rigidbody
     {
         float triggerTimer = -100;
-        public Ice(TiledObject obj = null) : base("Circle.png", new CircleCollider(32))
+        public Ice(TiledObject obj = null) : base("Square.png", new BoxCollider(new Vec2(64, 64)))
         {
             isTrigger = true;
         }
@@ -36,7 +36,7 @@ namespace GXPEngine
 
             scale = 2f;
             color = 0x00FF00;
-            other.velocity = collision.normal * 1000;
+            other.velocity = collision.normal * -1000;
             triggerTimer = 0.25f;
             ObjectiveManager.UpdateScore(ScoreType.BumperCount, 1);
             ObjectiveManager.UpdateScore(ScoreType.Score, 500);
