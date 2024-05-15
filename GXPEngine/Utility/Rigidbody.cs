@@ -112,9 +112,15 @@ namespace GXPEngine
 
             Move:
             List<CollisionData> data = PhysicsManager.GetCollisions(this);
+            int c = data.Count;
             foreach (CollisionData dat in data)
             {
-                dat.other.rigidbody.Collisions.Add(CollisionData.flip(dat));
+                CollisionData flipped = CollisionData.flip(dat);
+                if (dat.other.rigidbody.isTrigger)
+                    c--;
+                if (dat.other.rigidbody.Collisions.Contains(flipped))
+                    continue;
+                dat.other.rigidbody.Collisions.Add(flipped);
             }
 
             if (data.Count == 0)
