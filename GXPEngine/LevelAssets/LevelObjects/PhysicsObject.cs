@@ -20,7 +20,6 @@ namespace GXPEngine
         bool isDragging = false;
         Vec2 originalPosition;
         bool isOriginalPosition;
-        Vec2 realPosition;
         bool isValidPlacement = false;
 
         public PhysicsObject(string spriteLocation, bool isStatic) : base(spriteLocation, false)
@@ -51,15 +50,12 @@ namespace GXPEngine
             if ( Scene.debugMode )
             {
                 isStatic = false;
-                // Console.WriteLine("x: " + x + " y: " + y);
             }
         }
 
-        public void SetClickCollider( Vec2 pos, Vec2 size )
+        public void SetClickCollider( Vec2 pos)
         {
             originalPosition = pos;
-            width = (int)size.x;
-            height = (int)size.y;
             Console.WriteLine(originalPosition.x + " " + originalPosition.y);
         }
 
@@ -73,34 +69,29 @@ namespace GXPEngine
 
         void IsClickedOn()
         {
-            Vec2 mousePos = InverseTransformPoint(Input.mouseX, Input.mouseY);
-            // Console.WriteLine(mousePos);
             if (Input.GetMouseButton(0)
-                && mousePos.x > x - width / 2 
-                && mousePos.x < x + width / 2
-                && mousePos.y > y - height / 2
-                && mousePos.y < y + height / 2
+                && Input.mouseX > x - width / 2 
+                && Input.mouseX < x + width / 2
+                && Input.mouseY > y - height / 2
+                && Input.mouseY < y + height / 2
                 )
             {
-                Console.WriteLine("Clicked on object");
+                Console.WriteLine("Object x: " + x + " y: " + y);
             }
         }
 
         void DragObject()
         {
-            Vec2 mousePos = InverseTransformPoint(Input.mouseX, Input.mouseY);
-            // Console.WriteLine(mousePos);
             if (Input.GetMouseButton(0)
-                && mousePos.x > x - width / 2 
-                && mousePos.x < x + width / 2
-                && mousePos.y > y - height / 2
-                && mousePos.y < y + height / 2
+                && Input.mouseX  > x - width / 2 
+                && Input.mouseX  < x + width / 2
+                && Input.mouseY > y - height / 2
+                && Input.mouseY < y + height / 2
                 )
             {
                 isDragging = true;
-                mousePos *= 2;
-                x = x + (mousePos.x - x) * 0.1f;
-                y = y + (mousePos.y - y) * 0.1f; 
+                x = x + (Input.mouseX - x) * 0.1f;
+                y = y + (Input.mouseY - y) * 0.1f; 
             } else if (isDragging && !Input.GetMouseButton(0))
             {
                 isDragging = false;
@@ -118,8 +109,8 @@ namespace GXPEngine
 
             }   else if (isDragging)
             {
-                x = x + (mousePos.x  - x) * 0.1f;
-                y = y + (mousePos.y - y) * 0.1f;
+                x = x + (Input.mouseX - x) * 0.1f;
+                y = y + (Input.mouseY - y) * 0.1f;
             } else if (!isValidPlacement)
             {
                 MoveBackToOriginalPosition();

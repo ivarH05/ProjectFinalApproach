@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using TiledMapParser;
 using System.Dynamic;
+using System.Runtime.InteropServices;
 
 namespace GXPEngine
 {
@@ -57,24 +58,31 @@ namespace GXPEngine
             SetGridPositions();
         }
 
+        void IsClickedOn()
+        {
+            if (Input.GetMouseButton(0) && Input.mouseX > coords[0].x && Input.mouseX < coords[0].x + coords[1].x && Input.mouseY > coords[0].y && Input.mouseY < coords[0].y + coords[1].y)
+            {
+                Console.WriteLine("Clicked on SidePanel");
+            }
+        }
+
         void SetGridPositions()
         {
-            Vec2 tempOriginPoint = new Vec2( width/-2, height/-2 );
             Vec2 currentGridPosition = new Vec2(0, 0);
+            int offset = 0;
             bool runOnce = true;
 
             for ( int i = 0; i < gridIndex.Count; i++ )
             {
                 PhysicsObject spriteToAdd = new PhysicsObject(spriteLocations[i], true);
-                // spriteToAdd.SetScaleXY(0.5f, 0.5f); //NOTE: remove when real assets added
-                spriteToAdd.SetClickCollider( new Vec2( coords[0].x+currentGridPosition.x, coords[0].y+currentGridPosition.y ), new Vec2( spriteToAdd.width, spriteToAdd.height ) );
+                spriteToAdd.SetOrigin(spriteToAdd.width/2, spriteToAdd.height/2);
 
-                if ( currentGridPosition.y == 0 && runOnce ) currentGridPosition = new Vec2( tempOriginPoint.x , tempOriginPoint.y );
+                if ( currentGridPosition.y == 0 && runOnce ) currentGridPosition = new Vec2( coords[0].x+spriteToAdd.width/2, coords[0].y+spriteToAdd.height/2 );
                 else currentGridPosition = new Vec2(currentGridPosition.x + spriteToAdd.width, currentGridPosition.y);
 
-                if ( currentGridPosition.x + spriteToAdd.width >= width ) currentGridPosition = new Vec2( tempOriginPoint.x , currentGridPosition.y + spriteToAdd.height);
+                // if ( currentGridPosition.x + spriteToAdd.width >= width ) currentGridPosition = new Vec2( coords[0].x , currentGridPosition.y + spriteToAdd.height);
 
-                // spriteToAdd.SetXY( currentGridPosition.x, currentGridPosition.y );
+                spriteToAdd.SetClickCollider( new Vec2( currentGridPosition.x, currentGridPosition.y ));
                 gridPositions[i] = currentGridPosition;
                 gridObjects[i] = spriteToAdd;
                 Scene.workspace.AddChild(spriteToAdd);
@@ -103,7 +111,8 @@ namespace GXPEngine
 
         void Update()
         {
-
+            IsClickedOn();
+            // CheckIfClicked();
         }
     }
 }
