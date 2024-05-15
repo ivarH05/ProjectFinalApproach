@@ -130,20 +130,21 @@ namespace GXPEngine
             inputManager.Update();
             debugger.Update();
 
-            if (Input.GetKey(Key.NUMPAD_1))
+            if (Input.GetKeyDown(Key.NUMPAD_1))
             {
                 Ball.Position = new Vec2(686, 948);
                 Ball.velocity = new Vec2(0, -1500);
             }
-            if (Input.GetKey(Key.NUMPAD_2))
+            if (Input.GetKeyDown(Key.NUMPAD_2))
             {
                 Ball.Position = new Vec2(686, 948);
                 Ball.velocity = new Vec2(0, -1825);
             }
-            if (Input.GetKey(Key.NUMPAD_3))
+            if (Input.GetKeyDown(Key.NUMPAD_3))
             {
                 Ball.Position = new Vec2(686, 948);
                 Ball.velocity = new Vec2(0, -2250);
+                SoundManager.PlaySound("accept");
             }
             ObjectiveManager.UpdateScore(ScoreType.PlayerSpeed, Ball.velocity.magnitude);
         }

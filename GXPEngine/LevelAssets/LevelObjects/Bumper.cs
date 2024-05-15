@@ -33,9 +33,10 @@ namespace GXPEngine
             scale = 2f;
             color = 0xFF0000;
             other.velocity = collision.normal * 1000;
-            triggerTimer = 0.25f;
             ObjectiveManager.UpdateScore(ScoreType.BumperCount, 1);
             ObjectiveManager.UpdateScore(ScoreType.Score, 500);
+            SoundManager.PlaySound("circleBump");
+            triggerTimer = 0.25f;
         }
     }
 }

@@ -45,6 +45,7 @@ namespace GXPEngine
                     triggerTimer = 0.25f;
                     ObjectiveManager.UpdateScore(ScoreType.BumperCount, 1);
                     ObjectiveManager.UpdateScore(ScoreType.Score, 500);
+                    SoundManager.PlaySound("triangleBump");
                 }
                 edge.ClearCollisions();
             }

@@ -24,6 +24,7 @@ namespace GXPEngine
         public override void OnCollision(CollisionData collision)
         {
             Rigidbody other = collision.other.rigidbody;
+            SoundManager.PlaySound("wallBump");
 
             if (other.isKinematic || triggerTimer > 0)
                 return;

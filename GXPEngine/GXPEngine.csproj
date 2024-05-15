@@ -54,6 +54,7 @@
     <Compile Include="LevelAssets\LevelObjects\Wall.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="Managers\ObjectiveManager.cs" />
+    <Compile Include="Managers\SoundManager.cs" />
     <Compile Include="Utility\Collision\BoxCollider.cs" />
     <Compile Include="Utility\Collision\CircleCollider.cs" />
     <Compile Include="Utility\Collision\Collider.cs" />

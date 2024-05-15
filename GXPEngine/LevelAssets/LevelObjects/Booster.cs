@@ -11,9 +11,15 @@ namespace GXPEngine
 {
     public class Booster : Rigidbody
     {
+        float triggerTimer = 0;
         public Booster(TiledObject obj = null) : base("Square.png", new BoxCollider(new Vec2(64, 150)))
         {
             isTrigger = true;
+        }
+
+        void Update()
+        {
+            triggerTimer -= Time.DeltaSeconds;
         }
 
         public override void OnTrigger(CollisionData collision)
@@ -24,6 +30,11 @@ namespace GXPEngine
                 return;
 
             other.velocity += new Vec2(0, -10000 * Time.timeStep);
+            if (triggerTimer < 0)
+            {
+                SoundManager.PlaySound("speedUp");
+            }
+            triggerTimer = 0.5f;
         }
     }
 }
