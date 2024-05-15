@@ -134,6 +134,9 @@ namespace GXPEngine
                 time -= dat.penetrationDepth / velocity.magnitude;
                 velocity = velocity.Reflect(dat.normal);
                 Vec2 relativeVelocity = dat.other.Velocity - velocity;
+                velocity *= 0.95f;
+                if (velocity.magnitude < 10)
+                    velocity += dat.normal * 10;
 
                 if (Vec2.Dot(velocity.normalized, relativeVelocity.normalized) >= 0)
                 {
