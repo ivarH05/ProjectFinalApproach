@@ -75,6 +75,7 @@ namespace GXPEngine
                 if ( currentGridPosition.x + spriteToAdd.width >= width ) currentGridPosition = new Vec2( currentGridPosition.x+spriteToAdd.height , currentGridPosition.y + spriteToAdd.height);
 
                 spriteToAdd.SetClickCollider( new Vec2( currentGridPosition.x, currentGridPosition.y ));
+                spriteToAdd.SetXY( coords[0].x, coords[0].y-10000);
                 gridPositions[i] = currentGridPosition;
                 gridObjects[i] = spriteToAdd;
                 Scene.workspace.AddChild(spriteToAdd);
