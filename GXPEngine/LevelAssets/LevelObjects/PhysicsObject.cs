@@ -23,6 +23,7 @@ namespace GXPEngine
         bool isUIObject = false;
         bool levelJustStarted = true;
         int placementCount;
+        EasyDraw showPlacementCount;
 
         public PhysicsObject(string spriteLocation, bool isStatic, int placementCount, string colliderType) : base(spriteLocation, false)
         {
@@ -31,6 +32,7 @@ namespace GXPEngine
             this.isUIObject = true;
             this.placementCount = placementCount;
             this.colliderType = colliderType;
+            this.showPlacementCount = new EasyDraw(100, 100, false);
 
             if (isStatic) SetColor(0,0,0);
         }
@@ -58,6 +60,15 @@ namespace GXPEngine
             {
                 isStatic = false;
             }
+        }
+
+        void DrawPlacementCount()
+        {
+            showPlacementCount.Clear(Color.Transparent);
+            showPlacementCount.Fill(255, 255, 255);
+            showPlacementCount.TextFont(Utils.LoadFont("Assets/WishMF.ttf", 20));
+            showPlacementCount.Text(placementCount.ToString(), 50, 50);
+            AddChild(showPlacementCount);
         }
 
         public void SetClickCollider( Vec2 pos)
@@ -173,6 +184,7 @@ namespace GXPEngine
                 isStatic = true;
             }
             isValidPlacement = false;
+            DrawPlacementCount();
         }
 
         void SetStatic(bool isStatic)
@@ -183,6 +195,7 @@ namespace GXPEngine
         void LevelStart()
         {
             MoveBackToOriginalPosition();
+            DrawPlacementCount();
             levelJustStarted = isOriginalPosition ? false : true;
         }
 

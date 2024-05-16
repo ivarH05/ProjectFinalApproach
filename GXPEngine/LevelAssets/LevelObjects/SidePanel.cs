@@ -61,7 +61,6 @@ namespace GXPEngine
             for ( int i = 1; i < gridIndex.Count + 1; i++ )
             {
                 gridIndex[i] = obj.GetIntProperty(objectNames[i]);
-                Console.WriteLine(gridIndex[i]);
             }
 
             gridPositions = new Vec2[gridIndex.Count];
