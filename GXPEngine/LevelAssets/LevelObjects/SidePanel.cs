@@ -27,14 +27,24 @@ namespace GXPEngine
             "square.png" 
         };
 
+        // use this later to spawn the physics collider objects 
+        Dictionary<int, string> objectNames = new Dictionary<int, string>()
+        {
+            { 1,    "Bumper"    },
+            { 2,    "Triangle"  },
+            { 3,    "Break"     },
+            { 4,    "Booster"   },
+            { 5,    "Ice"       }
+        };
+
         //<GridIndex, ObjectCount>
         Dictionary<int, int> gridIndex = new Dictionary<int, int>()
         {
-            { 1, 0 },
-            { 2, 0 },
-            { 3, 0 },
-            { 4, 0 },
-            { 5, 0 },
+            { 1, 0 },   //Bumper
+            { 2, 0 },   //Triangle
+            { 3, 0 },   //Break
+            { 4, 0 },   //Booster
+            { 5, 0 },   //Ice
         };
 
         public SidePanel() : base("square.png", false)
@@ -46,11 +56,11 @@ namespace GXPEngine
         {
             alpha = 0f;
             coords = new Vec2[]{ new Vec2(obj.X, obj.Y), new Vec2(obj.Width, obj.Height)  };
-            
-            for ( int i = 0; i < obj.GetIntProperty("GridSize"); i++ )
+
+            // set count for objects            
+            for ( int i = 1; i < gridIndex.Count + 1; i++ )
             {
-                // Console.WriteLine("GridProp "+(i+1)+": "+obj.GetIntProperty("Object_"+i) );
-                gridIndex[i+1] = obj.GetIntProperty("Object_"+i);
+                gridIndex[i] = obj.GetIntProperty(objectNames[i]);
             }
 
             gridPositions = new Vec2[gridIndex.Count];
@@ -64,9 +74,13 @@ namespace GXPEngine
             int offset = 5;
             bool runOnce = true;
 
-            for ( int i = 0; i < gridIndex.Count; i++ )
+            for ( int i = 1; i < gridIndex.Count+1; i++ )
             {
-                PhysicsObject spriteToAdd = new PhysicsObject(spriteLocations[i], true);
+                PhysicsObject spriteToAdd;
+
+                if ( gridIndex[i] == 0 ) spriteToAdd = new PhysicsObject(spriteLocations[i-1], true);
+                else spriteToAdd = new PhysicsObject(spriteLocations[i-1], false);
+                
                 spriteToAdd.SetOrigin(spriteToAdd.width/2, spriteToAdd.height/2);
 
                 if ( currentGridPosition.y == 0 && runOnce ) currentGridPosition = new Vec2( coords[0].x+spriteToAdd.width/2+offset, coords[0].y+spriteToAdd.height/2+offset );
@@ -76,8 +90,8 @@ namespace GXPEngine
 
                 spriteToAdd.SetClickCollider( new Vec2( currentGridPosition.x, currentGridPosition.y ));
                 spriteToAdd.SetXY( coords[0].x, coords[0].y-10000);
-                gridPositions[i] = currentGridPosition;
-                gridObjects[i] = spriteToAdd;
+                gridPositions[i-1] = currentGridPosition;
+                gridObjects[i-1] = spriteToAdd;
                 Scene.workspace.AddChild(spriteToAdd);
 
                 if ( runOnce ) runOnce = false;             
