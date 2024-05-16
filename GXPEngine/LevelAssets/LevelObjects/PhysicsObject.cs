@@ -14,7 +14,7 @@ namespace GXPEngine
     {
         string colliderType;
         string[] colliderTypes = new string[] { "Box", "Circle", "Line" };
-        BoxCollider collider;
+        new BoxCollider collider;
         string spriteLocation;
         bool isStatic = false;
         bool isDragging = false;
