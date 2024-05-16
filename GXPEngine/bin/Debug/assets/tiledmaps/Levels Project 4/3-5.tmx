@@ -60,6 +60,11 @@
    </properties>
   </object>
   <object id="7" name="Score Box" type="GXPEngine.ScoreBoard" x="1059" y="792" width="759.333" height="250.333"/>
-  <object id="9" name="LevelProperties" type="GXPEngine.LevelProperties" x="-289.727" y="1098.06" width="234" height="216"/>
+  <object id="9" name="LevelProperties" type="GXPEngine.LevelProperties" x="-289.727" y="1098.06" width="234" height="216">
+   <properties>
+    <property name="ObjectiveScore" type="float" value="0"/>
+    <property name="ObjectiveType" value=""/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
