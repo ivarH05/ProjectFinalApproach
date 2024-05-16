@@ -86,7 +86,6 @@ namespace GXPEngine
             ObjectiveManager.Update();
             inputManager.Update();
             debugger.Update();
-
         }
     }
 }
