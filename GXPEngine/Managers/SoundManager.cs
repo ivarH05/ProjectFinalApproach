@@ -100,26 +100,27 @@ namespace GXPEngine
                 "GameMusic",
                 new Sound[]
                 {
-                    new Sound(prefix + "PG-2_Balling.wav"),
+                    new Sound(prefix + "PG-2_Balling.wav", true, true),
                 }
             },
             {
                 "MenuMusic",
                 new Sound[]
                 {
-                    new Sound(prefix + "CinematicMainMenu.wav"),
+                    new Sound(prefix + "CinematicMainMenu.wav", true, true),
                 }
             },
         };
 
-        public static SoundChannel PlaySound(string sound)
+        public static SoundChannel PlaySound(string sound, bool randomize = false)
         {
             Sound[] soundEffectList = soundEffects[sound];
 
             Sound soundEffect = soundEffectList[Utils.Random(0, soundEffectList.Length)];
 
             SoundChannel sc = soundEffect.Play();
-            sc.Frequency = Utils.Random(30000, 48200);
+            if(randomize)
+                sc.Frequency = Utils.Random(30000, 48200);
             Console.WriteLine("played " + sound);
             return sc;
         }

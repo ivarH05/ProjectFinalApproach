@@ -30,7 +30,7 @@ namespace GXPEngine
         int levelIndex;
         public Level(int levelIndex) : base(true)
         {
-            type = levelIndex / 10 + 1;
+            type = (levelIndex - 1) / 10 + 1;
             UILayer.LateDestroy();
             UILayer = new GameUI();
             AddChild(UILayer);

@@ -13,7 +13,7 @@ public class MainGame : Game {
     public MainGame() : base(1920, 1080, false, true, 1600, 900)
     {
         singleton = this;
-        music = SoundManager.PlaySound("MenuMusic");
+        music = SoundManager.PlaySound("MenuMusic", false);
         //targetFps = 50;
         AddChild(scene = new MainMenu());
     }
@@ -24,7 +24,7 @@ public class MainGame : Game {
             return;
         singleton.MainPlaying = false;
         singleton.music.Stop();
-        singleton.music = SoundManager.PlaySound("GameMusic");
+        singleton.music = SoundManager.PlaySound("GameMusic", false);
     }
     public static void MainMusic()
     {
@@ -32,7 +32,7 @@ public class MainGame : Game {
             return;
         singleton.MainPlaying = true;
         singleton.music.Stop();
-        singleton.music = SoundManager.PlaySound("MenuMusic");
+        singleton.music = SoundManager.PlaySound("MenuMusic", false);
     }
 
     public void ChangeLevel()

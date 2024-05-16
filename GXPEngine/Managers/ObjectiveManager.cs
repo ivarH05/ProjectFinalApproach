@@ -221,7 +221,7 @@ namespace GXPEngine
                     else
                         return ObjectiveState.completed;
                 case ObjectiveType.CollectTreats:
-                    if (score > parameter)
+                    if (score >= parameter)
                         return ObjectiveState.completed;
                     else if (completed)
                         return ObjectiveState.failed;
