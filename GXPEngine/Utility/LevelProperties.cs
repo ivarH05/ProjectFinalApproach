@@ -24,6 +24,8 @@ namespace GXPEngine
         {
             alpha = 0f;
             Scene.levelProperties = this;
+
+            ObjectiveManager.setObjective((ObjectiveType)Enum.Parse(typeof(ObjectiveType), obj.GetStringProperty("ObjectiveType")), obj.GetFloatProperty("ObjectiveScore"));
         }
     }    
 }

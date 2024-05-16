@@ -9,7 +9,6 @@
   <object id="36" name="Slowdown1" type="GXPEngine.Brake" x="117.333" y="678" width="71.1667" height="52.6667"/>
   <object id="37" name="Slowdown1" type="GXPEngine.Brake" x="518.667" y="545.333" width="71.1667" height="52.6667"/>
   <object id="38" name="Slowdown1" type="GXPEngine.Brake" x="518.667" y="545.333" width="71.1667" height="52.6667"/>
-  <object id="39" name="Exit Wall" type="GXPEngine.Wall " x="296.667" y="1008.67" width="158.667" height="34"/>
  </objectgroup>
  <objectgroup id="4" name="UI">
   <object id="4" name="Pinball Box" type="GXPEngine.PinBallMachine" x="72.0869" y="62.9853" width="658.594" height="985.015"/>
@@ -24,6 +23,11 @@
    </properties>
   </object>
   <object id="7" name="Score Box" type="GXPEngine.ScoreBoard" x="1063.99" y="798" width="747" height="240"/>
-  <object id="15" name="LevelProperties" type="GXPEngine.LevelProperties" x="-268" y="1068" width="234" height="216"/>
+  <object id="15" name="LevelProperties" type="GXPEngine.LevelProperties" x="-268" y="1068" width="234" height="216">
+   <properties>
+    <property name="ObjectiveScore" type="float" value="1000"/>
+    <property name="ObjectiveType" value="ScoreBelow"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
