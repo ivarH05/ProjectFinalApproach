@@ -14,6 +14,11 @@ namespace GXPEngine
         public Ice(TiledObject obj = null) : base("Square.png", new BoxCollider(new Vec2(64, 64)))
         {
             isTrigger = true;
+            if (obj != null)
+            {
+                obj.Width = 64;
+                obj.Height = 64;
+            }
         }
 
         void Update()

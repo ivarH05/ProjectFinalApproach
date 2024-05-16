@@ -14,10 +14,16 @@ namespace GXPEngine
         public Treat(TiledObject obj = null) : base("Circle.png", new CircleCollider(32))
         {
             isTrigger = true;
+            if (obj != null)
+            {
+                obj.Width = 64;
+                obj.Height = 64;
+            }
         }
 
         void Update()
         {
+            Console.WriteLine(collider);
             color = (uint)(color + (0xffffff - color) * Time.DeltaSeconds * 10);
             triggerTimer -= Time.DeltaSeconds;
             scale = Mathf.Lerp(scale, 1, Time.DeltaSeconds * 35);

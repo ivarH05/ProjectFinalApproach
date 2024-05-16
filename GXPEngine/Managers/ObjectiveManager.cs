@@ -55,6 +55,9 @@ namespace GXPEngine
         {
             objectiveType = PobjectiveType;
             parameter = Pparameter;
+            completed = false;
+            score = 0;
+            timer = -0.99f;
 
             switch (objectiveType)
             {
@@ -89,6 +92,8 @@ namespace GXPEngine
         }
         public static void Update()
         {
+            if (!isCounting)
+                return;
             timer += Time.DeltaSeconds;
         }
 
@@ -261,6 +266,7 @@ namespace GXPEngine
             }
         }
 
+        public static bool isCounting = false;
         public static void Complete()
         {
             completed = true;

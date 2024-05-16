@@ -19,6 +19,11 @@ namespace GXPEngine
         {
             centerOrigin();
             float r = rotation;
+            if (obj != null)
+            {
+                obj.Width = 290;
+                obj.Height = 293;
+            }
             for (int i = 0; i < verticies.Length; i++)
             {
                 Vec2 start = verticies[i].RotateAroundDegrees(Position, r);

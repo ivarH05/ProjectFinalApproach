@@ -13,7 +13,7 @@ namespace GXPEngine
         public static float GravityMultiplier = 1;
         public static float AirFriction = 0.2f;
 
-        private static bool debug = true;
+        private static bool debug = false;
         public static EasyDraw debugCanvas = new EasyDraw(1920, 1080, false);
 
         /// <summary>

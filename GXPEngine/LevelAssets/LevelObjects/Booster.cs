@@ -15,6 +15,11 @@ namespace GXPEngine
         public Booster(TiledObject obj = null) : base("Square.png", new BoxCollider(new Vec2(64, 150)))
         {
             isTrigger = true;
+            if (obj != null)
+            {
+                obj.Width = 64;
+                obj.Height = 150;
+            }
         }
 
         void Update()

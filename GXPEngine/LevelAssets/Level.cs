@@ -21,18 +21,19 @@ namespace GXPEngine
             new Vec2(668, 604), new Vec2(644, 624), new Vec2(642, 633), new Vec2(651, 646), new Vec2(650, 658), new Vec2(633, 673),
             new Vec2(650, 693), new Vec2(652, 854), new Vec2(648, 878), new Vec2(631, 898), new Vec2(457, 1020), new Vec2(475, 1054) };
 
+        int levelIndex;
         public Level(int levelIndex) : base(true)
         {
+            UILayer.LateDestroy();
+            UILayer = new GameUI();
+            AddChild(UILayer);
+            PhysicsManager.setup();
             tiledManager.LoadTiledMap("Levels Project 4/" + ((int)((levelIndex - 1) / 10 + 1)) + "-" + ((levelIndex - 1) % 10 + 1) + ".tmx");
 
             //tiledManager.LoadTiledMap("map" + levelIndex + "/map" + levelIndex + ".tmx");
 
             Console.WriteLine("Opening level from Levels Project 4/" + ((int)((levelIndex - 1) / 10 + 1)) + "-" + ((levelIndex - 1) % 10 + 1) + ".tmx");
 
-            UILayer.LateDestroy();
-            UILayer = new GameUI();
-            AddChild(UILayer);
-            PhysicsManager.setup();
 
 
             Ball = new Rigidbody("Circle.png", new CircleCollider(16));
@@ -45,9 +46,10 @@ namespace GXPEngine
                 Vec2 end = verticies[i + 1];
                 workspace.AddChild(new Rigidbody("", new LineCollider(start, end)));
             }
-            ObjectiveManager.setObjective(ObjectiveType.DoNotExit, 50);
             Console.WriteLine(levelIndex);
             MainGame.singleton.levelIndex = levelIndex;
+            this.levelIndex = levelIndex;
+            ObjectiveManager.isCounting = false;
         }
 
         override public void Update()
@@ -59,18 +61,26 @@ namespace GXPEngine
             {
                 Ball.Position = new Vec2(686, 948);
                 Ball.velocity = new Vec2(0, -1500);
+                ObjectiveManager.isCounting = true;
             }
             if (InputManager.IsShotTwo())
             {
                 Ball.Position = new Vec2(686, 948);
                 Ball.velocity = new Vec2(0, -1825);
+                ObjectiveManager.isCounting = true;
             }
             if (InputManager.IsShotThree())
             {
                 Ball.Position = new Vec2(686, 948);
                 Ball.velocity = new Vec2(0, -2250);
+                ObjectiveManager.isCounting = true;
             }
             ObjectiveManager.UpdateScore(ScoreType.PlayerSpeed, Ball.velocity.magnitude);
+
+            if(Input.GetKey(Key.R))
+            {
+                parent.AddChild(new Level(levelIndex));
+            }
         }
     }
 }

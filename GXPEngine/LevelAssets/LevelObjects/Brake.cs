@@ -15,6 +15,11 @@ namespace GXPEngine
         public Brake(TiledObject obj = null) : base("Square.png", new BoxCollider(new Vec2(64, 64)))
         {
             isTrigger = true;
+            if(obj != null )
+            {
+                obj.Width = 64;
+                obj.Height = 64;
+            }
         }
 
         void Update()
@@ -29,7 +34,7 @@ namespace GXPEngine
             if (other.isKinematic)
                 return;
 
-            other.velocity = Vec2.Lerp(other.velocity, new Vec2(0, -327), Time.timeStep * 3);
+            other.velocity = Vec2.Lerp(other.velocity, new Vec2(0, -299), Time.timeStep * 4);
             if (triggerTimer < 0)
             {
                 SoundManager.PlaySound("speedDown");
