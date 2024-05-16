@@ -11,7 +11,7 @@ namespace GXPEngine
     public class Wall : Rigidbody
     {
         float triggerTimer = 0;
-        public Wall(TiledObject obj = null) : base("Square.png", new BoxCollider(new Vec2(32, 196)), false)
+        public Wall(TiledObject obj = null) : base(Level.getPath() + ((obj.Rotation == 90 || obj.Width > obj.Height) ? "WallH.png" : "WallV.png"), new BoxCollider(new Vec2(32, 196)), false)
         {
             if (obj.Rotation == 90)
             {
@@ -45,7 +45,8 @@ namespace GXPEngine
         public override void OnCollision(CollisionData collision)
         {
             Rigidbody other = collision.other.rigidbody;
-            SoundManager.PlaySound("wallBump");
+            if(other.velocity.magnitude > 100)
+                SoundManager.PlaySound("wallBump");
 
             if (other.isKinematic || triggerTimer > 0)
                 return;

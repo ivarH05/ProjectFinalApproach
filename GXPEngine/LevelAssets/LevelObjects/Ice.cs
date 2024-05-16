@@ -11,7 +11,7 @@ namespace GXPEngine
     public class Ice : Rigidbody
     {
         float triggerTimer = -100;
-        public Ice(TiledObject obj = null) : base("Square.png", new BoxCollider(new Vec2(64, 64)))
+        public Ice(TiledObject obj = null) : base(Level.getPath() + "iceBreaking.png", 13, 1, new BoxCollider(new Vec2(64, 64)))
         {
             isTrigger = true;
             if (obj != null)
@@ -19,16 +19,22 @@ namespace GXPEngine
                 obj.Width = 64;
                 obj.Height = 64;
             }
+            width = 64;
+            height = 64;
         }
+        float animTime = 0.5f;
 
         void Update()
         {
             color = (uint)(color + (0xffffff - color) * Time.DeltaSeconds * 10);
             triggerTimer -= Time.DeltaSeconds;
             scale = Mathf.Lerp(scale, 1, Time.DeltaSeconds * 35);
-            if(triggerTimer > -100 && triggerTimer < -0.35)
+            if(triggerTimer > -100)
             {
-                LateDestroy();
+                if (triggerTimer < animTime)
+                    SetFrame(13 - (int)((triggerTimer / animTime) * 13));
+                if(triggerTimer < -0.05)
+                    LateDestroy();
             }
         }
 
@@ -39,10 +45,8 @@ namespace GXPEngine
             if (other.isKinematic || triggerTimer > -100)
                 return;
 
-            scale = 2f;
-            color = 0x00FF00;
-            other.velocity = collision.normal * -1000;
-            triggerTimer = 0.25f;
+            other.velocity += collision.normal * -1000;
+            triggerTimer = animTime;
             ObjectiveManager.UpdateScore(ScoreType.BumperCount, 1);
             ObjectiveManager.UpdateScore(ScoreType.Score, 500);
             SoundManager.PlaySound("wallBump");

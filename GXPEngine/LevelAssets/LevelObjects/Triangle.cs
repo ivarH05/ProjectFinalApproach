@@ -10,12 +10,12 @@ namespace GXPEngine
 {
     public class Triangle : Sprite
     {
-        public Vec2[] verticies = new Vec2[] { new Vec2(10, 20), new Vec2(10, -80), new Vec2(-70, 65) };
+                                                //10, 20
+        public Vec2[] verticies = new Vec2[] { new Vec2(45, 20), new Vec2(35, -80), new Vec2(-50, 75) };
         float triggerTimer = 0;
 
         Rigidbody[] edges = new Rigidbody[3];
-        //public Vec2[] verticies = new Vec2[] { new Vec2(-70, 65), new Vec2(10, -80), new Vec2(10, 20) };
-        public Triangle(TiledObject obj = null) : base("Assets/Triangle.png", false, false)
+        public Triangle(TiledObject obj = null) : base(Level.getPath() + "TriangleBumper.png", false, false)
         {
             centerOrigin();
             float r = rotation;
@@ -59,6 +59,16 @@ namespace GXPEngine
             color = (uint)(color + (0xffffff - color) * Time.DeltaSeconds * 10);
             triggerTimer -= Time.DeltaSeconds;
             scale = Mathf.Lerp(scale, 1, Time.DeltaSeconds * 35);
+        }
+
+        public bool isColliding()
+        {
+            foreach (Rigidbody edge in edges)
+            {
+                if (edge.CalculateCollisions().Count > 0)
+                    return true;
+            }
+            return false;
         }
     }
 }

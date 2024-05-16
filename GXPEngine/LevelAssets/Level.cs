@@ -11,6 +11,12 @@ namespace GXPEngine
     public class Level : Scene
     {
         private static Rigidbody Ball;
+        private static int type = 1;
+        public static string getPath()
+        {
+            return "assets/Style" + type + "/";
+        }
+        float nextLevelTimer = 0;
 
         public Vec2[] verticies = new Vec2[] { new Vec2(289, 1048), new Vec2(300, 1018), new Vec2(115, 892), new Vec2(104, 871),
             new Vec2(102, 374), new Vec2(111, 309), new Vec2(124, 273), new Vec2(141, 240), new Vec2(168, 206), new Vec2(204, 171),
@@ -24,11 +30,18 @@ namespace GXPEngine
         int levelIndex;
         public Level(int levelIndex) : base(true)
         {
+            type = levelIndex / 10 + 1;
             UILayer.LateDestroy();
             UILayer = new GameUI();
             AddChild(UILayer);
             PhysicsManager.setup();
             tiledManager.LoadTiledMap("Levels Project 4/" + ((int)((levelIndex - 1) / 10 + 1)) + "-" + ((levelIndex - 1) % 10 + 1) + ".tmx");
+            AddCat();
+            AnimationSprite spring;
+            workspace.AddChildAt(spring = new AnimationSprite(getPath() + "Spring.png", 13, 1), 1);
+            spring.width = 200;
+            spring.height = 500;
+            spring.Position = new Vec2(780, 600);
 
             //tiledManager.LoadTiledMap("map" + levelIndex + "/map" + levelIndex + ".tmx");
 
@@ -36,7 +49,7 @@ namespace GXPEngine
 
 
 
-            Ball = new Rigidbody("Circle.png", new CircleCollider(16));
+            Ball = new Player();
             workspace.AddChild(Ball);
             Ball.Position = new Vec2(686, 948);
 
@@ -50,34 +63,74 @@ namespace GXPEngine
             MainGame.singleton.levelIndex = levelIndex;
             this.levelIndex = levelIndex;
             ObjectiveManager.isCounting = false;
+            if (type == 3)
+            {
+                PhysicsManager.GravityMultiplier = 0;
+                PhysicsManager.AirFriction = 0f;
+            }
+            else
+            {
+                PhysicsManager.GravityMultiplier = 1;
+                PhysicsManager.AirFriction = 0.2f;
+            }
+        }
+        AnimationSprite cat;
+        void AddCat()
+        {
+            int framecount = type == 1 ? 5 : 9;
+            workspace.AddChildAt(cat = new AnimationSprite(getPath() + "Cat.png", framecount, 1), 1);
+            cat.SetCycle(0, framecount, 180);
+            cat.Position = new Vec2(1390, 360);
+            cat.width =  cat.height = type == 3 ? 730 : 500;
+            if (type == 1)
+            {
+                cat.height = 500;
+                cat.width = 370;
+            }
         }
 
         override public void Update()
         {
+            if(cat != null) 
+                cat.Animate(Time.deltaTime);
             base.Update();
             if (Ball.Position.y > 1080)
                 ObjectiveManager.Complete();
-            if (InputManager.IsShotDefault())
+            if (!ObjectiveManager.isActive)
             {
-                Ball.Position = new Vec2(686, 948);
-                Ball.velocity = new Vec2(0, -1500);
-                ObjectiveManager.isCounting = true;
-            }
-            if (InputManager.IsShotTwo())
-            {
-                Ball.Position = new Vec2(686, 948);
-                Ball.velocity = new Vec2(0, -1825);
-                ObjectiveManager.isCounting = true;
-            }
-            if (InputManager.IsShotThree())
-            {
-                Ball.Position = new Vec2(686, 948);
-                Ball.velocity = new Vec2(0, -2250);
-                ObjectiveManager.isCounting = true;
+                if (InputManager.IsShotDefault())
+                {
+                    Ball.Position = new Vec2(686, 948);
+                    Ball.velocity = new Vec2(0, -1500);
+                    ObjectiveManager.isCounting = true;
+                }
+                if (InputManager.IsShotTwo())
+                {
+                    Ball.Position = new Vec2(686, 948);
+                    Ball.velocity = new Vec2(0, -1825);
+                    ObjectiveManager.isCounting = true;
+                }
+                if (InputManager.IsShotThree())
+                {
+                    Ball.Position = new Vec2(686, 948);
+                    Ball.velocity = new Vec2(0, -2250);
+                    ObjectiveManager.isCounting = true;
+                }
             }
             ObjectiveManager.UpdateScore(ScoreType.PlayerSpeed, Ball.velocity.magnitude);
+            if(nextLevelTimer > 0)
+            {
+                nextLevelTimer += Time.deltaTime;
+                if (nextLevelTimer > 1)
+                    ((MainGame)parent).ChangeLevel();
 
-            if(Input.GetKey(Key.R))
+            }
+            else if(ObjectiveManager.GetObjectiveState() == ObjectiveState.completed)
+            {
+                nextLevelTimer += Time.deltaTime;
+            }
+
+            if (Input.GetKeyUp(Key.R) || ObjectiveManager.GetObjectiveState() == ObjectiveState.failed)
             {
                 parent.AddChild(new Level(levelIndex));
             }

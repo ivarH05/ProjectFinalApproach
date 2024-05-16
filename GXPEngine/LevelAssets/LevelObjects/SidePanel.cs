@@ -19,12 +19,12 @@ namespace GXPEngine
         PhysicsObject[] gridObjects;
 
         string[] spriteLocations = new string[] 
-        {    
-            "square.png", 
-            "square.png", 
-            "square.png", 
-            "square.png", 
-            "square.png" 
+        {
+            Level.getPath() + "Bumper.png",
+            Level.getPath() + "TriangleBumper.png",
+            Level.getPath() + "Brake.png",
+            Level.getPath() + "BoosterPreview.png",
+            Level.getPath() + "Ice.png"
         };
 
         // use this later to spawn the physics collider objects 
@@ -76,17 +76,18 @@ namespace GXPEngine
 
             for ( int i = 1; i < gridIndex.Count+1; i++ )
             {
+                float newwidth = 64;
                 PhysicsObject spriteToAdd;
 
                 if ( gridIndex[i] == 0 ) spriteToAdd = new PhysicsObject(spriteLocations[i-1], true, gridIndex[i], objectNames[i]);
                 else spriteToAdd = new PhysicsObject(spriteLocations[i-1], false, gridIndex[i], objectNames[i]);
                 
-                spriteToAdd.SetOrigin(spriteToAdd.width/2, spriteToAdd.height/2);
+                spriteToAdd.centerOrigin();
 
-                if ( currentGridPosition.y == 0 && runOnce ) currentGridPosition = new Vec2( coords[0].x+spriteToAdd.width/2+offset, coords[0].y+spriteToAdd.height/2+offset );
-                else currentGridPosition = new Vec2(currentGridPosition.x + spriteToAdd.width, currentGridPosition.y);
+                if ( currentGridPosition.y == 0 && runOnce ) currentGridPosition = new Vec2( coords[0].x+newwidth/2+offset, coords[0].y+newwidth/2+offset );
+                else currentGridPosition = new Vec2(currentGridPosition.x + newwidth, currentGridPosition.y);
 
-                if ( currentGridPosition.x + spriteToAdd.width >= width ) currentGridPosition = new Vec2( currentGridPosition.x+spriteToAdd.height , currentGridPosition.y + spriteToAdd.height);
+                if ( currentGridPosition.x + newwidth >= width ) currentGridPosition = new Vec2( currentGridPosition.x+newwidth , currentGridPosition.y + newwidth);
 
                 spriteToAdd.SetClickCollider( new Vec2( currentGridPosition.x, currentGridPosition.y ));
                 spriteToAdd.SetXY( coords[0].x, coords[0].y-10000);

@@ -12,14 +12,16 @@ namespace GXPEngine
     public class Brake : Rigidbody
     {
         float triggerTimer = 0;
-        public Brake(TiledObject obj = null) : base("Square.png", new BoxCollider(new Vec2(64, 64)))
+        public Brake(TiledObject obj = null) : base(Level.getPath() + "Brake.png", new BoxCollider(new Vec2(96, 64)))
         {
             isTrigger = true;
             if(obj != null )
             {
-                obj.Width = 64;
-                obj.Height = 64;
+                obj.Width =200;
+                obj.Height = 150000;
             }
+            width = 200;
+            height = 150;
         }
 
         void Update()
@@ -34,7 +36,7 @@ namespace GXPEngine
             if (other.isKinematic)
                 return;
 
-            other.velocity = Vec2.Lerp(other.velocity, new Vec2(0, -299), Time.timeStep * 4);
+            other.velocity = Vec2.Lerp(other.velocity, new Vec2(0, -245), Time.timeStep * 4);
             if (triggerTimer < 0)
             {
                 SoundManager.PlaySound("speedDown");

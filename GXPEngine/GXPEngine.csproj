@@ -64,6 +64,7 @@
     <Compile Include="Utility\Collision\LineCollider.cs" />
     <Compile Include="Utility\LevelSelect.cs" />
     <Compile Include="Utility\MainMenu.cs" />
+    <Compile Include="Utility\Player.cs" />
     <Compile Include="Utility\Scene.cs" />
     <Compile Include="Utility\LevelProperties.cs" />
     <Compile Include="LevelAssets\Other\Background.cs" />

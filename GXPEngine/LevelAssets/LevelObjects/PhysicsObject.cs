@@ -27,6 +27,10 @@ namespace GXPEngine
         int placementCount;
         EasyDraw showPlacementCount;
 
+        public static bool AlreadyDragging = false;
+
+        int offset = 40;
+
         public PhysicsObject(string spriteLocation, bool isStatic, int placementCount, string colliderType) : base(spriteLocation, false)
         {
             this.spriteLocation = spriteLocation;
@@ -95,10 +99,10 @@ namespace GXPEngine
         bool CanBeClickedOn()
         {
             if (Input.GetMouseButton(0)
-                && Input.mouseX > x - width / 2 
-                && Input.mouseX < x + width / 2
-                && Input.mouseY > y - height / 2
-                && Input.mouseY < y + height / 2
+                && Input.mouseX > x - offset
+                && Input.mouseX < x + offset
+                && Input.mouseY > y - offset
+                && Input.mouseY < y + offset
                 )
             {
                 return true;
@@ -108,18 +112,27 @@ namespace GXPEngine
 
         void DragObject()
         {
+            if (ObjectiveManager.isActive)
+            {
+                MoveBackToOriginalPosition();
+                return;
+            }
+
             if (Input.GetMouseButton(0)
-                && Input.mouseX  > x - width / 2 
-                && Input.mouseX  < x + width / 2
-                && Input.mouseY > y - height / 2
-                && Input.mouseY < y + height / 2
+                && AlreadyDragging == false
+                && Input.mouseX  > x - offset
+                && Input.mouseX  < x + offset
+                && Input.mouseY > y - offset
+                && Input.mouseY < y + offset
                 )
             {
+                AlreadyDragging = true;
                 isDragging = true;
                 x = x + (Input.mouseX - x) * 0.1f;
                 y = y + (Input.mouseY - y) * 0.1f; 
             } else if (isDragging && !Input.GetMouseButton(0))
             {
+                AlreadyDragging = false;
                 isDragging = false;
                 if ( x > PinBallMachine.coords[0].x && 
                         x < PinBallMachine.coords[1].x &&
@@ -147,36 +160,58 @@ namespace GXPEngine
 
         void SpawnPhysicsObject()
         {
+            GameObject rb = null;
             switch (colliderType)
             {
                 case "Bumper":
                     Bumper newCollider = new Bumper();
                     newCollider.SetXY(x, y);
-                    Scene.workspace.AddChild(newCollider);
+                    Scene.workspace.AddChild(rb = newCollider);
                     break;
                 case "Triangle":
                     Triangle newTriangle = new Triangle();
                     newTriangle.SetXY(x, y);
-                    Scene.workspace.AddChild(newTriangle);
+                    Scene.workspace.AddChild(rb = newTriangle);
                     break;
                 case "Brake":
                     Brake newBrake = new Brake();
                     newBrake.SetXY(x, y);
-                    Scene.workspace.AddChild(newBrake); 
+                    Scene.workspace.AddChild(rb = newBrake); 
                     break;
                 case "Booster":   
                     Booster newBooster = new Booster();
                     newBooster.SetXY(x, y);
-                    Scene.workspace.AddChild(newBooster);
+                    Scene.workspace.AddChild(rb = newBooster);
                     break;
                 case "Ice":
                     Ice newIce = new Ice();
                     newIce.SetXY(x, y);
-                    Scene.workspace.AddChild(newIce);
+                    Scene.workspace.AddChild(rb = newIce);
                     break;
                 default:
                     Console.WriteLine("No collider type found");
                     break;
+            }
+            if (rb == null)
+                return;
+
+            if(rb is Triangle t)
+            {
+                if (t.isColliding())
+                {
+                    t.LateDestroy();
+                    isValidPlacement = false;
+                    return;
+                }
+            }
+            if(rb is Rigidbody r)
+            {
+                if(r.CalculateCollisions().Count > 0)
+                {
+                    r.LateDestroy();
+                    isValidPlacement = false;
+                    return;
+                }
             }
 
             placementCount--;

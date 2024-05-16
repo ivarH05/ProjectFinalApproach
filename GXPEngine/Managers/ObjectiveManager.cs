@@ -48,8 +48,9 @@ namespace GXPEngine
         private static float score;
         private static float timer;
         private static bool completed = false;
+        public static bool isActive = false;
 
-        private static float stopThreshold = 50;
+        private static float stopThreshold = 200;
 
         public static void setObjective(ObjectiveType PobjectiveType, float Pparameter)
         {
@@ -58,6 +59,7 @@ namespace GXPEngine
             completed = false;
             score = 0;
             timer = -0.99f;
+            isActive = false;
 
             switch (objectiveType)
             {
@@ -168,6 +170,10 @@ namespace GXPEngine
 
         public static void UpdateScore(ScoreType inputType, float amount = 1)
         {
+            if(inputType == ScoreType.PlayerSpeed && amount > 100)
+                isActive = true;
+            if (!isActive)
+                return;
             if (inputType != scoreType)
                 return;
             switch (inputType)
@@ -215,11 +221,10 @@ namespace GXPEngine
                     else
                         return ObjectiveState.completed;
                 case ObjectiveType.CollectTreats:
-                    if (completed)
-                        if (score < parameter)
-                            return ObjectiveState.failed;
-                        else
-                            return ObjectiveState.completed;
+                    if (score > parameter)
+                        return ObjectiveState.completed;
+                    else if (completed)
+                        return ObjectiveState.failed;
                     return ObjectiveState.pending;
                 case ObjectiveType.DoNotColelctTreats:
                     if (completed)

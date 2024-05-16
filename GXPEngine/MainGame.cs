@@ -15,7 +15,7 @@ public class MainGame : Game {
         AddChild(scene = new MainMenu());
     }
 
-    void ChangeLevel()
+    public void ChangeLevel()
     {
         if ( levelIndex != lastLevel)
         {
@@ -32,9 +32,11 @@ public class MainGame : Game {
     }
 
 	// For every game object, Update is called every frame, by the engine:
-	void Update() {
-        if ( Input.GetKeyDown(Key.ENTER) || scene.SceneIsOver()) ChangeLevel();  // replace with other functionality later
-	}
+	void Update()
+    {
+        if (Input.GetKeyDown(Key.ESCAPE))
+            AddChild(scene = new MainMenu());
+    }
 
 	static void Main()
 	{
