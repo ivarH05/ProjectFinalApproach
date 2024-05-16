@@ -4,14 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TiledMapParser;
 
 namespace GXPEngine
 {
     public class Wall : Rigidbody
     {
         float triggerTimer = 0;
-        public Wall() : base("Square.png", new BoxCollider(new Vec2(32, 196)))
+        public Wall(TiledObject obj = null) : base("Square.png", new BoxCollider(new Vec2(32, 196)), false)
         {
+            if (obj != null && obj.Width > obj.Height)
+            {
+                collider = new BoxCollider(new Vec2(196, 32));
+                width = 192;
+                height = 32;
+            }
+            else
+            {
+                width = 32;
+                height = 192;
+            }
             isKinematic = true;
         }
 

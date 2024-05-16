@@ -29,7 +29,7 @@ namespace GXPEngine
             if (other.isKinematic)
                 return;
 
-            other.velocity = Vec2.Lerp(other.velocity, new Vec2(0, -164), Time.timeStep * 6);
+            other.velocity = Vec2.Lerp(other.velocity, new Vec2(0, -327), Time.timeStep * 3);
             if (triggerTimer < 0)
             {
                 SoundManager.PlaySound("speedDown");
