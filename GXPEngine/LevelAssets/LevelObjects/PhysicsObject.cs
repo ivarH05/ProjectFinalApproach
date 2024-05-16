@@ -134,7 +134,6 @@ namespace GXPEngine
 
         void SpawnPhysicsObject()
         {
-            Console.WriteLine("Spawning object"); // spawn physics collider object here
             switch (colliderType)
             {
                 case "Bumper":
