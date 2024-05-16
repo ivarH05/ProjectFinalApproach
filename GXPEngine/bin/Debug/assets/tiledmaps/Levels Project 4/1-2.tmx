@@ -29,7 +29,7 @@
     <property name="GridSize" type="int" value="5"/>
     <property name="Bumper" type="int" value="0"/>
     <property name="Triangle" type="int" value="0"/>
-    <property name="Break" type="int" value="0"/>
+    <property name="Brake" type="int" value="0"/>
     <property name="Booster" type="int" value="0"/>
     <property name="Ice" type="int" value="0"/>
    </properties>

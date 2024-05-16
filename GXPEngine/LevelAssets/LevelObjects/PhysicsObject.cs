@@ -14,8 +14,6 @@ namespace GXPEngine
     public class PhysicsObject : Sprite
     {
         string colliderType;
-        string[] colliderTypes = new string[] { "Box", "Circle", "Line" };
-        BoxCollider collider;
         string spriteLocation;
         bool isStatic = false;
         bool isDragging = false;
@@ -26,12 +24,13 @@ namespace GXPEngine
         bool levelJustStarted = true;
         int placementCount;
 
-        public PhysicsObject(string spriteLocation, bool isStatic, int placementCount) : base(spriteLocation, false)
+        public PhysicsObject(string spriteLocation, bool isStatic, int placementCount, string colliderType) : base(spriteLocation, false)
         {
             this.spriteLocation = spriteLocation;
             this.isStatic = isStatic;
             this.isUIObject = true;
             this.placementCount = placementCount;
+            this.colliderType = colliderType;
 
             if (isStatic) SetColor(0,0,0);
         }
@@ -116,6 +115,7 @@ namespace GXPEngine
                     ) {
                     isValidPlacement = true;
                     isOriginalPosition = false;
+                    if (isUIObject) SpawnPhysicsObject();
                     MoveToOriginalPosition();
                 } else {
                     isValidPlacement = false;
@@ -135,6 +135,38 @@ namespace GXPEngine
         void SpawnPhysicsObject()
         {
             Console.WriteLine("Spawning object"); // spawn physics collider object here
+            switch (colliderType)
+            {
+                case "Bumper":
+                    Bumper newCollider = new Bumper();
+                    newCollider.SetXY(x, y);
+                    Scene.workspace.AddChild(newCollider);
+                    break;
+                case "Triangle":
+                    Triangle newTriangle = new Triangle();
+                    newTriangle.SetXY(x, y);
+                    Scene.workspace.AddChild(newTriangle);
+                    break;
+                case "Brake":
+                    Brake newBrake = new Brake();
+                    newBrake.SetXY(x, y);
+                    Scene.workspace.AddChild(newBrake); 
+                    break;
+                case "Booster":   
+                    Booster newBooster = new Booster();
+                    newBooster.SetXY(x, y);
+                    Scene.workspace.AddChild(newBooster);
+                    break;
+                case "Ice":
+                    Ice newIce = new Ice();
+                    newIce.SetXY(x, y);
+                    Scene.workspace.AddChild(newIce);
+                    break;
+                default:
+                    Console.WriteLine("No collider type found");
+                    break;
+            }
+
             placementCount--;
             if (placementCount == 0) 
             {
@@ -159,7 +191,6 @@ namespace GXPEngine
         {
             if (!isStatic) DragObject();
             if (isUIObject && levelJustStarted) LevelStart();
-            if (isUIObject && isValidPlacement) SpawnPhysicsObject();
             DebugToggle();
         }
     }

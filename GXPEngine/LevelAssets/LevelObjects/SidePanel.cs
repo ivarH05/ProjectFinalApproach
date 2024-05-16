@@ -32,7 +32,7 @@ namespace GXPEngine
         {
             { 1,    "Bumper"    },
             { 2,    "Triangle"  },
-            { 3,    "Break"     },
+            { 3,    "Brake"     },
             { 4,    "Booster"   },
             { 5,    "Ice"       }
         };
@@ -42,7 +42,7 @@ namespace GXPEngine
         {
             { 1, 0 },   //Bumper
             { 2, 0 },   //Triangle
-            { 3, 0 },   //Break
+            { 3, 0 },   //Brake
             { 4, 0 },   //Booster
             { 5, 0 },   //Ice
         };
@@ -78,8 +78,8 @@ namespace GXPEngine
             {
                 PhysicsObject spriteToAdd;
 
-                if ( gridIndex[i] == 0 ) spriteToAdd = new PhysicsObject(spriteLocations[i-1], true, gridIndex[i]);
-                else spriteToAdd = new PhysicsObject(spriteLocations[i-1], false, gridIndex[i]);
+                if ( gridIndex[i] == 0 ) spriteToAdd = new PhysicsObject(spriteLocations[i-1], true, gridIndex[i], objectNames[i]);
+                else spriteToAdd = new PhysicsObject(spriteLocations[i-1], false, gridIndex[i], objectNames[i]);
                 
                 spriteToAdd.SetOrigin(spriteToAdd.width/2, spriteToAdd.height/2);
 
