@@ -48,12 +48,9 @@ namespace GXPEngine
         
         public Scene(bool overrideSingleton = true)
         {
-            if (_singleton != null && overrideSingleton)
+            if (_singleton != null)
             {
-                Clear();
-                UILayer.LateDestroy();
-                //debugger.LateDestroy();
-                //background.LateDestroy();
+                _singleton.LateDestroy();
             }
             _singleton = this;
 
@@ -69,8 +66,6 @@ namespace GXPEngine
             AddChild(workspace);
             AddChild(UILayer);
             AddChild(debugger);
-            PhysicsManager.setup();
-
         }
 
         public bool SceneIsOver()

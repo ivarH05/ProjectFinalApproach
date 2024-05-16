@@ -41,12 +41,14 @@ namespace GXPEngine.Core {
 		private static double _realToLogicWidthRatio;
 		private static double _realToLogicHeightRatio;
 
+		public static GLContext singleton;
 		//------------------------------------------------------------------------------------------------------------------------
 		//														RenderWindow()
 		//------------------------------------------------------------------------------------------------------------------------
 		public GLContext (Game owner) {
 			_owner = owner;
 			_lastFPS = _targetFrameRate;
+			singleton = this;
 		}
 		
 		//------------------------------------------------------------------------------------------------------------------------
@@ -245,8 +247,14 @@ namespace GXPEngine.Core {
 			_owner.Render(this);
 
 			GL.glfwSwapBuffers();
-			if (GetKey(Key.ESCAPE)) this.Close();
+			//if (GetKey(Key.ESCAPE)) this.Close();
 		}
+
+
+		public static void Quit()
+		{
+            singleton.Close();
+        }
 		
 		//------------------------------------------------------------------------------------------------------------------------
 		//														SetColor()

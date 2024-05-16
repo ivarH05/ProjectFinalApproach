@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace GXPEngine
         int maxlevel;
         int unlockedlevel;
         int levelOffset;
+        bool stopped;
         public LevelSelect(int MaxLevel, int unlockedLevel) : base(true)
         {
             maxlevel = MaxLevel;
@@ -59,6 +61,8 @@ namespace GXPEngine
             if (SelectBackground != null)
                 SelectBackground.LateDestroy();
 
+            this.levelOffset = levelOffset;
+
             Sprite s = (Sprite)AddChild(new Sprite("assets/UI/PanelHorizontal.png", false, false));
             s.centerOrigin();
             s.Position = new Vec2(960, 600);
@@ -93,7 +97,7 @@ namespace GXPEngine
 
         void Update()
         {
-
+            if (stopped) return;
             for (int i = 0; i < maxlevel && i < levels.Length; i++)
             {
                 if (levels[i] == null)
@@ -157,7 +161,7 @@ namespace GXPEngine
             }
             if (SelectBackground != null)
                 SelectBackground.LateDestroy();
-
+            stopped = true;
         }
     }
 }

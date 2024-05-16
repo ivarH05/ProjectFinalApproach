@@ -13,18 +13,22 @@ namespace GXPEngine
         float triggerTimer = 0;
         public Wall(TiledObject obj = null) : base("Square.png", new BoxCollider(new Vec2(32, 196)), false)
         {
-            if (obj != null && obj.Width > obj.Height)
+            obj.Height = 196;
+            obj.Width = 32;
+            if (obj.Rotation == 90)
             {
-                collider = new BoxCollider(new Vec2(196, 32));
-                width = 192;
-                height = 32;
-            }
-            else
-            {
-                width = 32;
-                height = 192;
+                SetCollider(new BoxCollider(new Vec2(196, 32)));
+                obj.Rotation = 0;
+                obj.Width = 196;
+                obj.Height = 32;
+                obj.X -= 196;
             }
             isKinematic = true;
+        }
+        public Wall(bool sideways = false) : base("Square.png", new BoxCollider(new Vec2(32, 196)), false, false, false)
+        {
+            isKinematic = true;
+            SetOrigin(width, 0);
         }
 
         void Update()

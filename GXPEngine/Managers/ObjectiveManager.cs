@@ -8,20 +8,20 @@ namespace GXPEngine
 {
     public enum ObjectiveType
     {
-        ScoreBelow,
-        ScoreEqual,
-        ScoreAbove,
+        ScoreBelow,         //parameter = maximum score
+        ScoreEqual,         //parameter = target score
+        ScoreAbove,         //parameter = minimum score
 
-        CollectTreats,
-        DoNotColelctTreats,
+        CollectTreats,      //parameter = minimum amount of treats
+        DoNotColelctTreats, //parameter = none
 
-        DoNotStop,
-        StopInTime,
+        DoNotStop,          //parameter = survival time
+        StopInTime,         //parameter = time limit
 
-        DoNotExit,
-        ExitInTime,
+        DoNotExit,          //parameter = survival time
+        ExitInTime,         //parameter = time limit
 
-        TouchBumpers
+        TouchBumpers        //parameter = minimum amount of bumpers
     }
 
     public enum ObjectiveState

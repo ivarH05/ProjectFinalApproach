@@ -29,7 +29,11 @@ namespace GXPEngine
 
             Console.WriteLine("Opening level from Levels Project 4/" + ((int)((levelIndex - 1) / 10 + 1)) + "-" + ((levelIndex - 1) % 10 + 1) + ".tmx");
 
+            UILayer.LateDestroy();
             UILayer = new GameUI();
+            AddChild(UILayer);
+            PhysicsManager.setup();
+
 
             Ball = new Rigidbody("Circle.png", new CircleCollider(16));
             workspace.AddChild(Ball);
@@ -42,6 +46,8 @@ namespace GXPEngine
                 workspace.AddChild(new Rigidbody("", new LineCollider(start, end)));
             }
             ObjectiveManager.setObjective(ObjectiveType.DoNotExit, 50);
+            Console.WriteLine(levelIndex);
+            MainGame.singleton.levelIndex = levelIndex;
         }
 
         override public void Update()

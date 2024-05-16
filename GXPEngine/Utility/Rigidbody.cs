@@ -61,9 +61,11 @@ namespace GXPEngine
         public List<CollisionData> Collisions = new List<CollisionData>();
         public List<CollisionData> lastCollisions = new List<CollisionData>();
 
-        public Rigidbody(string spritePath = "Square.png", Collider collider = null, bool correctSize = true, bool storeCollisions = false) : base(spritePath == "" ? "Square.png" : spritePath, false, false)
+        public Rigidbody(string spritePath = "Square.png", Collider collider = null, bool correctSize = true, bool storeCollisions = false, bool PcenterOrigin = true) : base(spritePath == "" ? "Square.png" : spritePath, false, false)
         {
-            centerOrigin();
+            parent = Level.workspace;
+            if(PcenterOrigin)
+                centerOrigin();
             if (spritePath == "")
                 visible = false;
 
