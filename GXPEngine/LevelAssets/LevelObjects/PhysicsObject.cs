@@ -24,12 +24,14 @@ namespace GXPEngine
         bool isValidPlacement = false;
         bool isUIObject = false;
         bool levelJustStarted = true;
+        int placementCount;
 
-        public PhysicsObject(string spriteLocation, bool isStatic) : base(spriteLocation, false)
+        public PhysicsObject(string spriteLocation, bool isStatic, int placementCount) : base(spriteLocation, false)
         {
             this.spriteLocation = spriteLocation;
             this.isStatic = isStatic;
             this.isUIObject = true;
+            this.placementCount = placementCount;
 
             if (isStatic) SetColor(0,0,0);
         }
@@ -132,7 +134,13 @@ namespace GXPEngine
 
         void SpawnPhysicsObject()
         {
-            Console.WriteLine("Spawning object");
+            Console.WriteLine("Spawning object"); // spawn physics collider object here
+            placementCount--;
+            if (placementCount == 0) 
+            {
+                SetColor(0,0,0);
+                isStatic = true;
+            }
             isValidPlacement = false;
         }
 

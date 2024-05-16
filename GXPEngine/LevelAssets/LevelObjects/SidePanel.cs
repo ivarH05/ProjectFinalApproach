@@ -78,8 +78,8 @@ namespace GXPEngine
             {
                 PhysicsObject spriteToAdd;
 
-                if ( gridIndex[i] == 0 ) spriteToAdd = new PhysicsObject(spriteLocations[i-1], true);
-                else spriteToAdd = new PhysicsObject(spriteLocations[i-1], false);
+                if ( gridIndex[i] == 0 ) spriteToAdd = new PhysicsObject(spriteLocations[i-1], true, gridIndex[i]);
+                else spriteToAdd = new PhysicsObject(spriteLocations[i-1], false, gridIndex[i]);
                 
                 spriteToAdd.SetOrigin(spriteToAdd.width/2, spriteToAdd.height/2);
 
