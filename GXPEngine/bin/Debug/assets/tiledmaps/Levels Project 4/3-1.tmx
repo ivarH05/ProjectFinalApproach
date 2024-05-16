@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="39" height="26" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="24">
+ <imagelayer id="2" name="background">
+  <image source="../../OneDrive/Documenten/GitHub/ProjectFinalApproach/GXPEngine/bin/Debug/assets/tiledmaps/Neptune_Background.png" width="1920" height="1080"/>
+ </imagelayer>
+ <objectgroup id="3" name="physics objects">
+  <object id="10" name="Ice" type="GXPEngine.Ice" x="112.119" y="326.164" width="80.0849" height="49.5071"/>
+  <object id="11" name="Ice" type="GXPEngine.Ice" x="189.292" y="326.164" width="80.0849" height="49.5071"/>
+  <object id="12" name="Ice" type="GXPEngine.Ice" x="266.464" y="327.62" width="80.0849" height="49.5071"/>
+  <object id="13" name="Ice" type="GXPEngine.Ice" x="352.374" y="326.164" width="80.0849" height="49.5071"/>
+  <object id="14" name="Ice" type="GXPEngine.Ice" x="426.634" y="326.164" width="80.0849" height="49.5071"/>
+  <object id="15" name="Ice" type="GXPEngine.Ice" x="500.895" y="323.252" width="80.0849" height="49.5071"/>
+  <object id="16" name="Ice" type="GXPEngine.Ice" x="573.699" y="323.252" width="80.0849" height="49.5071"/>
+  <object id="17" name="Ice" type="GXPEngine.Ice" x="621.75" y="323.252" width="80.0849" height="49.5071"/>
+  <object id="18" name="Treat" type="GXPEngine.Treat" x="198.028" y="228.606" width="104.838" height="71.3484">
+   <ellipse/>
+  </object>
+  <object id="21" name="Treat" type="GXPEngine.Treat" x="377.127" y="218.413" width="104.838" height="71.3484">
+   <ellipse/>
+  </object>
+  <object id="22" name="Treat" type="GXPEngine.Treat" x="541.665" y="221.326" width="104.838" height="71.3484">
+   <ellipse/>
+  </object>
+  <object id="23" name="Treat" type="GXPEngine.Treat" x="125.224" y="806.674" width="104.838" height="71.3484">
+   <ellipse/>
+  </object>
+  <object id="19" x="509.631" y="-78.6288">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="UI" visible="0">
+  <object id="4" name="Pinball Box" type="GXPEngine.PinBallMachine" x="48.4057" y="45.1157" width="673.551" height="1002.81"/>
+  <object id="6" name="Side Box" type="GXPEngine.SidePanel" x="1068.46" y="38.1515" width="745.94" height="490.727"/>
+  <object id="7" name="Score Box" type="GXPEngine.ScoreBoard" x="1059" y="792" width="759.333" height="250.333"/>
+  <object id="9" name="LevelProperties" type="GXPEngine.LevelProperties" x="-289.727" y="1098.06" width="234" height="216"/>
+ </objectgroup>
+</map>
