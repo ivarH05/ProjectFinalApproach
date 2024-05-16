@@ -95,7 +95,21 @@ namespace GXPEngine
                     new Sound(prefix + "wallHit2.wav"),
                     new Sound(prefix + "wallHit3.wav"),
                 }
-            }
+            },
+            {
+                "GameMusic",
+                new Sound[]
+                {
+                    new Sound(prefix + "PG-2_Balling.wav"),
+                }
+            },
+            {
+                "MenuMusic",
+                new Sound[]
+                {
+                    new Sound(prefix + "CinematicMainMenu.wav"),
+                }
+            },
         };
 
         public static SoundChannel PlaySound(string sound)

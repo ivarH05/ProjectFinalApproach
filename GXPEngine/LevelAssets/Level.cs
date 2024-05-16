@@ -73,6 +73,7 @@ namespace GXPEngine
                 PhysicsManager.GravityMultiplier = 1;
                 PhysicsManager.AirFriction = 0.2f;
             }
+            MainGame.LevelMusic();
         }
         AnimationSprite cat;
         void AddCat()

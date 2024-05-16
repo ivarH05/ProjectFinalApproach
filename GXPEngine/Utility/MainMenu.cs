@@ -14,6 +14,7 @@ namespace GXPEngine
     {
         public MainMenu() : base(true)
         {
+            MainGame.MainMusic();
         }
         private Sprite SelectBackground;
 
