@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="39" height="26" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="27">
+ <imagelayer id="2" name="background">
+  <image source="../../OneDrive/Documenten/GitHub/ProjectFinalApproach/GXPEngine/bin/Debug/assets/tiledmaps/GameUranus2.png" width="1920" height="1080"/>
+ </imagelayer>
+ <objectgroup id="3" name="physics objects">
+  <object id="15" x="453.333" y="-22.6667"/>
+  <object id="23" name="Booster" type="GXPEngine.Booster" x="445.333" y="310.667" width="81.3333" height="137.333"/>
+  <object id="25" name="Booster" type="GXPEngine.Booster" x="140" y="577.333" width="81.3333" height="137.333"/>
+  <object id="26" name="Booster" type="GXPEngine.Booster" x="269.333" y="786.667" width="81.3333" height="137.333"/>
+ </objectgroup>
+ <objectgroup id="4" name="UI" visible="0">
+  <object id="4" name="Pinball Box" type="GXPEngine.PinBallMachine" x="44.7698" y="40.7607" width="678.951" height="1007.24"/>
+  <object id="6" name="Side Box" type="GXPEngine.SidePanel" x="1068.79" y="39.4848" width="740.273" height="487.727"/>
+  <object id="7" name="Score Box" type="GXPEngine.ScoreBoard" x="1059" y="786" width="750" height="255"/>
+  <object id="8" name="LevelProperties" type="GXPEngine.LevelProperties" x="-313.97" y="1092" width="234" height="216"/>
+ </objectgroup>
+</map>
