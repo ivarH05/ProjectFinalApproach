@@ -274,10 +274,11 @@ namespace GXPEngine
 			OnDestroy();
 
 			// Destroy all children:
-			while (_children.Count > 0) {
-				GameObject child = _children[0];
-				if (child != null) child.Destroy();
-			}
+			for (int i = 0; i < _children.Count; i++)
+            {
+                GameObject child = _children[0];
+                if (child != null) child.Destroy();
+            }
 		}
 
 		//------------------------------------------------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="39" height="26" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="68">
  <imagelayer id="2" name="background">
-  <image source="../../OneDrive/Documenten/GitHub/ProjectFinalApproach/GXPEngine/bin/Debug/assets/tiledmaps/Neptune_Background.png"/>
+  <image source="../Neptune_Background.png"/>
  </imagelayer>
  <objectgroup id="3" name="physics objects">
   <object id="58" name="Wall" type="GPXEngine.Wall" x="416.667" y="446" width="29.3333" height="173.333"/>

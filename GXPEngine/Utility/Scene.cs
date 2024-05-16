@@ -39,7 +39,7 @@ namespace GXPEngine
         /// <summary>
         /// The UI, here all user interface objects that should not move with the camera can be placed. 
         /// </summary>
-        public static UILayer UILayer { get; internal set; }
+        public static UILayer UILayer;
 
         public static TiledManager tiledManager { get; private set; }
         public static Debugger debugger { get; private set; }
@@ -50,9 +50,10 @@ namespace GXPEngine
         {
             if (_singleton != null && overrideSingleton)
             {
+                Clear();
                 UILayer.LateDestroy();
-                debugger.LateDestroy();
-                background.LateDestroy();
+                //debugger.LateDestroy();
+                //background.LateDestroy();
             }
             _singleton = this;
 
@@ -86,6 +87,10 @@ namespace GXPEngine
             ObjectiveManager.Update();
             inputManager.Update();
             debugger.Update();
+        }
+        public virtual void Clear()
+        {
+
         }
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="39" height="26" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="57">
  <imagelayer id="2" name="background">
-  <image source="../../OneDrive/Documenten/GitHub/ProjectFinalApproach/GXPEngine/bin/Debug/assets/tiledmaps/Neptune_Background.png"/>
+  <image source="../Neptune_Background.png"/>
  </imagelayer>
  <objectgroup id="3" name="physics objects">
   <object id="28" name="Ice" type="GXPEngine.Ice" x="185.813" y="906.238" width="56.1019" height="46.1378"/>

@@ -42,19 +42,6 @@ namespace GXPEngine
                 workspace.AddChild(new Rigidbody("", new LineCollider(start, end)));
             }
             ObjectiveManager.setObjective(ObjectiveType.DoNotExit, 50);
-
-            GameObject b = workspace.AddChild(new Booster());
-            b.Position = new Vec2(380, 990);
-            GameObject p = workspace.AddChild(new Bumper());
-            p.Position = new Vec2(380, 500);
-            GameObject t = workspace.AddChild(new Triangle());
-            t.Position = new Vec2(250, 700);
-            GameObject w = workspace.AddChild(new Wall());
-            w.Position = new Vec2(400, 200);
-            GameObject B = workspace.AddChild(new Brake());
-            B.Position = new Vec2(500, 600);
-            GameObject I = workspace.AddChild(new Ice());
-            I.Position = new Vec2(400, 400);
         }
 
         override public void Update()
@@ -62,21 +49,20 @@ namespace GXPEngine
             base.Update();
             if (Ball.Position.y > 1080)
                 ObjectiveManager.Complete();
-            if (Input.GetKeyDown(Key.NUMPAD_1))
+            if (InputManager.IsShotDefault())
             {
                 Ball.Position = new Vec2(686, 948);
                 Ball.velocity = new Vec2(0, -1500);
             }
-            if (Input.GetKeyDown(Key.NUMPAD_2))
+            if (InputManager.IsShotTwo())
             {
                 Ball.Position = new Vec2(686, 948);
                 Ball.velocity = new Vec2(0, -1825);
             }
-            if (Input.GetKeyDown(Key.NUMPAD_3))
+            if (InputManager.IsShotThree())
             {
                 Ball.Position = new Vec2(686, 948);
                 Ball.velocity = new Vec2(0, -2250);
-                SoundManager.PlaySound("accept");
             }
             ObjectiveManager.UpdateScore(ScoreType.PlayerSpeed, Ball.velocity.magnitude);
         }

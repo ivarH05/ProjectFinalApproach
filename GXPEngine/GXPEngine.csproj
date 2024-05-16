@@ -111,8 +111,6 @@
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\TiledManager.cs" />
     <Compile Include="LevelAssets\LevelObjects\Booster.cs" />
-    <Compile Include="Managers\InputManager.cs" />
-    <Compile Include="Managers\TiledManager.cs" />
     <Compile Include="LevelAssets\LevelObjects\PhysicsObject.cs" />
     <Compile Include="LevelAssets\LevelObjects\PinBallMachine.cs" />
     <Compile Include="LevelAssets\LevelObjects\ScoreBoard.cs" />

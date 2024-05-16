@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="39" height="26" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="49">
  <imagelayer id="2" name="background">
-  <image source="../../OneDrive/Documenten/GitHub/ProjectFinalApproach/GXPEngine/bin/Debug/assets/tiledmaps/BGGAMEfinal.jpg"/>
+  <image source="../BGGAMEfinal.jpg"/>
  </imagelayer>
  <objectgroup id="3" name="physics objects">
   <object id="35" name="Slowdown1" type="GXPEngine.Brake" x="226.667" y="291" width="71.1667" height="52.6667"/>

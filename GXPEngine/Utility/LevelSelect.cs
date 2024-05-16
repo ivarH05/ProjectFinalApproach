@@ -149,5 +149,15 @@ namespace GXPEngine
                 }
             }
         }
+        public override void Clear()
+        {
+            foreach (EasyDraw level in levels)
+            {
+                level.LateDestroy();
+            }
+            if (SelectBackground != null)
+                SelectBackground.LateDestroy();
+
+        }
     }
 }

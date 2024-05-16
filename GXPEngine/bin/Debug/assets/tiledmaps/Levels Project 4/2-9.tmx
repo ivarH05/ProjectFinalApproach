@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="39" height="26" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="30">
  <imagelayer id="2" name="background">
-  <image source="../../OneDrive/Documenten/GitHub/ProjectFinalApproach/GXPEngine/bin/Debug/assets/tiledmaps/GameUranus2.png"/>
+  <image source="../GameUranus2.png"/>
  </imagelayer>
  <objectgroup id="3" name="physics objects">
   <object id="26" name="Booster" type="GXPEngine.Booster" x="340" y="792" width="81.3333" height="137.333"/>
