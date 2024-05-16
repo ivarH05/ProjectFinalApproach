@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="39" height="26" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="58">
+ <imagelayer id="2" name="background">
+  <image source="../../OneDrive/Documenten/GitHub/ProjectFinalApproach/GXPEngine/bin/Debug/assets/tiledmaps/Neptune_Background.png" width="1920" height="1080"/>
+ </imagelayer>
+ <objectgroup id="3" name="physics objects">
+  <object id="28" name="Ice" type="GXPEngine.Ice" x="185.813" y="906.238" width="56.1019" height="46.1378"/>
+  <object id="42" name="Ice" type="GXPEngine.Ice" x="183.813" y="858.904" width="56.1019" height="46.1378"/>
+  <object id="34" name="Ice" type="GXPEngine.Ice" x="243.813" y="905.571" width="56.1019" height="46.1378"/>
+  <object id="43" name="Ice" type="GXPEngine.Ice" x="241.813" y="858.238" width="56.1019" height="46.1378"/>
+  <object id="35" name="Ice" type="GXPEngine.Ice" x="298.479" y="906.238" width="56.1019" height="46.1378"/>
+  <object id="41" name="Ice" type="GXPEngine.Ice" x="296.479" y="858.904" width="56.1019" height="46.1378"/>
+  <object id="36" name="Ice" type="GXPEngine.Ice" x="355.146" y="904.904" width="56.1019" height="46.1378"/>
+  <object id="46" name="Ice" type="GXPEngine.Ice" x="353.146" y="857.571" width="56.1019" height="46.1378"/>
+  <object id="37" name="Ice" type="GXPEngine.Ice" x="411.146" y="905.571" width="56.1019" height="46.1378"/>
+  <object id="44" name="Ice" type="GXPEngine.Ice" x="409.146" y="858.238" width="56.1019" height="46.1378"/>
+  <object id="38" name="Ice" type="GXPEngine.Ice" x="467.813" y="906.904" width="56.1019" height="46.1378"/>
+  <object id="40" name="Ice" type="GXPEngine.Ice" x="465.813" y="859.571" width="56.1019" height="46.1378"/>
+  <object id="39" name="Ice" type="GXPEngine.Ice" x="513.146" y="904.904" width="56.1019" height="46.1378"/>
+  <object id="45" name="Ice" type="GXPEngine.Ice" x="511.146" y="857.571" width="56.1019" height="46.1378"/>
+  <object id="47" name="Bumper" type="GXPEngine.Bumper" x="114.667" y="306" width="52" height="55.3333">
+   <ellipse/>
+  </object>
+  <object id="48" name="Bumper" type="GXPEngine.Bumper" x="114.667" y="416.667" width="52" height="55.3333">
+   <ellipse/>
+  </object>
+  <object id="49" name="Bumper" type="GXPEngine.Bumper" x="109.333" y="534" width="52" height="55.3333">
+   <ellipse/>
+  </object>
+  <object id="50" name="Bumper" type="GXPEngine.Bumper" x="109.333" y="642" width="52" height="55.3333">
+   <ellipse/>
+  </object>
+  <object id="51" name="Bumper" type="GXPEngine.Bumper" x="104" y="743.333" width="52" height="55.3333">
+   <ellipse/>
+  </object>
+  <object id="52" name="Bumper" type="GXPEngine.Bumper" x="592" y="739.333" width="52" height="55.3333">
+   <ellipse/>
+  </object>
+  <object id="53" name="Bumper" type="GXPEngine.Bumper" x="590.667" y="654" width="52" height="55.3333">
+   <ellipse/>
+  </object>
+  <object id="54" name="Bumper" type="GXPEngine.Bumper" x="592" y="560.667" width="52" height="55.3333">
+   <ellipse/>
+  </object>
+  <object id="55" name="Bumper" type="GXPEngine.Bumper" x="584" y="419.333" width="52" height="55.3333">
+   <ellipse/>
+  </object>
+  <object id="57" name="Wall" type="GXPEngine.Wall" x="334.667" y="340" width="50.6667" height="316"/>
+ </objectgroup>
+ <objectgroup id="4" name="UI" visible="0">
+  <object id="4" name="Pinball Box" type="GXPEngine.PinBallMachine" x="48.4057" y="45.1157" width="673.551" height="1002.81"/>
+  <object id="6" name="Side Box" type="GXPEngine.SidePanel" x="1068.46" y="38.1515" width="745.94" height="490.727"/>
+  <object id="7" name="Score Box" type="GXPEngine.ScoreBoard" x="1059" y="792" width="759.333" height="250.333"/>
+  <object id="9" name="LevelProperties" type="GXPEngine.LevelProperties" x="-289.727" y="1098.06" width="234" height="216"/>
+ </objectgroup>
+</map>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="39" height="26" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="27">
+ <imagelayer id="2" name="background">
+  <image source="../../OneDrive/Documenten/GitHub/ProjectFinalApproach/GXPEngine/bin/Debug/assets/tiledmaps/BGGAMEfinal.jpg" width="1920" height="1080"/>
+ </imagelayer>
+ <objectgroup id="3" name="physics objects">
+  <object id="16" name="Static wall" type="GXPEngine.PhysicsObject" x="766.667" y="242" width="132" height="108"/>
+  <object id="20" x="837.333" y="205.333"/>
+  <object id="23" x="828" y="216">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="UI" visible="0">
+  <object id="4" name="Pinball Box" type="GXPEngine.PinBallMachine" x="72.0869" y="62.9853" width="658.594" height="985.015"/>
+  <object id="6" name="Side Box" type="GXPEngine.SidePanel" x="1073.78" y="43.4848" width="737.273" height="483.727">
+   <properties>
+    <property name="GridSize" type="int" value="5"/>
+    <property name="Object_1" type="int" value="0"/>
+    <property name="Object_2" type="int" value="0"/>
+    <property name="Object_3" type="int" value="0"/>
+    <property name="Object_4" type="int" value="0"/>
+    <property name="Object_5" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="7" name="Score Box" type="GXPEngine.ScoreBoard" x="1063.99" y="798" width="747" height="240"/>
+  <object id="15" name="LevelProperties" type="GXPEngine.LevelProperties" x="-268" y="1068" width="234" height="216"/>
+ </objectgroup>
+</map>
