@@ -130,17 +130,17 @@ namespace GXPEngine
             inputManager.Update();
             debugger.Update();
 
-            if (Input.GetKey(Key.NUMPAD_1))
+            if (InputManager.IsShotDefault())
             {
                 Ball.Position = new Vec2(686, 948);
                 Ball.velocity = new Vec2(0, -1500);
             }
-            if (Input.GetKey(Key.NUMPAD_2))
+            if (InputManager.IsShotTwo())
             {
                 Ball.Position = new Vec2(686, 948);
                 Ball.velocity = new Vec2(0, -1825);
             }
-            if (Input.GetKey(Key.NUMPAD_3))
+            if (InputManager.IsShotThree())
             {
                 Ball.Position = new Vec2(686, 948);
                 Ball.velocity = new Vec2(0, -2250);

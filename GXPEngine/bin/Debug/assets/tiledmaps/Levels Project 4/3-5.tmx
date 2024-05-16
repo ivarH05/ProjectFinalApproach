@@ -47,7 +47,7 @@
   </object>
   <object id="57" name="Wall" type="GXPEngine.Wall" x="334.667" y="340" width="50.6667" height="316"/>
  </objectgroup>
- <objectgroup id="4" name="UI" visible="0">
+ <objectgroup id="4" name="UI">
   <object id="4" name="Pinball Box" type="GXPEngine.PinBallMachine" x="48.4057" y="45.1157" width="673.551" height="1002.81"/>
   <object id="6" name="Side Box" type="GXPEngine.SidePanel" x="1068.46" y="38.1515" width="745.94" height="490.727"/>
   <object id="7" name="Score Box" type="GXPEngine.ScoreBoard" x="1059" y="792" width="759.333" height="250.333"/>

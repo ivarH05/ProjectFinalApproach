@@ -7,14 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using TiledMapParser;
+using System.Drawing;
 
 namespace GXPEngine
 {
     public class PhysicsObject : Sprite
     {
         string colliderType;
-        string[] colliderTypes = new string[] { "Box", "Circle", "Line" };
-        BoxCollider collider;
         string spriteLocation;
         bool isStatic = false;
         bool isDragging = false;
@@ -22,12 +21,18 @@ namespace GXPEngine
         bool isOriginalPosition;
         bool isValidPlacement = false;
         bool isUIObject = false;
+        bool levelJustStarted = true;
+        int placementCount;
 
-        public PhysicsObject(string spriteLocation, bool isStatic) : base(spriteLocation, false)
+        public PhysicsObject(string spriteLocation, bool isStatic, int placementCount, string colliderType) : base(spriteLocation, false)
         {
             this.spriteLocation = spriteLocation;
             this.isStatic = isStatic;
             this.isUIObject = true;
+            this.placementCount = placementCount;
+            this.colliderType = colliderType;
+
+            if (isStatic) SetColor(0,0,0);
         }
 
         public PhysicsObject(string spriteLocation, Vec2 originalPosition) : base(spriteLocation, false)
@@ -58,15 +63,20 @@ namespace GXPEngine
         public void SetClickCollider( Vec2 pos)
         {
             originalPosition = pos;
-            isOriginalPosition = false;
         }
 
         void MoveBackToOriginalPosition()
         {
             x = x + (originalPosition.x - x) * 0.1f;
             y = y + (originalPosition.y - y) * 0.1f;
-            if (x == originalPosition.x && y == originalPosition.y) isOriginalPosition = true;
+            if ((int)x == (int)originalPosition.x && (int)y == (int)originalPosition.y) isOriginalPosition = true;
             // if (isOriginalPosition) this.Destroy();    //NOTE uncomment this line to destroy object when it is back to original position
+        }
+
+        void MoveToOriginalPosition()
+        {
+            x = originalPosition.x;
+            y = originalPosition.y;
         }
 
         bool CanBeClickedOn()
@@ -105,6 +115,8 @@ namespace GXPEngine
                     ) {
                     isValidPlacement = true;
                     isOriginalPosition = false;
+                    if (isUIObject) SpawnPhysicsObject();
+                    MoveToOriginalPosition();
                 } else {
                     isValidPlacement = false;
                     MoveBackToOriginalPosition();
@@ -122,7 +134,45 @@ namespace GXPEngine
 
         void SpawnPhysicsObject()
         {
-            Console.WriteLine("Spawning object");
+            switch (colliderType)
+            {
+                case "Bumper":
+                    Bumper newCollider = new Bumper();
+                    newCollider.SetXY(x, y);
+                    Scene.workspace.AddChild(newCollider);
+                    break;
+                case "Triangle":
+                    Triangle newTriangle = new Triangle();
+                    newTriangle.SetXY(x, y);
+                    Scene.workspace.AddChild(newTriangle);
+                    break;
+                case "Brake":
+                    Brake newBrake = new Brake();
+                    newBrake.SetXY(x, y);
+                    Scene.workspace.AddChild(newBrake); 
+                    break;
+                case "Booster":   
+                    Booster newBooster = new Booster();
+                    newBooster.SetXY(x, y);
+                    Scene.workspace.AddChild(newBooster);
+                    break;
+                case "Ice":
+                    Ice newIce = new Ice();
+                    newIce.SetXY(x, y);
+                    Scene.workspace.AddChild(newIce);
+                    break;
+                default:
+                    Console.WriteLine("No collider type found");
+                    break;
+            }
+
+            placementCount--;
+            if (placementCount == 0) 
+            {
+                SetColor(0,0,0);
+                isStatic = true;
+            }
+            isValidPlacement = false;
         }
 
         void SetStatic(bool isStatic)
@@ -130,11 +180,16 @@ namespace GXPEngine
             this.isStatic = isStatic;
         }
 
+        void LevelStart()
+        {
+            MoveBackToOriginalPosition();
+            levelJustStarted = isOriginalPosition ? false : true;
+        }
+
         void Update()
         {
             if (!isStatic) DragObject();
-            if (isUIObject && !isOriginalPosition) MoveBackToOriginalPosition();
-            if (isUIObject && CanBeClickedOn()) SpawnPhysicsObject();
+            if (isUIObject && levelJustStarted) LevelStart();
             DebugToggle();
         }
     }

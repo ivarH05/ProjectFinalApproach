@@ -6,7 +6,16 @@
  <objectgroup id="3" name="physics objects"/>
  <objectgroup id="4" name="UI">
   <object id="4" name="Pinball Box" type="GXPEngine.PinBallMachine" x="44.7698" y="40.7607" width="678.951" height="1007.24"/>
-  <object id="6" name="Side Box" type="GXPEngine.SidePanel" x="1068.79" y="39.4848" width="740.273" height="487.727"/>
+  <object id="6" name="Side Box" type="GXPEngine.SidePanel" x="1068.79" y="39.4848" width="740.273" height="487.727">
+   <properties>
+    <property name="Booster" type="int" value="0"/>
+    <property name="Break" type="int" value="0"/>
+    <property name="Bumper" type="int" value="0"/>
+    <property name="GridSize" type="int" value="5"/>
+    <property name="Ice" type="int" value="0"/>
+    <property name="Triangle" type="int" value="0"/>
+   </properties>
+  </object>
   <object id="7" name="Score Box" type="GXPEngine.ScoreBoard" x="1059" y="786" width="750" height="255"/>
   <object id="8" name="LevelProperties" type="GXPEngine.LevelProperties" x="-313.97" y="1092" width="234" height="216"/>
  </objectgroup>

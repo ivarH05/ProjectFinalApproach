@@ -9,8 +9,12 @@ namespace GXPEngine.Managers
     public class InputManager 
     {
         public const int shootKey = Key.SPACE;           // also UI select
+        public const int shootOne = Key.ONE;
+        public const int shootTwo = Key.TWO;
+        public const int shootThree = Key.THREE;
         public const int leftBumper = Key.LEFT;          // also UI left
         public const int rightBumper = Key.RIGHT;        // also UI right
+        public static bool isShot = false;
         const int debugToggleKey = Key.F1;
         bool debugModeToggle = false;
         Dictionary<int, bool> isHeld;
@@ -47,9 +51,22 @@ namespace GXPEngine.Managers
             return isHeld[key];
         }
 
-        public bool IsShot() 
+        public static bool IsShotDefault() 
         {
-            return Input.GetKeyDown(shootKey);
+            isShot = true;
+            return Input.GetKeyDown(shootKey) || Input.GetKeyDown(shootOne);
+        }
+
+        public static bool IsShotTwo() 
+        {
+            isShot = true;
+            return Input.GetKeyDown(shootTwo);
+        }
+
+        public static bool IsShotThree() 
+        {
+            isShot = true;
+            return Input.GetKeyDown(shootThree);
         }
 
         public bool LeftBumperPressed()
@@ -70,7 +87,7 @@ namespace GXPEngine.Managers
 
         void DebugInput()
         {
-            Console.WriteLine( "Shoot key is pressed:" + IsShot() + "\n" +
+            Console.WriteLine( "Shoot key is pressed:" + IsShotDefault() + "\n" +
                                 "Left bumper is pressed:" + LeftBumperPressed() + "\n" +
                                 "Right bumper is pressed:" + RightBumperPressed() + "\n" +
                                 "Both bumpers are pressed:" + BothBumpersPressed());
@@ -83,7 +100,7 @@ namespace GXPEngine.Managers
                 switch (keyName)
                 {
                     case shootKey:
-                        Console.WriteLine( "Shoot key is pressed:" + IsShot());
+                        Console.WriteLine( "Shoot key is pressed:" + IsShotDefault());
                         break;
                     case leftBumper:
                         Console.WriteLine( "Left bumper is pressed:" + LeftBumperPressed());
