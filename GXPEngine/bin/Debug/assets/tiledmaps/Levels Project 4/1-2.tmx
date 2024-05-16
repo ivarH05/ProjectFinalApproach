@@ -4,7 +4,7 @@
   <image source="../../OneDrive/Documenten/GitHub/ProjectFinalApproach/GXPEngine/bin/Debug/assets/tiledmaps/BGGAMEfinal.jpg" width="1920" height="1080"/>
  </imagelayer>
  <objectgroup id="3" name="physics objects">
-  <object id="16" name="Static wall" type="GXPEngine.PhysicsObject" x="766.667" y="242" width="132" height="108"/>
+  
   <object id="20" x="837.333" y="205.333"/>
   <object id="22" name="Treat 1" type="GXPEngine.Treat" x="120" y="304" width="161.333" height="80">
    <ellipse/>
@@ -22,16 +22,16 @@
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup id="4" name="UI" visible="0">
+ <objectgroup id="4" name="UI">
   <object id="4" name="Pinball Box" type="GXPEngine.PinBallMachine" x="72.0869" y="62.9853" width="658.594" height="985.015"/>
   <object id="6" name="Side Box" type="GXPEngine.SidePanel" x="1073.78" y="43.4848" width="737.273" height="483.727">
    <properties>
     <property name="GridSize" type="int" value="5"/>
-    <property name="Object_1" type="int" value="0"/>
-    <property name="Object_2" type="int" value="0"/>
-    <property name="Object_3" type="int" value="0"/>
-    <property name="Object_4" type="int" value="0"/>
-    <property name="Object_5" type="int" value="0"/>
+    <property name="Bumper" type="int" value="0"/>
+    <property name="Triangle" type="int" value="0"/>
+    <property name="Break" type="int" value="0"/>
+    <property name="Booster" type="int" value="0"/>
+    <property name="Ice" type="int" value="0"/>
    </properties>
   </object>
   <object id="7" name="Score Box" type="GXPEngine.ScoreBoard" x="1063.99" y="798" width="747" height="240"/>

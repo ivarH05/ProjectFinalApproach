@@ -18,7 +18,7 @@
   <object id="33" name="Wall" type="GXPEngine.Wall" x="408" y="120" width="22.6667" height="173.333"/>
   <object id="34" name="Wall" type="GXPEngine.Wall" x="109.333" y="698.667" width="212" height="21.3333"/>
  </objectgroup>
- <objectgroup id="4" name="UI" visible="0">
+ <objectgroup id="4" name="UI">
   <object id="4" name="Pinball Box" type="GXPEngine.PinBallMachine" x="44.7698" y="40.7607" width="678.951" height="1007.24"/>
   <object id="6" name="Side Box" type="GXPEngine.SidePanel" x="1068.79" y="39.4848" width="740.273" height="487.727"/>
   <object id="7" name="Score Box" type="GXPEngine.ScoreBoard" x="1059" y="786" width="750" height="255"/>
