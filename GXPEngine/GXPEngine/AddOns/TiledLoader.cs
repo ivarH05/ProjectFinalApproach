@@ -346,8 +346,18 @@ namespace TiledMapParser {
 			foreach (TiledObject obj in group.Objects) {
 				obj.Initialize();
 				Sprite newSprite = null;
+				if(obj.type != null)
+                {
+                    obj.Type = obj.Type.Replace(" ", "");
+                    obj.Type = obj.Type.Replace("GPX", "GXP");
+                    obj.Name = "naam";
+				}
+				else
+				{
+					continue;
+				}
 
-				if (_manualObjects.Contains(obj.Type)) {
+                if (_manualObjects.Contains(obj.Type)) {
 					// Don't create an object, just fire the event and let the user create something.
 					//Console.WriteLine("Skipping object because type is in manual list: "+obj);
 				} else if (obj.ImageID>=0) { // Create an AnimationSprite

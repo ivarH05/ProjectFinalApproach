@@ -11,7 +11,7 @@ namespace GXPEngine
     public class Bumper : Rigidbody
     {
         float triggerTimer = 0;
-        public Bumper(TiledObject obj = null) : base("Circle.png", new CircleCollider(32))
+        public Bumper(TiledObject obj = null) : base(Level.getPath() + "Bumper.png", new CircleCollider(32))
         {
             isTrigger = true;
         }
@@ -30,12 +30,13 @@ namespace GXPEngine
             if (other.isKinematic || triggerTimer > 0)
                 return;
 
-            scale = 2f;
+            scale = 1.35f;
             color = 0xFF0000;
             other.velocity = collision.normal * 1000;
-            triggerTimer = 0.25f;
             ObjectiveManager.UpdateScore(ScoreType.BumperCount, 1);
             ObjectiveManager.UpdateScore(ScoreType.Score, 500);
+            SoundManager.PlaySound("circleBump");
+            triggerTimer = 0.25f;
         }
     }
 }

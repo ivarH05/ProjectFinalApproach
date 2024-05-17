@@ -10,15 +10,20 @@ namespace GXPEngine
 {
     public class Triangle : Sprite
     {
-        public Vec2[] verticies = new Vec2[] { new Vec2(10, 20), new Vec2(10, -80), new Vec2(-70, 65) };
+                                                //10, 20
+        public Vec2[] verticies = new Vec2[] { new Vec2(45, 20), new Vec2(35, -80), new Vec2(-50, 75) };
         float triggerTimer = 0;
 
         Rigidbody[] edges = new Rigidbody[3];
-        //public Vec2[] verticies = new Vec2[] { new Vec2(-70, 65), new Vec2(10, -80), new Vec2(10, 20) };
-        public Triangle(TiledObject obj = null) : base("Assets/Triangle.png", false, false)
+        public Triangle(TiledObject obj = null) : base(Level.getPath() + "TriangleBumper.png", false, false)
         {
             centerOrigin();
             float r = rotation;
+            if (obj != null)
+            {
+                obj.Width = 290;
+                obj.Height = 293;
+            }
             for (int i = 0; i < verticies.Length; i++)
             {
                 Vec2 start = verticies[i].RotateAroundDegrees(Position, r);
@@ -45,6 +50,7 @@ namespace GXPEngine
                     triggerTimer = 0.25f;
                     ObjectiveManager.UpdateScore(ScoreType.BumperCount, 1);
                     ObjectiveManager.UpdateScore(ScoreType.Score, 500);
+                    SoundManager.PlaySound("triangleBump");
                 }
                 edge.ClearCollisions();
             }
@@ -53,6 +59,16 @@ namespace GXPEngine
             color = (uint)(color + (0xffffff - color) * Time.DeltaSeconds * 10);
             triggerTimer -= Time.DeltaSeconds;
             scale = Mathf.Lerp(scale, 1, Time.DeltaSeconds * 35);
+        }
+
+        public bool isColliding()
+        {
+            foreach (Rigidbody edge in edges)
+            {
+                if (edge.CalculateCollisions().Count > 0)
+                    return true;
+            }
+            return false;
         }
     }
 }

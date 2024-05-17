@@ -8,7 +8,7 @@ using TiledMapParser;
 
 namespace GXPEngine
 {
-    public class Rigidbody : Sprite
+    public class Rigidbody : AnimationSprite
     {
         /// <summary>
         /// the velocity of the current object in pixels / second. 
@@ -61,9 +61,11 @@ namespace GXPEngine
         public List<CollisionData> Collisions = new List<CollisionData>();
         public List<CollisionData> lastCollisions = new List<CollisionData>();
 
-        public Rigidbody(string spritePath = "Square.png", Collider collider = null, bool storeCollisions = false) : base(spritePath == "" ? "Square.png" : spritePath, false, false)
+        public Rigidbody(string spritePath = "Square.png", Collider collider = null, bool storeCollisions = false, bool PcenterOrigin = true) : base(spritePath == "" ? "Square.png" : spritePath, 1, 1)
         {
-            centerOrigin();
+            parent = Level.workspace;
+            if (PcenterOrigin)
+                centerOrigin();
             if (spritePath == "")
                 visible = false;
 
@@ -84,6 +86,31 @@ namespace GXPEngine
 
             PhysicsManager.AddBody(this);
             this.storeCollisions = storeCollisions;
+        }
+        public Rigidbody(string spritePath = "Square.png", int cols = 1, int rows = 1, Collider collider = null) : base(spritePath == "" ? "Square.png" : spritePath, cols, rows)
+        {
+            parent = Level.workspace;
+            centerOrigin();
+            if (spritePath == "")
+                visible = false;
+
+            if (collider != null)
+                SetCollider(collider);
+            if (collider is LineCollider)
+                isKinematic = true;
+            if (collider is CircleCollider cc)
+            {
+                width = (int)cc.radius * 2;
+                height = (int)cc.radius * 2;
+            }
+            if (collider is BoxCollider bc)
+            {
+                width = (int)bc.size.x;
+                height = (int)bc.size.y;
+            }
+
+            PhysicsManager.AddBody(this);
+            this.storeCollisions = false;
         }
 
         public void SetCollider(Collider collider)
@@ -121,9 +148,11 @@ namespace GXPEngine
                 CollisionData flipped = CollisionData.flip(dat);
                 if (dat.other.rigidbody.isTrigger)
                     c--;
-                if (dat.other.rigidbody.Collisions.Contains(flipped))
-                    continue;
-                dat.other.rigidbody.Collisions.Add(flipped);
+                if (!dat.other.rigidbody.Collisions.Contains(flipped))
+                    dat.other.rigidbody.Collisions.Add(flipped);
+
+                if (!Collisions.Contains(dat))
+                    Collisions.Add(dat);
             }
 
             if (c == 0)
@@ -152,6 +181,9 @@ namespace GXPEngine
             count++;
             if (count < 5)
                 goto Move;
+            if (collider is CircleCollider)
+                angularVelocity += Utils.Random(-velocity.magnitude, velocity.magnitude) * 0.25f;
+            angularVelocity = Mathf.Lerp(angularVelocity, velocity.x * 3, Time.timeStep);
 
             End:
             velocity = Vec2.Lerp(velocity, Vec2.Zero, Time.timeStep * PhysicsManager.AirFriction);
@@ -206,6 +238,11 @@ namespace GXPEngine
         public List<CollisionData> GetCollisions()
         {
             return lastCollisions;
+        }
+        public List<CollisionData> CalculateCollisions()
+        {
+            List<CollisionData> data = PhysicsManager.GetCollisions(this);
+            return data;
         }
         public void ClearCollisions()
         {

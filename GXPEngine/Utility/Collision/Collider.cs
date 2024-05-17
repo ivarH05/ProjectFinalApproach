@@ -48,7 +48,7 @@ namespace GXPEngine
 
         public virtual CollisionData GetCollision(CircleCollider other) { throw new Exception("This collision detection has not been implemented"); }
 
-        public virtual CollisionData GetCollision(LineCollider other) { throw new Exception("This collision detection has not been implemented"); }
+        public virtual CollisionData GetCollision(LineCollider other) { return null; }
 
         public virtual CollisionData IsOverlapping(Vec2 point) { throw new Exception("This collision detection has not been implemented"); }
 

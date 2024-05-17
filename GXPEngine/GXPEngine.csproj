@@ -45,6 +45,7 @@
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
     <Compile Include="GXPEngine\Core\Vec2.cs" />
+    <Compile Include="LevelAssets\Level.cs" />
     <Compile Include="LevelAssets\LevelObjects\Brake.cs" />
     <Compile Include="LevelAssets\LevelObjects\Bumper.cs" />
     <Compile Include="LevelAssets\LevelObjects\Ice.cs" />
@@ -52,13 +53,18 @@
     <Compile Include="LevelAssets\LevelObjects\treat.cs" />
     <Compile Include="LevelAssets\LevelObjects\Triangle.cs" />
     <Compile Include="LevelAssets\LevelObjects\Wall.cs" />
+    <Compile Include="LevelAssets\Other\GameUI.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="Managers\ObjectiveManager.cs" />
+    <Compile Include="Managers\SoundManager.cs" />
     <Compile Include="Utility\Collision\BoxCollider.cs" />
     <Compile Include="Utility\Collision\CircleCollider.cs" />
     <Compile Include="Utility\Collision\Collider.cs" />
     <Compile Include="Utility\Collision\CollisionData.cs" />
     <Compile Include="Utility\Collision\LineCollider.cs" />
+    <Compile Include="Utility\LevelSelect.cs" />
+    <Compile Include="Utility\MainMenu.cs" />
+    <Compile Include="Utility\Player.cs" />
     <Compile Include="Utility\Scene.cs" />
     <Compile Include="Utility\LevelProperties.cs" />
     <Compile Include="LevelAssets\Other\Background.cs" />
@@ -106,8 +112,6 @@
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\TiledManager.cs" />
     <Compile Include="LevelAssets\LevelObjects\Booster.cs" />
-    <Compile Include="Managers\InputManager.cs" />
-    <Compile Include="Managers\TiledManager.cs" />
     <Compile Include="LevelAssets\LevelObjects\PhysicsObject.cs" />
     <Compile Include="LevelAssets\LevelObjects\PinBallMachine.cs" />
     <Compile Include="LevelAssets\LevelObjects\ScoreBoard.cs" />
