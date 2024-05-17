@@ -53,20 +53,17 @@ namespace GXPEngine
 
         public static bool IsShotDefault() 
         {
-            isShot = true;
-            return Input.GetKeyDown(shootKey) || Input.GetKeyDown(shootOne);
+            return isShot = (Input.GetKeyDown(shootKey) || Input.GetKeyDown(shootOne));
         }
 
         public static bool IsShotTwo() 
         {
-            isShot = true;
-            return Input.GetKeyDown(shootTwo);
+            return isShot = Input.GetKeyDown(shootTwo);
         }
 
         public static bool IsShotThree() 
         {
-            isShot = true;
-            return Input.GetKeyDown(shootThree);
+            return isShot = Input.GetKeyDown(shootThree);
         }
 
         public bool LeftBumperPressed()

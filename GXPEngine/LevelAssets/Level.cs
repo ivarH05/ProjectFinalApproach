@@ -6,11 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// TODO animate spring once when shot is taken
+
 namespace GXPEngine
 {
     public class Level : Scene
     {
         private static Rigidbody Ball;
+        AnimationSprite spring;
         private static int type = 1;
         public static string getPath()
         {
@@ -37,12 +40,12 @@ namespace GXPEngine
             PhysicsManager.setup();
             tiledManager.LoadTiledMap("Levels Project 4/" + ((int)((levelIndex - 1) / 10 + 1)) + "-" + ((levelIndex - 1) % 10 + 1) + ".tmx");
             AddCat();
-            AnimationSprite spring;
-            workspace.AddChildAt(spring = new AnimationSprite(getPath() + "Spring.png", 13, 1), 1);
+            int frameCountLevel = ((int)((levelIndex - 1) / 10 + 1)) == 3 ? 10 : 11;
+            workspace.AddChildAt(spring = new AnimationSprite(getPath() + "Spring.png", frameCountLevel, 1), 1); // 11 for maps 1-10, 2-10 and 10 for 3-10 
             spring.width = 200;
             spring.height = 500;
             spring.Position = new Vec2(780, 600);
-
+            spring.SetCycle(0, frameCountLevel, 60);
             //tiledManager.LoadTiledMap("map" + levelIndex + "/map" + levelIndex + ".tmx");
 
             Console.WriteLine("Opening level from Levels Project 4/" + ((int)((levelIndex - 1) / 10 + 1)) + "-" + ((levelIndex - 1) % 10 + 1) + ".tmx");
@@ -94,6 +97,13 @@ namespace GXPEngine
         {
             if(cat != null) 
                 cat.Animate(Time.deltaTime);
+            if (spring != null && InputManager.isShot)
+                spring.Animate(Time.deltaTime);
+            if (spring.currentFrame == spring.frameCount - 1)
+            {
+                spring.SetFrame(0); 
+                InputManager.isShot = false;
+            }
             base.Update();
             if (Ball.Position.y > 1080)
                 ObjectiveManager.Complete();
@@ -105,13 +115,13 @@ namespace GXPEngine
                     Ball.velocity = new Vec2(0, -1500);
                     ObjectiveManager.isCounting = true;
                 }
-                if (InputManager.IsShotTwo())
+                else if (InputManager.IsShotTwo())
                 {
                     Ball.Position = new Vec2(686, 948);
                     Ball.velocity = new Vec2(0, -1825);
                     ObjectiveManager.isCounting = true;
                 }
-                if (InputManager.IsShotThree())
+                else if (InputManager.IsShotThree())
                 {
                     Ball.Position = new Vec2(686, 948);
                     Ball.velocity = new Vec2(0, -2250);
@@ -134,6 +144,8 @@ namespace GXPEngine
             if (Input.GetKeyUp(Key.R) || ObjectiveManager.GetObjectiveState() == ObjectiveState.failed)
             {
                 parent.AddChild(new Level(levelIndex));
+                spring.Destroy();
+                InputManager.isShot = false;
             }
         }
     }
